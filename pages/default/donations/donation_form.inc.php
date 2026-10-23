@@ -7,7 +7,7 @@
             <?= $oPage->content ?>
             <form method="post" class="validateForm">
                 <input type="hidden" name="action" value="sendForm">
-                <? include TEMPLATES_FOLDER . '/elements/errorBox.inc.php'; ?>
+                <?php include TEMPLATES_FOLDER . '/elements/errorBox.inc.php'; ?>
                 <table class="withForm">
                     <tr>
                         <td style="width: 120px;"><label for="name">Name *</label></td>
@@ -28,7 +28,7 @@
             </form>                
 
         </div>
-        <? include TEMPLATES_FOLDER . '/elements/rightColumn.inc.php'; ?>
+        <?php include TEMPLATES_FOLDER . '/elements/rightColumn.inc.php'; ?>
     </article>
     <!-- /MAIN CONTENT -->
 </section>

@@ -21,10 +21,10 @@
                         <td colspan="2">                            
                             <select id="parentPageId" name="parentPageId" class="{validate:{required:true}}">
                                 <option value="">-- None --</option>
-                            <?  foreach ($aPages AS $oPage) { ?>
+                            <?php  foreach ($aPages AS $oPage) { ?>
                                    <option value="<?= $oPage->pageId ?>" <?= $oPage->pageId == $oArticleCategory->parentPageId ? 'selected' : '' ?>><?= $oPage->title ?></option>
        
-                            <?  } ?>
+                            <?php  } ?>
                             </select>
                         </td>
                     </tr>                    
@@ -33,12 +33,12 @@
                         <td colspan="2">
                             <select id="parentCategoryId" name="parentCategoryId">
                                 <option value="">-- None --</option>
-                                <?
+                                <?php
                                 foreach ($aParentCategories AS $oParentCategory) {
                                     if ($oParentCategory->articleCategoryId != $oArticleCategory->articleCategoryId) {
                                         ?>
                                         <option value="<?= $oParentCategory->articleCategoryId ?>" <?= $oParentCategory->articleCategoryId == $oArticleCategory->parentCategoryId ? 'selected' : '' ?>><?= $oParentCategory->name ?></option>
-                                        <?
+                                        <?php
                                     }
                                 }
                                 ?>
@@ -50,16 +50,16 @@
                         <td><input id="name" class="{validate:{required:true}} autofocus default" name="name" title="<?= sysTranslations::get('global_set_name') ?>" type="text" value="<?= _e($oArticleCategory->name) ?>" /></td>
                         <td><span class="error"><?= $oArticleCategory->isPropValid("name") ? '' : sysTranslations::get('global_field_incorrect') ?></span></td>
                     </tr>
-                    <? if ($oCurrentUser->isSEO()) { ?>
+                    <?php if ($oCurrentUser->isSEO()) { ?>
                         <tr>
                             <td colspan="3" style="padding-top: 10px;"><h2><?= sysTranslations::get('user_seo') ?></h2></td>
                         </tr>
-                        <? if ($oArticleCategory->articleCategoryId) { ?>
+                        <?php if ($oArticleCategory->articleCategoryId) { ?>
                             <tr>
                                 <td><?= sysTranslations::get('global_current_url') ?></td>
                                 <td><?= $oArticleCategory->getUrlPath() ?></td>
                             </tr>
-                        <? } ?>
+                        <?php } ?>
                         <tr>
                             <td class="withLabel"><label for="windowTitle"><?= sysTranslations::get('global_window_title') ?></label> <div class="hasTooltip tooltip" title="<?= sysTranslations::get('global_title_seo') ?>">&nbsp;</div></td>
                             <td colspan="2">
@@ -87,7 +87,7 @@
                             <td><input class="default" id="urlPart" type="text" name="urlPartText" value="<?= _e($oArticleCategory->getUrlPartText()) ?>" /></td>
                             <td></td>
                         </tr>
-                    <? } ?>
+                    <?php } ?>
                     <tr>
                         <td colspan="3">
                             <input type="submit" value="<?= sysTranslations::get('global_save') ?>" name="save" />
@@ -101,7 +101,7 @@
 <div id="bottomOptions">
     <a class="backBtn" href="<?= ADMIN_FOLDER ?>/<?= http_get('controller') ?>"><?= sysTranslations::get('global_back_to_overview') ?></a><span class="backBtnInfo"> (<?= sysTranslations::get('global_without_saving') ?>)</span>
 </div>
-<?
+<?php
 $sCurrentUrl = getCurrentUrl();
 $sJavascript = <<<EOT
 <script>

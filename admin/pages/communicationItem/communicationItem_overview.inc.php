@@ -13,7 +13,7 @@
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($aCommunicationItemsNotSended AS $oCommunicationItem) {
             echo '<tr>';
             echo '<td>' . _e($oCommunicationItem->title) . '</td>';
@@ -94,7 +94,7 @@
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($aCommunicationItemsSended AS $oCommunicationItem) {
             echo '<tr>';
             echo '<td>' . _e($oCommunicationItem->title) . '</td>';

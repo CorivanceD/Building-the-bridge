@@ -10,12 +10,12 @@
 
     <meta charset="utf-8">
 
-    <? #Uncomment this viewport metatag to make website responsive 
+    <?php #Uncomment this viewport metatag to make website responsive 
     ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title><?= $oPageLayout->sWindowTitle ?> | <?= CLIENT_NAME ?></title>
-    <?
+    <?php
     # add meta tags
     if (!empty($oPageLayout->sMetaDescription))
         echo '<meta name="description" content="' . $oPageLayout->sMetaDescription . '">' . PHP_EOL;
@@ -79,7 +79,7 @@
 
 
 
-    <?
+    <?php
     # echo extra stylesheet stuff
     foreach ($oPageLayout->getStylesheets() as $sStylesheet) {
         echo $sStylesheet . "\n";
@@ -90,7 +90,7 @@
         <!--[if lte IE 7]>
                 <script>window.location = '/browserwarning';</script>
             <![endif]-->
-    <?
+    <?php
     }
 
     /* echo extra javascript stuff */
@@ -141,7 +141,7 @@
     <div id="banner"></div>
     <div class="default-container-width" style="min-height:100%">
         <header>
-            <div id="today" class="hide-on-mobile"><?
+            <div id="today" class="hide-on-mobile"><?php
                                                     $oCurrentDate = new Date();
                                                     echo $oCurrentDate->format('%A, %d %B, %Y');
                                                     ?></div>
@@ -157,17 +157,17 @@
                 <ul>
                     <li><a href="/account/newsletter"><img style="width:22px;height:14px;padding-bottom:2px;padding-right:2px" src="<?= IMAGE_FOLDER . '/layout/newsletter.png' ?>" width="28" height="18" alt="Subscribe to our newsletter">NEWSLETTER</a></li>
                     <li>·</li>
-                    <? if (empty($oCurrentCustomer)) { ?>
+                    <?php if (empty($oCurrentCustomer)) { ?>
                         <li><a class="loginLink" href="/">LOGIN</a></li>
                         <li>·</li>
                         <li><a href="/account">SIGN UP</a></li>
                         <li>·</li>
-                    <? } else { ?>
+                    <?php } else { ?>
                         <li><a href="/account">MY ACCOUNT</a></li>
                         <li>·</li>
                         <li><a href="/account/logout">LOGOUT</a></li>
                         <li>·</li>
-                    <? } ?>
+                    <?php } ?>
                     <li><a class="donateLink" href="/donate">DONATE</a></li>
                     <li>·</li>
                     <li><a href="/petitions">PETITIONS</a></li>
@@ -195,7 +195,7 @@
             </div>
             <nav class="hide-on-mobile">
 
-                <?
+                <?php
                 $aUrl = array();
 
                 function makeMainMenu($aPages)
@@ -241,7 +241,7 @@
                     <input type="hidden" name="action" value="search">
                     <input id="mobileQ" type="search" name="q" placeholder="Keywords">
                 </form>
-                <?
+                <?php
                 $aUrl = array();
 
                 function makeMobileMenu($aPages)
@@ -283,7 +283,7 @@
                     </form>
                 </div>
             </div>
-            <? if (empty($oCurrentCustomer)) { ?>
+            <?php if (empty($oCurrentCustomer)) { ?>
                 <div id="loginForm">
                     <form method="POST" action="/account"><input type="hidden" name="action" value="login">
                         <input type="email" name="email" placeholder="Email">
@@ -291,10 +291,10 @@
                         <input type="submit" name="login" value="ENTER">
                     </form>
                 </div>
-            <? } ?>
+            <?php } ?>
         </header>
         <div class="main-content">
-            <?
+            <?php
             # include the actual page with changable content
             include_once $oPageLayout->sPagePath;
             ?>
@@ -322,14 +322,14 @@
                 <h1>Categories</h1>
                 <nav>
                     <ul class="footerNav">
-                        <?
+                        <?php
                         foreach (PageManager::getPagesByFilter(array('level' => 1)) as $oSubpage) {
                             if ($oSubpage->getUrlPath() != '/') {
                         ?>
                                 <li>
                                     <div class="item">&gt;</div><a href="<?= $oSubpage->getUrlPath() ?>"><?= $oSubpage->getShortTitle() ?></a>
                                 </li>
-                        <?
+                        <?php
                             }
                         }
                         ?>
@@ -399,7 +399,7 @@
             }
         );
     </script>
-    <?
+    <?php
     # echo extra javascript stuff
     foreach ($oPageLayout->getJavascriptsBottom() as $sJavascript) {
         echo $sJavascript . "\n";

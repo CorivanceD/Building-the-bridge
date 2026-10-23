@@ -8,7 +8,7 @@
                 return false;" id="_form" class="validateForm" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="action" value="<?= $this->sHiddenAction ?>" />
         <table class="withForm">
-            <?
+            <?php
             if (!$this->bMultipleFileUpload) {
                 ?>
                 <tr>
@@ -26,7 +26,7 @@
                         <input type="file" title="<?= $this->sValidateFile ? sysTranslations::get('global_select_extensions') .': '  . $this->sValidateFile : sysTranslations::get('global_select_file') ?>" class="{validate:{required:true<?= $this->sValidateFile ? ', accept:\'' . $this->sValidateFile . '\'' : '' ?>}}" name="file" />
                     </td>
                 </tr>
-                <?
+                <?php
             }
             if (!$this->bMultipleFileUpload) {
                 ?>
@@ -36,7 +36,7 @@
                         <input <?= $this->iMaxFiles > 0 && (count($this->aFiles) >= $this->iMaxFiles) ? 'DISABLED' : '' ?> id="saveFileBtn_<?= $this->iContainerIDAddition ?>" type="submit" name="saveFile" value="<?= sysTranslations::get('global_upload_file') ?>" />
                     </td>
                 </tr>
-                <?
+                <?php
             } else {
                 ?>
                 <tr>
@@ -47,13 +47,13 @@
                 <tr>
                     <td><div class="progressInfo"></div></td>
                 </tr>
-                <?
+                <?php
             }
             ?>
         </table>
     </form>
     <hr>
-    <?
+    <?php
     $sTooltipTitle = '';
     $sTooltipTitle .= ($sTooltipTitle != '' ? '<br />' : '') . sysTranslations::get('global_drag_lines');
     if ($this->iMaxFiles > 0)
@@ -61,7 +61,7 @@
     ?>
     <h3><?= sysTranslations::get('global_already_uploaded') ?><?= $this->iMaxFiles > 0 ? ' (<span class="filesCountLeft">' . count($this->aFiles) . '/' . $this->iMaxFiles . '</span>) ' : '' ?> <div class="hasTooltip tooltip" title="<?= $sTooltipTitle ?>">&nbsp;</div></h3>    
     <ul class="files <?= $this->sortable ? 'sortable' : '' ?>">
-        <?
+        <?php
         foreach ($this->aFiles AS $oFile) {
             ?>
             <li id="placeholder-<?= $oFile->mediaId ?>" data-mediaid="<?= $oFile->mediaId ?>" data-title="<?= _e($oFile->title) ?>" class="placeholder">
@@ -69,7 +69,7 @@
                     <span class="fileType <?= $oFile->getExtension() ?>"></span><a class="title" target="_blank" href="<?= $oFile->link ?>"><?= $oFile->title ? $oFile->title : $oFile->name ?></a>
                 </div>
                 <div class="actionsPlaceholder">
-                    <?
+                    <?php
                     if ($this->onlineChangeable) {
                         if ($oFile->isOnlineChangeable()) {
                             echo '<a class="action_icon ' . ($oFile->online ? 'online' : 'offline') . '_icon onlineOfflineBtn" onclick="setOnlineFile(this); return false;" data-online="' . ($oFile->online ? 0 : 1) . '" href="' . $this->changeOnlineLink . '"></a>';
@@ -94,12 +94,12 @@
                     ?>
                 </div>
             </li>
-            <?
+            <?php
         }
         ?>
     </ul>
 </div>
-<?
+<?php
 # include editImageForm once
 include_once $this->sEditFileFormLocation;
 

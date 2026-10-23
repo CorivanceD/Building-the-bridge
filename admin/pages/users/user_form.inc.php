@@ -32,7 +32,7 @@
                         <td class="withLabel"><label for="description"><?= sysTranslations::get('global_description') ?> *</label></td>
                         <td colspan="2"><textarea maxlength="255" rows="10" cols="26" id="description" title="" name="description"><?= $oUser->description ?></textarea></td>
                     </tr>  
-                    <?
+                    <?php
                     if ((intval($oCurrentUser->userProfile) == User::USER_CLIENT_ADMIN || $oCurrentUser->username === 'admin') && $oUser->username !== 'admin') { ?>
                         <tr>
                             <td class="withLabel"><label for="userProfile"><?= sysTranslations::get('user_profile') ?> *</label></td>
@@ -45,31 +45,31 @@
                                 </select>
                             </td>
                         </tr>
-                    <? } ?>                    
-                    <? if ($oCurrentUser->isAdmin() || intval($oCurrentUser->userProfile) == User::USER_CLIENT_ADMIN ) { ?>
+                    <?php } ?>                    
+                    <?php if ($oCurrentUser->isAdmin() || intval($oCurrentUser->userProfile) == User::USER_CLIENT_ADMIN ) { ?>
                         <tr id="editorRow" style="<?= (intval($oUser->userProfile) == User::USER_WRITER) ? '' : 'display:none' ?>">
                             <td class="withLabel"><label for="editorId"><?= sysTranslations::get('user_editor') ?></label> *</td>
                             <td colspan="2">                           
                                 <select name="editorId" class="{validate:{required:true}}">
                               
                                         <option value="">-- <?= sysTranslations::get('user_select_editor') ?> --</option>
-                                        <? foreach ($aEditors AS $oEditor) { ?>
+                                        <?php foreach ($aEditors AS $oEditor) { ?>
                                             <option value="<?= $oEditor->userId ?>" <?= $oUser->editorId == $oEditor->userId ? 'selected' : '' ?> ><?= $oEditor->name ?></option>
-                                        <? } ?>
+                                        <?php } ?>
                                 </select>
                             </td>
                         </tr>
-                    <? } ?>
-                    <? if ($oUser->userId == $oCurrentUser->userId && !$oCurrentUser->isAsideAdmin() && empty($oCurrentUser->userProfile)) { ?>
+                    <?php } ?>
+                    <?php if ($oUser->userId == $oCurrentUser->userId && !$oCurrentUser->isAsideAdmin() && empty($oCurrentUser->userProfile)) { ?>
                         <tr>
                             <td colspan="3"><b class="errorColor"><i><?= sysTranslations::get('user_put_out_module_warning') ?></i></b></td>
                         </tr>
-                    <? } ?>
-                    <? if ($oCurrentUser->isAdmin()) { ?>
+                    <?php } ?>
+                    <?php if ($oCurrentUser->isAdmin()) { ?>
                         <tr>
                             <td><?= sysTranslations::get('global_modules') ?></td>
                             <td>
-                                <?
+                                <?php
                                 foreach ($aModules AS $oModule) {
                                     echo '<input class="alignCheckbox" type="checkbox" id="module_' . $oModule->moduleId . '" name="moduleIds[' . $oModule->name . ']" ' . ($oUser->hasRightsFor($oModule->name) ? 'CHECKED' : '') . ' value="' . $oModule->moduleId . '" /> <label for="module_' . $oModule->moduleId . '">' . sysTranslations::get($oModule->linkName) . '</label><br />';
                                 }
@@ -93,8 +93,8 @@
                             </td>
                             <td><span class="error"><?= $oUser->isPropValid("userProfile") ? '' : sysTranslations::get('global_field_not_completed') ?></span></td>
                         </tr>                         -->
-                    <? } ?>                        
-                    <? if ($oCurrentUser->isAdmin() || $oCurrentUser->isSEO()) { ?>
+                    <?php } ?>                        
+                    <?php if ($oCurrentUser->isAdmin() || $oCurrentUser->isSEO()) { ?>
                         <tr>
                             <td><?= sysTranslations::get('user_seo_rights') ?></td>
                             <td>
@@ -103,19 +103,19 @@
                             </td>
                             <td><span class="error"><?= $oUser->isPropValid("global_seo") ? '' : sysTranslations::get('global_field_not_completed') ?></span></td>
                         </tr>
-                    <? } ?>
-                    <? if ($oCurrentUser->isAdmin() || $oCurrentUser->userProfile == User::USER_CLIENT_ADMIN || $oCurrentUser->userProfile == User::USER_EDITOR) { ?>
+                    <?php } ?>
+                    <?php if ($oCurrentUser->isAdmin() || $oCurrentUser->userProfile == User::USER_CLIENT_ADMIN || $oCurrentUser->userProfile == User::USER_EDITOR) { ?>
                         <tr>
                             <td><label for="systemLanguageId"><?= sysTranslations::get('user_language') ?></label> * </td>
                             <td><select name="systemLanguageId" class="{validate:{required:true}}">
                                     <option value=""><?= sysTranslations::get('user_choose_language') ?></option>
-                                    <? foreach (SystemLanguageManager::getLanguagesByFilter() AS $oSystemLanguage) { ?>
+                                    <?php foreach (SystemLanguageManager::getLanguagesByFilter() AS $oSystemLanguage) { ?>
                                         <option value="<?= $oSystemLanguage->systemLanguageId ?>" <?= ($oUser->systemLanguageId === $oSystemLanguage->systemLanguageId) ? 'selected' : '' ?> ><?= $oSystemLanguage->name ?></option>
-                                    <? } ?>
+                                    <?php } ?>
                                 </select>
                             </td>
                         </tr>
-                    <? } ?>
+                    <?php } ?>
                     <tr>
                         <td>&nbsp;</td>
                         <td colspan="2">
@@ -129,7 +129,7 @@
     <div class="contentColumn">
         <fieldset>
             <legend><?= sysTranslations::get('global_image') ?></legend>
-            <?
+            <?php
             if ($oUser->userId !== null) {
                 $oImageManagerHTML->includeTemplate();
             } else {
@@ -142,7 +142,7 @@
 <div id="bottomOptions">
     <a class="backBtn" href="<?= ADMIN_FOLDER ?>/<?= http_get('controller') ?>"><?= sysTranslations::get('global_back_to_overview') ?></a><span class="backBtnInfo"> (<?= sysTranslations::get('global_without_saving') ?>)</span>
 </div>
-<?
+<?php
 # add ajax code for online/offline handling
 $sRandomPasswordJavascript = <<<EOT
 <script>

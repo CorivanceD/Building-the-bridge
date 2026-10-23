@@ -7,13 +7,13 @@
                 <td class="withLabel" style="width: 116px;"><?= sysTranslations::get('global_search_word') ?></td>
                 <td><input type="text" name="articleFilter[q]" value="<?= _e($aArticleFilter['q']) ?>" /></td>
             </tr>
-            <? if (class_exists('ArticleCategoryManager')) { ?>
+            <?php if (class_exists('ArticleCategoryManager')) { ?>
                 <tr>
                     <td class="withLabel"><label><?= ucfirst(sysTranslations::get('global_category'))?></label></td>
                     <td>
                         <select name="articleFilter[articleCategoryId]">
                             <option value="">-- <?= sysTranslations::get('global_all_categories') ?> --</option>
-                            <?
+                            <?php
                             foreach (ArticleCategoryManager::getArticleCategoriesByFilter(array('showAll' => true)) AS $oArticleCategory) {
                                 echo '<option ' . (isset($aArticleFilter['articleCategoryId']) && $aArticleFilter['articleCategoryId'] == $oArticleCategory->articleCategoryId ? 'selected' : '') . ' value="' . $oArticleCategory->articleCategoryId . '">' . $oArticleCategory->name . '</option>';
                             }
@@ -21,7 +21,7 @@
                         </select>
                     </td>
                 </tr>
-            <? } ?>
+            <?php } ?>
             <tr>
                 <td>&nbsp;</td>
                 <td><input type="submit" name="filterArticles" value="<?= sysTranslations::get('articles_filter') ?>" /> <input type="submit" name="resetFilter" value="<?= sysTranslations::get('global_reset_filter') ?>" /></td>
@@ -47,7 +47,7 @@
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($aArticles AS $oArticle) {
             echo '<tr>';
             echo '<td>' . Date::strToDate($oArticle->pubDate)->format('%d-%m-%Y') . '</td>';

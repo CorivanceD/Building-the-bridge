@@ -18,33 +18,33 @@
             <br>
             <br>
             <form method="post" class="validateForm" enctype="multipart/form-data"> 
-                <? include TEMPLATES_FOLDER . '/elements/errorBox.inc.php'; ?>
+                <?php include TEMPLATES_FOLDER . '/elements/errorBox.inc.php'; ?>
                 <input type="hidden" name="action" value="sendForm"> 
                 <div class="column-100 float-left withForm contactForm"> 
                     <div class="column-100 float-left"><label for="name"><b>Address your open letter to *</b></label></div>
                     <div class="column-100 float-left">
                         <select id="regionAddressee" name="regionId">
                             <option value="">--- Select a region ---</option>
-                            <?
+                            <?php
                             $aRegions = CountryManager::getRegions();
 
                             foreach ($aRegions as $oRegion) {
                                 ?>
                                 <option value="<?= $oRegion->regionId ?>" ><?= $oRegion->name ?></option>    
-                                <?
+                                <?php
                             }
                             ?>
                         </select>  
 
                         <select id="countryAddressee" <?= (http_post('regionId') == Region::REGION_ID_UN_NY || http_post('regionId') == Region::REGION_ID_UN_GE) ? 'style="display:hidden"' : '' ?>>
                             <option value="">--- Select a country ---</option>
-                            <?
+                            <?php
                             if (http_post('regionId', false)) {
                                 foreach (CountryManager::getCountriesByRegionId(http_post('regionId')) as $oCountry) {
                                     ?>
                                     <option value="<?= $oCountry->countryId ?>" ><?= $oCountry->name ?></option>    
 
-                                    <?
+                                    <?php
                                 }
                             }
                             ?>
@@ -52,7 +52,7 @@
 
                         <select id="worldLeaderId" name="worldLeaderId" data-rule-required="true" data-msg-required="You must choose an addressee">
                             <option value="">--- Choose an addressee ---</option>
-                            <?
+                            <?php
                             $iCountryId = false;
                             if (http_post('regionId') == Region::REGION_ID_UN_NY) {
                                 $iCountryId = Country::UN_NY_ID;
@@ -64,25 +64,25 @@
                                 foreach (WorldLeaderManager::getWorldLeadersByFilter(array('countryId' => http_post('countryId'))) AS $oWorldLeader) {
                                     ?>
                                     <option value="<?= $oWorldLeader->worldLeaderId ?>" <?= ($oWorldLeader->worldLeaderId == http_post('worldLeaderId') ? 'selected' : '') ?>><?= $oWorldLeader->getCompleteName() ?></option>    
-                                    <?
+                                    <?php
                                 }
                             }
                             ?>
                         </select>
                         <select id="worldLeaderAddressId" name="worldLeaderAddressId" data-rule-required="true" data-msg-required="You must choose an address">
                             <option value="">--- Choose an address ---</option>
-                            <?
+                            <?php
                             if (http_post('worldLeaderId', false)) {
                                 foreach (WorldLeaderManager::getWorldLeaderById(http_post('worldLeaderId')) AS $oWorldLeaderAddress) {
                                     ?>
                                     <option value="<?= $oWorldLeaderAddress->worldLeaderAddressId ?>" <?= ($oWorldLeaderAddress->worldLeaderAddressId == http_post('worldLeaderAddressId') ? 'selected' : '') ?>><?= $oWorldLeaderAddress->name ?></option>    
-                                    <?
+                                    <?php
                                 }
                             }
                             ?>
                         </select>     
                         <div id="address" class="column-100 float-left" style="margin-top: 10px;">
-                            <?
+                            <?php
                             if (http_post('worldLeaderAddressId', false)) {
                                 $oWorldLeaderAddress = WorldLeaderAddressManager::getWorldLeaderAddressById(http_post('worldLeaderAddress'));
 
@@ -92,7 +92,7 @@
                                     <?= $oWorldLeaderAddress->postalCode ?>&nbsp;
                                     <?= $oWorldLeaderAddress->city ?><br>
                                     <?= $oWorldLeaderAddress->getAddressCountry()->name ?>
-                                    <?
+                                    <?php
                                 }
                             }
                             ?>
@@ -115,13 +115,13 @@
                     <div class="column-100 float-left">
                         <select data-rule-required="true" data-msg-required="You must select a country" id="signup-country" name="countryId">
                             <option value="">--- Select a country ---</option>
-                            <?
+                            <?php
                             $aCountries = CountryManager::getCountries();
                             foreach ($aCountries as $oCountry) {
                                 if (intval($oCountry->countryId) != Country::UNKNOWN_COUNTRY_ID) {
                                     ?>
                                     <option value="<?= $oCountry->countryId ?>" <?= ($oCountry->countryId == http_post('countryId')) ? 'selected' : '' ?> ><?= $oCountry->name ?></option>    
-                                    <?
+                                    <?php
                                 }
                             }
                             ?>
@@ -153,7 +153,7 @@
                     <div class="column-100 float-left">&nbsp;</div>
                     <div class="column-100 float-left">
                         <ul id="linkList">
-                            <?
+                            <?php
                             $sLinks = _e(http_post('links'));
                             $aLinks = explode('^', $sLinks);
 
@@ -177,7 +177,7 @@
                     <div class="column-100 float-left">&nbsp;</div>
                     <div class="column-100 float-left">
                         <ul id="videoList">
-                            <?
+                            <?php
                             $sVideos = _e(http_post('videos'));
                             $aVideos = explode('^', $sVideos);
 
@@ -203,10 +203,10 @@
                 </div> 
             </form>          
         </article>        
-        <? include TEMPLATES_FOLDER . '/elements/rightColumn.inc.php'; ?>       
+        <?php include TEMPLATES_FOLDER . '/elements/rightColumn.inc.php'; ?>       
     </div>
 </section> 
-<?
+<?php
 $iRegionUnNyId = Region::REGION_ID_UN_NY;
 $iCountryUnNyId = Country::UN_NY_ID;
 $iRegionUnGeId = Region::REGION_ID_UN_GE;

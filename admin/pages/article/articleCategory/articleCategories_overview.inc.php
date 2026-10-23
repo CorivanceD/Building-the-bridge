@@ -12,7 +12,7 @@
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($aArticleCategories AS $oArticleCategory) {
             echo '<tr>';
             echo '<td>';
@@ -41,7 +41,7 @@
         ?>
     </tbody>
 </table>
-<?
+<?php
 # create necessary javascript
 $sArticleCatOnlineMsg = sysTranslations::get('articles_category_online');
 $sArticleCatOfflineMsg = sysTranslations::get('articles_category_offline');

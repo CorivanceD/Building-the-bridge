@@ -4,11 +4,11 @@
         <hr>
         <article class="column-66 page-content float-left contactForm">
             <?= $oPage->content ?>
-            <!-- <? if (empty($oCurrentCustomer)) { ?>
+            <!-- <?php if (empty($oCurrentCustomer)) { ?>
 
                 <div class="withForm contactForm">
                     <form method="POST" class="validateForm">
-                        <? include TEMPLATES_FOLDER . '/elements/errorBox.inc.php'; ?>
+                        <?php include TEMPLATES_FOLDER . '/elements/errorBox.inc.php'; ?>
                         <input type="hidden" name="action" value="subscribeNewsletter">
                         <p><label for="email"><b>Email address*</b></label></p>
                         <p><input type="text" id="email" name="email" value="" data-rule-email="true" data-msg-email="You must enter a valid e-mail address" data-rule-remote="/account?ajax=checkEmail" data-msg-remote="There already was a registered user with that e-mail address. Please log in or use another e-mail address" value="<?= _e(http_post('email')) ?>"></p>
@@ -19,13 +19,13 @@
                         <p><label for="countryId"><b>Country</b></label></p>
                         <p><select id="countryId" name="countryId" style="float:none">
                                 <option value="">Select a country</option>
-                                <?
+                                <?php
                                 $aCountries = CountryManager::getCountries();
                                 foreach ($aCountries as $oCountry) {
                                     if ($oCountry->countryId != Country::UNKNOWN_COUNTRY_ID) {
                                 ?>
                                         <option value="<?= $oCountry->countryId ?>" <?= http_post('countryId') == $oCountry->countryId ? 'selected' : '' ?>><?= $oCountry->name ?></option>
-                                <?
+                                <?php
                                     }
                                 }
                                 ?>
@@ -39,14 +39,14 @@
                     </form>
                 </div>
 
-            <?
+            <?php
                     } else {
             ?>
                 <form method="POST">
                     <input type="hidden" name="action" value="subscribeNewsletter">
                     <input type="submit" name="submit" id="subscribe" value="CLICK HERE">
                 </form>
-            <?
+            <?php
                     }
             ?> -->
 
@@ -98,6 +98,6 @@
             <!--End mc_embed_signup-->
 
         </article>
-        <? include TEMPLATES_FOLDER . '/elements/rightColumn.inc.php'; ?>
+        <?php include TEMPLATES_FOLDER . '/elements/rightColumn.inc.php'; ?>
     </div>
 </section>

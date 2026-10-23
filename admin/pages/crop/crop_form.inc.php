@@ -3,20 +3,20 @@
 </div>
 <h1><?= sysTranslations::get('crop_cut_make')?> <?= count($aCropSettings) > 1 ? '(' . count($aCropSettings) . ') <div class="hasTooltip tooltip" title="'.sysTranslations::get('crop_this_image').' '. count($aCropSettings) . ' '.sysTranslations::get('crop_this_image').'">&nbsp;</div>' : '' ?></h1>
 <div style="margin-bottom: 10px;">
-    <? if ($bHasNeededCrops && count($aCropSettings) > 1) { ?>
+    <?php if ($bHasNeededCrops && count($aCropSettings) > 1) { ?>
         <form method="POST">
             <input type="hidden" name="action" value="setCrop" />
             <?= sysTranslations::get('crop_cut')?> <select onchange="$(this).closest('form').submit();" name="crop">
-                <?
+                <?php
                 foreach ($aCropSettings AS $iKey => $oCropSettings) {
                     echo '<option ' . ($iCropCurrent == $iKey ? 'selected' : '') . ' value="' . $iKey . '">' . ($oCropSettings->sName ? $oCropSettings->sName : 'crop ' . $iKey) . '</option>';
                 }
                 ?>
             </select> <div class="hasTooltip tooltip" title="<?= sysTranslations::get('crop_choose_cut_tooltip')?>">&nbsp;</div>
         </form>
-    <? } elseif (!$bHasNeededCrops && count($aCropSettings) > 1) { ?>
+    <?php } elseif (!$bHasNeededCrops && count($aCropSettings) > 1) { ?>
         <div><?= sysTranslations::get('crop_cuts_to_make')?>: <b>
-                <?
+                <?php
                 foreach ($aCropSettings AS $iKey => $oCropSettings) {
                     echo $iKey > 0 && $iKey < count($aCropSettings) - 1 ? ', ' : '';
                     echo $iKey == count($aCropSettings) - 1 ? ' en ' : '';
@@ -25,7 +25,7 @@
                 ?>
             </b>
         </div>
-    <? } ?>
+    <?php } ?>
 </div>
 <div id="cropboxPreviewPlaceholder" class="cf">
     <div id="cropBoxPlaceholder">
@@ -38,9 +38,9 @@
         </div>
     </div>
 </div>
-<? if (!$bHasNeededCrops) { ?>
+<?php if (!$bHasNeededCrops) { ?>
     <div id="crops2Go"><?= $iCrops2Go > 1 ? sysTranslations::get('crop_cuts_to_go') .' '. $iCrops2Go . ' '.sysTranslations::get('crop_cuts_to_go_2') : '' ?></div>
-<? } ?>
+<?php } ?>
 <form onsubmit="return checkCoords();" action="" id="crop_form" method="POST">
     <input type="hidden" name="action" value="crop" />
 
@@ -49,22 +49,22 @@
     <input type="hidden" id="w" name="w" value="" />
     <input type="hidden" id="h" name="h" value="" />
     <input type="submit" name="apply" value="<?= sysTranslations::get('crop_cut_out') ?>" />
-    <?
+    <?php
     if ($iCropNext !== false) {
         ?>
         <input type="submit" name="saveAndNext" value="<?= sysTranslations::get('crop_cutting_cropping') ?> `<?= $aCropSettings[$iCropNext]->sName ? $aCropSettings[$iCropNext]->sName : sysTranslations::get('crop_cutting_cropping_2').' ' . $iCropNext ?>` <?= sysTranslations::get('crop_cutting_cropping_3') ?>" />
-        <? if ($bHasNeededCrops) { ?>
+        <?php if ($bHasNeededCrops) { ?>
             <input type="submit" name="save" value="<?= sysTranslations::get('crop_and_back_to') ?> `<?= $aCropSettings[$iCropCurrent]->sReferrerTekst ?>`" />
-        <? } ?>
-    <? } else {
+        <?php } ?>
+    <?php } else {
         ?>
         <input type="submit" name="save" value="<?= sysTranslations::get('crop_and_back_to') ?> `<?= $aCropSettings[$iCropCurrent]->sReferrerTekst ?>`" />
-        <?
+        <?php
     }
     ?>
 </form>
 <hr class="cropSeperator" />
-<?
+<?php
 # display all existing crops
 $sImages = '';
 foreach ($aCropSettings[$iCropCurrent]->getCrops() As $aCropInfo) {
@@ -83,7 +83,7 @@ if (!empty($sImages)) {
 <div id="bottomOptions">
     <a class="backBtn" href="<?= $aCropSettings[$iCropCurrent]->sReferrer ?>"><?= sysTranslations::get('global_back_to') ?> `<?= $aCropSettings[$iCropCurrent]->sReferrerTekst ?>`</a><span class="backBtnInfo"> (<?= sysTranslations::get('global_without_saving') ?>)</span>
 </div>
-<?
+<?php
 # add jCrop javascript initiation code
 $sMakeSelectionMsg = sysTranslations::get('crop_make_selection');
 $sJcropJavascript = <<<EOT

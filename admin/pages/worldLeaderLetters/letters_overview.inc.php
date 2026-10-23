@@ -33,7 +33,7 @@
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($aArticles AS $oArticle) {
             echo '<tr>';
             echo '<td>' . Date::strToDate($oArticle->pubDate)->format('%d-%m-%Y') . '</td>';

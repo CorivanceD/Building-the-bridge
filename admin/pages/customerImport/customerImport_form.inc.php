@@ -2,7 +2,7 @@
 <div class="errorBox" <?= !empty($aErrors) ? 'style="display:block;"' : '' ?>>
     <div class="title">De volgende fouten zijn gevonden</div>
     <ul>
-        <?
+        <?php
         if (!empty($aErrors)) {
             foreach ($aErrors AS $sField => $sError) {
                 echo '<li><label for="' . $sField . '" style="display: block;">' . $sError . '</label></li>';
@@ -11,7 +11,7 @@
         ?>
     </ul>
 </div>
-<? if (!empty($aLogs)) { ?>
+<?php if (!empty($aLogs)) { ?>
     <div class="import-messages">
         <h2>Resultaat <?= $iSaved . '/' . $iTotal ?> opgeslagen</h2>
         <ul>
@@ -20,7 +20,7 @@
             <li>Totaal waarschuwingen: <?= $iWarnings ?></li>
             <li>Totaal opgeslagen: <?= $iSaved ?></li>
         </ul>
-        <?
+        <?php
         foreach ($aLogs AS $iRow => $aErrors) {
             echo '<div class="row ' . ($iRow == 2 ? 'first' : '') . '">';
             foreach ($aErrors AS $sType => $aMsgs) {
@@ -34,7 +34,7 @@
         }
         ?>
     </div>
-<? } ?>
+<?php } ?>
 <form method="POST" enctype="multipart/form-data">
     <input name="action" type="hidden" value="import" />
     <table class="withForm">
@@ -50,14 +50,14 @@
         <tr>
             <td>Kies te koppelen groep</td>
             <td>
-                <?
+                <?php
                 $aCustomerGroups = CustomerGroupManager::getAllCustomerGroups();
                 foreach ($aCustomerGroups as $oCustomerGroup) {
                     ?>
                     <input class="alignCheckbox" id="customerGroup-<?= $oCustomerGroup->customerGroupId ?>" name="customerGroupIds[]" type="checkbox" value="<?= $oCustomerGroup->customerGroupId ?>">
                     <label for="customerGroup-<?= $oCustomerGroup->customerGroupId ?>"><?= _e($oCustomerGroup->title) ?></label>
                     <br>
-                <? } ?>
+                <?php } ?>
             </td>
         </tr>
         <tr>
@@ -74,7 +74,7 @@
 <hr />
 <div>
     <h2>Ondersteunde kolommen</h2>|
-    <?
+    <?php
     foreach ($aImportFields AS $aField) {
         $bRequiredColumn = in_array($aField['column'], $aRequiredColumns);
 

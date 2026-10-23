@@ -13,7 +13,7 @@
         <![endif]-->
         <link rel="stylesheet" href="<?= ADMIN_PLUGINS_FOLDER ?>/jquery-ui-1.8.17.custom/jquery-ui-1.8.17.custom.css" />
         <link rel="shortcut icon" href="/favicon.ico" />
-        <?
+        <?php
         # extra stylesheet stuff
         foreach ($oPageLayout->getStylesheets() AS $sStylesheet) {
             echo $sStylesheet . "\n";
@@ -24,7 +24,7 @@
             <script src="<?= ADMIN_JS_FOLDER ?>/html5.min.js"></script>
         <![endif]-->
 
-        <?
+        <?php
         # extra javascript stuff
         foreach ($oPageLayout->getJavascriptsTop() AS $sJavascript) {
             echo $sJavascript . "\n";
@@ -32,18 +32,18 @@
         ?>
     </head>
     <body>
-        <? include_once ADMIN_TEMPLATES_FOLDER . '/elements/header.inc.php'; ?>
+        <?php include_once ADMIN_TEMPLATES_FOLDER . '/elements/header.inc.php'; ?>
         <div id="header-pusher"></div>
         <div id="container">
             <div id="main-leftColumn">
-                <? include_once ADMIN_TEMPLATES_FOLDER . '/elements/leftMenu.inc.php'; ?>
+                <?php include_once ADMIN_TEMPLATES_FOLDER . '/elements/leftMenu.inc.php'; ?>
             </div>
             <div id="main-rightColumn">
                 <div id="contentContainer" class="main-box">
                     <div class="main-box-header-dark"><?= $oPageLayout->sModuleName ?></div>
                     <div class="main-box-header-light crumblePath"><?= sysTranslations::get('global_youre_here') ?> <?= $oPageLayout->generateAutoCrumblePath() ?></div>
                     <div class="main-box-content cf">
-                        <?
+                        <?php
                         # include the actual page with changable content
                         include_once $oPageLayout->sPagePath;
                         ?>
@@ -71,7 +71,7 @@
         <script src="<?= ADMIN_PLUGINS_FOLDER ?>/fancybox/jquery-fancybox.pack.js"></script>
         <!--<script src="<?= ADMIN_PLUGINS_FOLDER ?>/tiny_mce/tiny_mce.js"></script>-->
         <script src="<?= ADMIN_PLUGINS_FOLDER ?>/tinyMCE/tinymce.min.js"></script>
-        <?
+        <?php
         $jsTranslations = json_encode(sysTranslations::getTranslations('js'));
         $jsLang = empty($oCurrentUser) ? 'nl' : $oCurrentUser->getLanguage()->abbr;
         ?>
@@ -136,7 +136,7 @@
             setDefaultValidationStuff();
             setTableSorterStuff();
         </script>
-        <?
+        <?php
         # extra javascript stuff
         foreach ($oPageLayout->getJavascriptsBottom() AS $sJavascript) {
             echo $sJavascript . "\n";

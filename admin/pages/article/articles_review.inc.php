@@ -12,9 +12,9 @@
                 <td>
                     <select name="articleFilter[authorId]">
                         <option value="">-- <?= sysTranslations::get('global_all') ?> --</option>
-                        <? foreach (UserManager::getUsersByFilter() AS $oUser) { ?>
+                        <?php foreach (UserManager::getUsersByFilter() AS $oUser) { ?>
                             <option value="<?= $oUser->userId ?>" <?= (isset($aArticleFilter['authorId']) && ($oUser->userId == $aArticleFilter['authorId'])) ? 'selected' : '' ?> ><?= $oUser->name ?></option>
-                        <? } ?>
+                        <?php } ?>
                     </select>
                 </td>
             </tr>            
@@ -23,7 +23,7 @@
                 <td>
                     <select name="articleFilter[articleCategoryId]">
                         <option value="">-- <?= sysTranslations::get('global_all_categories') ?> --</option>
-                        <?
+                        <?php
                         foreach (ArticleCategoryManager::getArticleCategoriesByFilter(array('showAll' => true)) AS $oArticleCategory) {
                             echo '<option ' . ( (isset($aArticleFilter['articleCategoryId']) && $aArticleFilter['articleCategoryId'] === $oArticleCategory->articleCategoryId) ? 'selected' : '') . ' value="' . $oArticleCategory->articleCategoryId . '">' . $oArticleCategory->name . '</option>';
                         }
@@ -69,7 +69,7 @@
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($aArticles AS $oArticle) {
             echo '<tr>';
             echo '<td>'.$oArticle->order.'</td>';
@@ -115,7 +115,7 @@
     </tfoot>
 </table>
 
-<?
+<?php
 $sFancyboxContent = <<<EOT
 <div id="editorMessage">
     <form id="messageForm" method="POST">

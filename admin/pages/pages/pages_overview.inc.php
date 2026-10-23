@@ -3,7 +3,7 @@
     <a class="addBtn textLeft" href="<?= ADMIN_FOLDER ?>/<?= http_get('controller') ?>/toevoegen"><?= sysTranslations::get('pages_add_main') ?></a><br />
     <a class="changeOrderBtn textLeft" href="<?= ADMIN_FOLDER ?>/<?= http_get('controller') ?>/structuur-wijzigen"><?= sysTranslations::get('pages_change_structure') ?></a>
 </div>
-<?
+<?php
 # list pages in unordered list
 
 function makeListTree($aPages, $iLevel, $iMaxLevels) {
@@ -70,7 +70,7 @@ if (count($aAllLevel1Pages) == 0) {
 # start recursive displaying pages
 makeListTree($aAllLevel1Pages, 1, $iMaxLevels);
 ?>
-<?
+<?php
 $sPageOnlineMsg = sysTranslations::get('pages_online');
 $sPageOfflineMsg = sysTranslations::get('pages_offline');
 $sPageNotChangedMsg = sysTranslations::get('pages_not_changed');

@@ -8,7 +8,7 @@
             <br/>
             <form method="post" class="validateForm">
                 <input type="hidden" name="action" value="sendPetition">
-                <? include TEMPLATES_FOLDER . '/elements/errorBox.inc.php'; ?>
+                <?php include TEMPLATES_FOLDER . '/elements/errorBox.inc.php'; ?>
                 <table class="withForm contactForm column-100">
                     <tr>
                         <td style="width:120px"><label for="author">Alias *</label></td>
@@ -44,12 +44,12 @@
                     <tr>
                         <td><select data-rule-required="true" data-msg-required="You must choose a country" id="countryId" name="countryId">
                                 <option value="">Select a country</option>
-                                <?
+                                <?php
                                 $aCountries = CountryManager::getCountries();
                                 foreach ($aCountries as $oCountry) {
                                     ?>
                                     <option value="<?= $oCountry->countryId ?>" <?= (http_post('countryId') == $oCountry->countryId) ? 'selected' : '' ?> ><?= $oCountry->name ?></option>    
-                                <? } ?>
+                                <?php } ?>
                             </select>
                         </td>
                     </tr>
@@ -113,6 +113,6 @@
                 </table>
             </form>
         </div>
-        <? include TEMPLATES_FOLDER . '/elements/rightColumn.inc.php'; ?>
+        <?php include TEMPLATES_FOLDER . '/elements/rightColumn.inc.php'; ?>
     </article>
 </section>

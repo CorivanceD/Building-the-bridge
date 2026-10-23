@@ -4,13 +4,13 @@
             <td><h1><?= $oPetition->title ?></h1></td>            
         </tr>
         <tr><td style="width:180mm" class="topBorder">&nbsp;</td></tr>
-        <? if ($oPetition->getImage() != null) { ?>
+        <?php if ($oPetition->getImage() != null) { ?>
             <tr>
                 <td style="text-align: center">
                     <img class="petitionImg" src="<?= $oPetition->getImage()->getImageFileByReference('detail')->link ?>">
                 </td>
             </tr>
-        <? } ?>
+        <?php } ?>
         <tr>
             <td><?= $oPetition->description ?></td>
         </tr> 
@@ -30,7 +30,7 @@
             <tr><td colspan="8" style="width:180mm" class="topBorder">&nbsp;</td></tr>
         </thead>            
         <tbody>
-            <?
+            <?php
             $i = 1;
             foreach ($aRequiredSignatures AS $oPetitionSignature) {
                 $oCustomer = $oPetitionSignature->getCustomer();
@@ -44,7 +44,7 @@
                     <td align="left"><?= $oCustomer->city ?></td>                      
                     <td align="left"><?= Date::strToDate($oPetitionSignature->date)->format('%d-%m-%Y') ?></td>
                 </tr>                       
-            <? } ?>
+            <?php } ?>
         </tbody>
     </table>
     <br>

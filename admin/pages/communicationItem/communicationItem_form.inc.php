@@ -11,18 +11,18 @@
                     <tr>
                         <td width="60">Type *</td>
                         <td>
-                            <? if (!is_numeric($oCommunicationItem->communicationItemId)) { ?>
+                            <?php if (!is_numeric($oCommunicationItem->communicationItemId)) { ?>
                                 <input class="alignRadio {validate:{required:true}} typeTemplate" title="Bepaal het type bericht" type="radio" <?= $oCommunicationItem->type == CommunicationItem::COMMUNICATION_TYPE_SMS ? 'CHECKED' : '' ?> id="type_sms" name="type" value="<?= CommunicationItem::COMMUNICATION_TYPE_SMS ?>" data-ajaxurl="<?= ADMIN_FOLDER . '/' . http_get('controller') . '/ajax-getTemplatesByType/' . CommunicationItem::COMMUNICATION_TYPE_SMS ?>" /> <label for="type_sms">SMS</label>
                                 <input class="alignRadio {validate:{required:true}} typeTemplate" title="Bepaal het type bericht" type="radio" <?= $oCommunicationItem->type == CommunicationItem::COMMUNICATION_TYPE_EMAIL ? 'CHECKED' : '' ?> id="type_email" name="type" value="<?= CommunicationItem::COMMUNICATION_TYPE_EMAIL ?>" data-ajaxurl="<?= ADMIN_FOLDER . '/' . http_get('controller') . '/ajax-getTemplatesByType/' . CommunicationItem::COMMUNICATION_TYPE_EMAIL ?>" /> <label for="type_email">E-mail</label>
-                            <? } else { ?>
+                            <?php } else { ?>
                                 <i><?= $oCommunicationItem->type ?></i>
-                            <? } ?>
+                            <?php } ?>
                         </td>
                         <td><span class="error"><?= $oCommunicationItem->isPropValid("type") ? '' : 'Veld niet (juist) ingevuld' ?></span></td>
                     </tr>
                 </table>
-                <table class="commTypeEmail withForm <? if (!is_numeric($oCommunicationItem->communicationItemId)) { ?>hide<? } ?>" <? if (!is_numeric($oCommunicationItem->communicationItemId)) { ?>id="propertiesCommunicationItem" <? } ?> style="width: 100%">
-                    <? if (!is_numeric($oCommunicationItem->communicationItemId)) { ?>
+                <table class="commTypeEmail withForm <?php if (!is_numeric($oCommunicationItem->communicationItemId)) { ?>hide<?php } ?>" <?php if (!is_numeric($oCommunicationItem->communicationItemId)) { ?>id="propertiesCommunicationItem" <?php } ?> style="width: 100%">
+                    <?php if (!is_numeric($oCommunicationItem->communicationItemId)) { ?>
                         <tr>
                             <td class="withLabel"><label for="templateId">Template</label></td>
                             <td colspan="2">
@@ -31,7 +31,7 @@
                                 <img src="<?= ADMIN_IMAGE_FOLDER ?>/layout/ajax-loader.gif" alt="Loading" width="220" height="19" id="ajaxloaderTemplateChoice" class="hide">
                             </td>
                         </tr>
-                    <? } ?>
+                    <?php } ?>
                     <tr>
                         <td colspan="3">
                             <textarea name="message" id="message" class="tiny_MCE_default tiny_MCE"><?= $oCommunicationItem->message ?></textarea>
@@ -61,7 +61,7 @@
                         <td class="senderEmailOption" class="withLabel"><label for="senderEmail">E-mail afzender *</label></td>
                         <td class="senderEmailOption">
                             <input size="50" readonly="readonly" id="senderEmail" class="{validate:{required:true}}" title="Vul het e-mailadres van de afzender in" type="text" name="senderEmail" value="<?= _e($oCommunicationItem->senderEmail) ?>" />
-                            <?
+                            <?php
                             if (is_numeric($oCommunicationItem->communicationItemId)) {
                                 if ($oCommunicationItem->hasValidSPFrecord()) {
                                     echo '<span style="color: #88ba01">(goedgekeurd voor verzending)</span>';
@@ -81,13 +81,13 @@
                     <tr>
                         <td class="withLabel"><label for="groups">Groep(en)</label></td>
                         <td>
-                            <?
+                            <?php
                             foreach (CustomerGroupManager::getAllCustomerGroups() as $oCustomerGroup) {
                                 $iAmountOfClients = count($oCustomerGroup->getClients());
                                 ?>
                                 <label><input type="checkbox" name="customerGroupIds[]" value="<?= $oCustomerGroup->customerGroupId ?>" <?= $oCommunicationItem->isLinkedToCustomerGroup($oCustomerGroup->customerGroupId) ? 'checked="checked"' : '' ?> class="alignCheckbox"> <?= _e($oCustomerGroup->title . ' (' . $iAmountOfClients . ' klant' . ($iAmountOfClients !== 1 ? 'en' : '' ) . ')') ?></label>
                                 <br>
-                            <? } ?>
+                            <?php } ?>
                         </td>
                         <td><span class="error"><?= $oCommunicationItem->isPropValid("subject") ? '' : 'Veld niet (juist) ingevuld' ?></span></td>
                     </tr>
@@ -117,10 +117,10 @@
 
             </p>
         </fieldset>
-        <? if ($oCommunicationItem->type == CommunicationItem::COMMUNICATION_TYPE_EMAIL) { ?>
+        <?php if ($oCommunicationItem->type == CommunicationItem::COMMUNICATION_TYPE_EMAIL) { ?>
             <fieldset>
                 <legend>Afbeeldingen</legend>
-                <?
+                <?php
                 if ($oCommunicationItem->communicationItemId !== null) {
                     $oImageManagerHTML->includeTemplate();
                 } else {
@@ -130,28 +130,28 @@
             </fieldset>
             <fieldset>
                 <legend>Stuur een testbericht</legend>
-                <? if (!empty($aVerificationCustomers)) { ?>
+                <?php if (!empty($aVerificationCustomers)) { ?>
                     <p>Selecteer de klanten die het testbericht mogen ontvangen</p>
                     <p class="hide" id="sendedMessage">Het bericht is naar de geselecteerde personen verstuurd</p>
                     <div class="selectedVerificationCustomers">
-                        <? foreach ($aVerificationCustomers as $oTestCustomer) { ?>
+                        <?php foreach ($aVerificationCustomers as $oTestCustomer) { ?>
                             <label>
                                 <input type="checkbox" value="<?= $oTestCustomer->customerId ?>" name="customerIds[]" checked="checked">
                                 <img src="<?= ADMIN_IMAGE_FOLDER ?>/layout/ajax-loader-small.gif" alt="Versturen" width="24" height="16" class="hide" id="loader_<?= $oTestCustomer->customerId ?>">
                                 <?= $oTestCustomer->getFullName() . ' - ' . $oTestCustomer->email ?>
                             </label>
                             <br>
-                        <? } ?>
+                        <?php } ?>
                     </div>
                     <br>
                     <input type="submit" value="Verzend verificatie" onclick="btnSendVerification();" style="margin-bottom: 12px;">
-                <? } else { ?>
+                <?php } else { ?>
                     <p>Geen klanten gevonden die verificaties uit de communicatie module mogen ontvangen.</p>
-                <? } ?>
+                <?php } ?>
             </fieldset>
-        <? } ?>
+        <?php } ?>
     </div>
-    <?
+    <?php
     if (!empty($oCommunicationItem->communicationItemId) && $oCommunicationItem->type == CommunicationItem::COMMUNICATION_TYPE_EMAIL && $oCommunicationItem->getTemplate() !== null && $oCommunicationItem->getTemplate()->templateId == Template::NEWSLETTER_TEMPLATE_ID) {
         ?>
         <div class="contentColumn">
@@ -175,9 +175,9 @@
                                 <td>
                                     <select name="newsletterItemFilter[authorId]">
                                         <option value="">-- <?= sysTranslations::get('global_all') ?> --</option>
-                                        <? foreach (UserManager::getUsersByFilter() AS $oUser) { ?>
+                                        <?php foreach (UserManager::getUsersByFilter() AS $oUser) { ?>
                                             <option value="<?= $oUser->userId ?>" <?= (isset($aArticleFilter['authorId']) && ($oUser->userId == $aArticleFilter['authorId'])) ? 'selected' : '' ?> ><?= $oUser->name ?></option>
-                                        <? } ?>
+                                        <?php } ?>
                                     </select>
                                 </td>
                             </tr>            
@@ -186,7 +186,7 @@
                                 <td>
                                     <select name="newsletterItemFilter[articleCategoryId]">
                                         <option value="">-- <?= sysTranslations::get('global_all_categories') ?> --</option>
-                                        <?
+                                        <?php
                                         foreach (ArticleCategoryManager::getArticleCategoriesByFilter(array('showAll' => true)) AS $oArticleCategory) {
                                             echo '<option ' . ($aArticleFilter['articleCategoryId'] === $oArticleCategory->articleCategoryId ? 'selected' : '') . ' value="' . $oArticleCategory->articleCategoryId . '">' . $oArticleCategory->name . '</option>';
                                         }
@@ -228,7 +228,7 @@
                             </tr>
                         </thead>
                         <tbody id="articles">
-                            <?
+                            <?php
                             $bOdd = true;
 
                             foreach ($aArticles AS $oArticle) {
@@ -275,13 +275,13 @@
 
         </div>
 
-    <? } ?>
+    <?php } ?>
 </div>
 <div id="bottomOptions">
     <a class="backBtn" href="<?= ADMIN_FOLDER ?>/<?= http_get('controller') ?>">Terug naar overzicht</a><span class="backBtnInfo"> (zonder opslaan)</span>
 </div>
 
-<?
+<?php
 # create necessary javascript
 $sAdminFolder = ADMIN_FOLDER;
 $sBottomJavascript = '';

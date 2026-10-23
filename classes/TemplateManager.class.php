@@ -1,4 +1,4 @@
-<?
+<?php
 
 /* Models and managers used by the TemplateManager model */
 require_once 'Template.class.php';

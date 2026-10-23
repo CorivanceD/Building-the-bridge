@@ -18,7 +18,7 @@
     <hr>
     <h3><?= sysTranslations::get('global_youtube_links_already_added') ?> <div class="hasTooltip tooltip" title="<?= sysTranslations::get('global_youtube_drag') ?>">&nbsp;</div></h3>     
     <ul class="youtubeLinks <?= $this->sortable ? 'sortable' : '' ?>">
-        <?
+        <?php
         foreach ($this->aYoutubeLinks AS $oYoutubeLink) {
             ?>
             <li id="placeholder-<?= $oYoutubeLink->mediaId ?>" data-mediaid="<?= $oYoutubeLink->mediaId ?>" data-title="<?= _e($oYoutubeLink->title) ?>" data-link="<?= _e($oYoutubeLink->link) ?>" class="placeholder">
@@ -31,7 +31,7 @@
                     <img class="thumb3" src="<?= $oYoutubeLink->getThumbLink(3) ?>" />
                 </div>
                 <div class="actionsPlaceholder">
-                    <?
+                    <?php
                     if ($this->onlineChangeable) {
                         if ($oYoutubeLink->isOnlineChangeable()) {
                             echo '<a class="action_icon ' . ($oYoutubeLink->online ? 'online' : 'offline') . '_icon onlineOfflineBtn" onclick="setOnlineYoutubeLink(this); return false;" data-online="' . ($oYoutubeLink->online ? 0 : 1) . '" href="' . $this->changeOnlineLink . '"></a>';
@@ -56,12 +56,12 @@
                     ?>
                 </div>
             </li>
-            <?
+            <?php
         }
         ?>
     </ul>
 </div>
-<?
+<?php
 # include editLinkForm once
 include_once $this->sEditYoutubeLinkFormLocation;
 

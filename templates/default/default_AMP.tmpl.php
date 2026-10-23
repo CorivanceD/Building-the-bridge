@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
         <title><?= $oPageLayout->sWindowTitle ?> | <?= CLIENT_NAME ?></title>
         <link rel="canonical" href="<?= str_replace("/amp","",getCurrentUrl()) ?>" />
-        <?
+        <?php
         # add meta tags
         if (!empty($oPageLayout->sMetaDescription))
             echo '<meta name="description" content="' . $oPageLayout->sMetaDescription . '">' . PHP_EOL;
@@ -117,7 +117,7 @@
         }
         </script>
         </amp-analytics>
-        <?
+        <?php
         $aUrl = array();
         function makeMobileMenu($aPages) {
             global $aUrl;
@@ -166,7 +166,7 @@
         <div id="banner"></div>
         <div class="default-container-width">
             <header>     
-                <div id="today" class="hide-on-mobile"><?
+                <div id="today" class="hide-on-mobile"><?php
                     $oCurrentDate = new Date();
                     echo $oCurrentDate->format('%A, %d %B, %Y');
                 ?></div>                
@@ -174,17 +174,17 @@
                     <ul>
                         <li><a href="/account/newsletter"><amp-img class="newsletter" src="<?= IMAGE_FOLDER . '/layout/newsletter.png' ?>" width="18" height="12" alt="Subscribe to our newsletter"></amp-img> NEWSLETTER</a></li>
                         <li>·</li>
-                        <? if (empty($oCurrentCustomer)) { ?>
+                        <?php if (empty($oCurrentCustomer)) { ?>
                             <li><a class="loginLink" href="/">LOGIN</a></li>
                             <li>·</li>                        
                             <li><a href="/account">SIGN UP</a></li>
                             <li>·</li>
-                        <? } else { ?>
+                        <?php } else { ?>
                             <li><a href="/account">MY ACCOUNT</a></li>
                             <li>·</li> 
                             <li><a href="/account/logout">LOGOUT</a></li>
                             <li>·</li>                        
-                        <? } ?>
+                        <?php } ?>
                         <li><a class="donateLink" href="/donate">DONATE</a></li>
                         <li>·</li>
                         <li><a href="/petitions">PETITIONS</a></li>
@@ -214,7 +214,7 @@
                     </div>
                 </div>  
                 <nav class="hide-on-mobile">                   
-                    <?
+                    <?php
                     $aUrl = array();
 
                     function makeMainMenu($aPages) {
@@ -258,7 +258,7 @@
                 
             </header>
             <div class="main-content">
-                <?
+                <?php
                 # include the actual page with changable content
                 include_once $oPageLayout->sPagePath;
                 ?>
@@ -286,12 +286,12 @@
                     <h1>Categories</h1>
                     <nav>
                         <ul class="footerNav">
-                            <?
+                            <?php
                             foreach (PageManager::getPagesByFilter(array('level' => 1)) AS $oSubpage) {
                                 if ($oSubpage->getUrlPath() != '/') {
                                     ?>
                                     <li><div class="item">&gt;</div><a href="<?= $oSubpage->getUrlPath() ?>"><?= $oSubpage->getShortTitle() ?></a></li>
-                                    <?
+                                    <?php
                                 }
                             }
                             ?>

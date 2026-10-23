@@ -12,7 +12,7 @@
                         <?= sysTranslations::get('sysTrans_compare_with_language') ?>
                         <select id="compareSystemLanguageId" name="compareSystemLanguageId">
                             <option value="">-- <?= sysTranslations::get('sysTrans_choose_language') ?> --</option>
-                            <?
+                            <?php
                             foreach (SystemLanguageManager::getLanguagesByFilter() AS $oLanguage) {
                                 if ($oLanguage->systemLanguageId == $oSystemLanguage->systemLanguageId && $oLanguage->systemLanguageId != $oCompareSystemLanguage->systemLanguageId)
                                     continue;
@@ -27,13 +27,13 @@
             <tr>
                 <th style="width: 33.33333%;"><?= sysTranslations::get('sysTrans_label') ?></th>
                 <th><?= sysTranslations::get('sysTrans_text') ?> <?= $oSystemLanguage->name ?></th>
-                <? if (!empty($oCompareSystemLanguage)) { ?>
+                <?php if (!empty($oCompareSystemLanguage)) { ?>
                     <th  style="width: 33.33333%;"><?= sysTranslations::get('sysTrans_text') ?> <?= $oCompareSystemLanguage->name ?></th>
-                <? } ?>
+                <?php } ?>
             </tr>
         </thead>
         <tbody>
-            <?
+            <?php
             foreach ($aSystemTranslations AS $oSystemTranslation) {
                 // take text or if empty and not empty compare, take that one
                 $sText = !empty($oSystemTranslation->text) ? $oSystemTranslation->text : (!empty($aCompareTextsByLabel[$oSystemTranslation->label]) ? $aCompareTextsByLabel[$oSystemTranslation->label] : '');
@@ -60,7 +60,7 @@
             }
             ?>
         </tbody>
-        <? if (count($aSystemTranslations) > 0) { ?>
+        <?php if (count($aSystemTranslations) > 0) { ?>
             <tfoot>
                 <tr class="bottomRow">
                     <td colspan="3">
@@ -68,13 +68,13 @@
                     </td>
                 </tr>
             </tfoot>
-        <? } ?>
+        <?php } ?>
     </table>
 </form>
 <div id="bottomOptions">
     <a class="backBtn" href="<?= ADMIN_FOLDER ?>/<?= http_get('controller') ?>"><?= sysTranslations::get('global_back_to_overview') ?></a><span class="backBtnInfo"> (<?= sysTranslations::get('global_without_saving') ?>)</span>
 </div>
-<?
+<?php
 $sConfirm = sysTranslations::get('sysTrans_change_language_will_empty_form');
 $sCurrentUrlPath = getCurrentUrlPath();
 $sJavascript = <<<EOT

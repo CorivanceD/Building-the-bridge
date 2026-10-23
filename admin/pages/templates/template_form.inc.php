@@ -4,10 +4,10 @@
 <div class="contentColumn">
     <form method="POST" action="" class="validateForm">
         <input type="hidden" value="save" name="action" />
-        <? if (is_numeric($oTemplate->templateId)) { ?>
+        <?php if (is_numeric($oTemplate->templateId)) { ?>
             <input type="hidden" value="<?= $oTemplate->type ?>" name="type" /> 
             <input type="hidden" value="<?= $oTemplate->templateGroupId ?>" name="templateGroupId" />
-        <? } ?>
+        <?php } ?>
         <fieldset>
             <legend><?= sysTranslations::get('templates_template') ?></legend>
             <table class="withForm">
@@ -18,10 +18,10 @@
                 </tr>
                 <tr>
                     <td class="withLabel" style="width: 120px;"><label for="type"><?= sysTranslations::get('global_message_type') ?> *</label></td>
-                    <? if (!is_numeric($oTemplate->templateId)) { ?>
+                    <?php if (!is_numeric($oTemplate->templateId)) { ?>
                         <td>
                             <select onchange="changeMessageFieldOptions(this.value);" id="type" class="{validate:{required:true}}" title="<?= sysTranslations::get('templates_choose_template_type') ?>" name="type">
-                                <?
+                                <?php
                                 # get unique type values
                                 foreach (TemplateManager::getUniqueTemplateTypes() AS $oTemplateType) {
                                     echo '<option ' . ($oTemplate->type == $oTemplateType->type ? 'SELECTED' : '') . ' value="' . $oTemplateType->type . '">' . _e($oTemplateType->type) . '</option>';
@@ -29,32 +29,32 @@
                                 ?>
                             </select>
                         </td>
-                    <? } else { ?>
+                    <?php } else { ?>
                         <td class="withLabel">
                             <?= _e($oTemplate->type) ?>
                         </td>
-                    <? } ?>
+                    <?php } ?>
                 </tr>
                 <tr>
                     <td class="withLabel"><label for="templateGroupId"><?= sysTranslations::get('templates_template_group') ?> *</label></td>
-                    <? if (!is_numeric($oTemplate->templateId)) { ?>
+                    <?php if (!is_numeric($oTemplate->templateId)) { ?>
                         <td>
                             <select onchange="setTemplateVariables(this.value);" id="templateGroupId" class="{validate:{required:true}}" title="<?= sysTranslations::get('templates_choose_template_group') ?>" name="templateGroupId">
-                                <?
+                                <?php
                                 foreach (TemplateManager::getAllTemplateGroups() AS $oTemplateGroup) {
                                     echo '<option ' . ($oTemplate->templateGroupId == $oTemplateGroup->templateGroupId ? 'SELECTED' : '') . ' value="' . $oTemplateGroup->templateGroupId . '">' . $oTemplateGroup->templateGroupName . '</option>';
                                 }
                                 ?>
                             </select>
                         </td>
-                    <? } else { ?>
+                    <?php } else { ?>
                         <td class="withLabel">
-                            <?
+                            <?php
                             $oTemplateGroup = TemplateManager::getTemplateGroupById($oTemplate->templateGroupId);
                             echo _e($oTemplateGroup->templateGroupName);
                             ?>
                         </td>
-                    <? } ?>
+                    <?php } ?>
                     <td><span class="error"><?= $oTemplate->isPropValid("templateGroupId") ? '' : sysTranslations::get('templates_field_not_completed') ?></span></td>
                 </tr>
                 <tr>
@@ -70,7 +70,7 @@
                         <textarea name="template" id="template" class="tiny_MCE_default tiny_MCE template_email"><?= $oTemplate->template ?></textarea>
                     </td>
                 </tr>
-                <? if ($oCurrentUser->isAdmin()) { ?>
+                <?php if ($oCurrentUser->isAdmin()) { ?>
                     <tr>
                         <td colspan="3" style="padding-top: 10px;"><h2><?= sysTranslations::get('global_admin_settings') ?></h2></td>
                     </tr>
@@ -95,7 +95,7 @@
                         </td>
                         <td><span class="error"><?= $oTemplate->isPropValid("deletable") ? '' : sysTranslations::get('global_field_not_completed') ?></span></td>
                     </tr>
-                <? } ?>
+                <?php } ?>
                 <tr>
                     <td colspan="3">
                         <input type="submit" value="<?= sysTranslations::get('global_save') ?>" name="save" />
@@ -116,7 +116,7 @@
 <div id="bottomOptions">
     <a class="backBtn" href="<?= ADMIN_FOLDER ?>/<?= http_get('controller') ?>"><?= sysTranslations::get('global_back_to_overview') ?></a><span class="backBtnInfo"> (<?= sysTranslations::get('global_without_saving') ?>)</span>
 </div>
-<?
+<?php
 $sAdminFolder = ADMIN_FOLDER;
 $sController = http_get('controller');
 $sJavascript = '';

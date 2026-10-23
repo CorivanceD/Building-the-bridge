@@ -1,4 +1,4 @@
-<?
+<?php
 
 # get micro time to check what time it takes to load the PHP
 $iSMT = microtime(true);

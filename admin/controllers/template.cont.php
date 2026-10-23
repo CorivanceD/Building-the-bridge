@@ -1,4 +1,4 @@
-<?
+<?php
 
 # check if controller is required by index.php
 if (!defined('ACCESS'))

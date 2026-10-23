@@ -3,7 +3,7 @@
     <div class="main-box-header-light"></div>
     <div class="main-box-content">
         <ul class="menu">
-            <?
+            <?php
             $iT = 1;
             foreach ($oCurrentUser->getModules() AS $oMainModuleForMenu) {
 

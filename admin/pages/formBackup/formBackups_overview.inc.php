@@ -30,7 +30,7 @@
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($aFormBackups AS $oFormBackup) {
             echo '<tr>';
             echo '<td>' . Date::strToDate($oFormBackup->created)->format('%d-%m-%Y %H:%M:%S') . '</td>';

@@ -19,10 +19,10 @@
                         <td>                            
                             <select id="parentPageId" name="parentPageId" class="{validate:{required:true}}">
                                 <option value="">-- None --</option>
-                                <? foreach ($aPages AS $oPage) { ?>
+                                <?php foreach ($aPages AS $oPage) { ?>
                                     <option value="<?= $oPage->pageId ?>" <?= (!empty($oArticle->articleCategoryId) && $oPage->pageId == $oArticle->getCategory()->parentPageId) ? 'selected' : '' ?>><?= $oPage->title ?></option>
 
-                                <? } ?>
+                                <?php } ?>
                             </select>
                         </td>
                         <td><span class="error"><?= $oArticle->isPropValid("parentPageId") ? '' : sysTranslations::get('global_field_not_completed') ?></span></td>                        
@@ -32,9 +32,9 @@
                         <td>
                             <select id="articleCategoryId" class="{validate:{required:true}}" name="articleCategoryId"  title="<?= sysTranslations::get('articles_enter_title_tooltip') ?>">
                                 <option value="">-- None --</option>
-                                <? foreach ($aArticleCategories AS $oArticleCategory) { ?>
+                                <?php foreach ($aArticleCategories AS $oArticleCategory) { ?>
                                     <option value="<?= $oArticleCategory->articleCategoryId ?>" <?= $oArticle->articleCategoryId === $oArticleCategory->articleCategoryId ? 'selected' : '' ?> ><?= $oArticleCategory->getFullName() ?></option>
-                                <? } ?>
+                                <?php } ?>
                             </select>
                         <td><span class="error"><?= $oArticle->isPropValid("articleCategoryId") ? '' : sysTranslations::get('global_field_not_completed') ?></span></td>                            
                         </td>
@@ -63,12 +63,12 @@
                     <tr>
                         <td colspan="3"><h2><?= sysTranslations::get('user_seo') ?></h2></td>
                     </tr>
-                    <? if (!empty($oArticle->articleCategoryId)) { ?>
+                    <?php if (!empty($oArticle->articleCategoryId)) { ?>
                         <tr>
                             <td><?= sysTranslations::get('global_current_url') ?></td>
                             <td><?= $oArticle->getUrlPath() ?></td>
                         </tr>
-                    <? } ?>                        
+                    <?php } ?>                        
                     <tr>
                         <td class="withLabel"><label for="windowTitle"><?= sysTranslations::get('global_window_title') ?></label> <div class="hasTooltip tooltip" title="<?= sysTranslations::get('global_title_seo') ?>">&nbsp;</div></td>
                         <td colspan="2">
@@ -94,20 +94,20 @@
                     <tr>
                         <td colspan="3">
                             <input type="submit" id="saveButton" value="<?= sysTranslations::get('global_save') ?>" name="saveButton" />
-                            <? if (!empty($oArticle->articleId)) { ?>
+                            <?php if (!empty($oArticle->articleId)) { ?>
                                 &nbsp;<input type="submit" id="sendToReview" value="<?= sysTranslations::get('articles_send_to_review') ?>" name="sendToReview" />
-                            <? } ?>
+                            <?php } ?>
                         </td>
                     </tr>
                 </table>
             </fieldset>
         </form>
     </div>
-    <? ?>
+    <?php ?>
     <div class="contentColumn">
         <fieldset>
             <legend><?= sysTranslations::get('global_images') ?></legend>
-            <?
+            <?php
             if ($oArticle->articleId !== null) {
 
                 $oImageManagerHTML->includeTemplate();
@@ -120,7 +120,7 @@
     <div class="contentColumn">
         <fieldset>
             <legend><?= sysTranslations::get('global_files') ?></legend>
-            <?
+            <?php
             if ($oArticle->articleId !== null) {
                 $oFileManagerHTML->includeTemplate();
             } else {
@@ -132,7 +132,7 @@
     <div class="contentColumn">
         <fieldset>
             <legend><?= sysTranslations::get('global_links') ?></legend>
-            <?
+            <?php
             if ($oArticle->articleId !== null) {
                 $oLinkManagerHTML->includeTemplate();
             } else {
@@ -144,7 +144,7 @@
     <div class="contentColumn">
         <fieldset>
             <legend><?= sysTranslations::get('global_youtube') ?></legend>
-            <?
+            <?php
             if ($oArticle->articleId !== null) {
                 $oYoutubeLinkManagerHTML->includeTemplate();
             } else {
@@ -157,7 +157,7 @@
 <div id="bottomOptions">
     <a class="backBtn" href="<?= ADMIN_FOLDER ?>/<?= http_get('controller') ?>"><?= sysTranslations::get('global_back_to_overview') ?></a><span class="backBtnInfo"> (<?= sysTranslations::get('global_without_saving') ?>)</span>
 </div>
-<?
+<?php
 $jsLang = empty($oCurrentUser) ? 'nl' : $oCurrentUser->getLanguage()->abbr;
 $sCurrentUrl = getCurrentUrl();
 $sJavascript = <<<EOT

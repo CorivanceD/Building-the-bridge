@@ -5,14 +5,14 @@
             <hr>
             <div class="statusUpdate signatureStatusUpdate"></div>  
             <h2 class="articleTitle"><?= _e($oPetition->title) ?></h2>   
-            <?
+            <?php
             $aSignatures = $oPetition->getSignatures();
             $oPetitionImage = $oPetition->getImage();
 
             if (!empty($oPetitionImage)) {
                 ?>
                 <img class="articleHeadImage" src="<?= $oPetitionImage->getImageFileByReference('detail')->link ?>" alt="alt="<?= empty($oPetitionImage->getImageFileByReference('detail')->title) ? $oPetition->title : $oPetitionImage->getImageFileByReference('detail')->title ?>"" <?= $oPetitionImage->getImageFileByReference('detail')->imageSizeAttr ?> >
-            <? } ?>              
+            <?php } ?>              
             <p>We're almost there, help us get <b><?= $oPetition->requiredSignatures ?></b></p>
             <div class="signatures" style="vertical-align: top">                
                 <div id="progressBar" class="jquery-ui-like"><div style="background-color: #ffbc00"></div></div>
@@ -44,12 +44,12 @@
                 </div>                    
                 </div>                    
             </form>
-            <? if (!empty($aSignatures)) { ?>
+            <?php if (!empty($aSignatures)) { ?>
                 <br>
                 <div class="comments">
                     <h3>LATEST COMMENTS</h3>
                     <hr>                
-                    <?
+                    <?php
                     $iComments = 0;
 
                     foreach ($aSignatures AS $oSignature) {
@@ -68,20 +68,20 @@
                                     <br>
                                 </div>
                             </div>
-                        <? //} ?>
-                        <? } ?>
+                        <?php //} ?>
+                        <?php } ?>
                 </div>  
-            <? } ?>
+            <?php } ?>
         </div>
-        <? include TEMPLATES_FOLDER . '/elements/rightColumn.inc.php'; ?>
+        <?php include TEMPLATES_FOLDER . '/elements/rightColumn.inc.php'; ?>
     </article>
 </section>
-<? if (empty($oCurrentCustomer)) { ?>
+<?php if (empty($oCurrentCustomer)) { ?>
     <div id="signerForm">
         <div class="withForm contactForm signerForm">
             <p>Please, enter the required info or <a href="/account" style="text-decoration: underline">login</a> to sign the petition.</p>
             <form method="POST" class="validateForm">
-                <? include TEMPLATES_FOLDER . '/elements/errorBox.inc.php'; ?>
+                <?php include TEMPLATES_FOLDER . '/elements/errorBox.inc.php'; ?>
                 <input type="hidden" name="action" value="sign">
                 <input type="hidden" name="petitionId" value="<?= $oPetition->petitionId ?>">
                 <input type="hidden" id="comment2" name="comment" value="<?= _e(http_post('comment')) ?>">
@@ -109,13 +109,13 @@
                 <p><label for="countryId"><b>Country *</b></label></p>
                 <select id="countryId" name="countryId" style="float:none"  data-rule-required="true" data-msg-required="You must enter your country">
                     <option value="">Select a country</option>
-<?
+<?php
                     $aCountries = CountryManager::getCountries();
                     foreach ($aCountries as $oCountry) {
                         if ($oCountry->countryId != Country::UNKNOWN_COUNTRY_ID) {
                         ?>
                         <option value="<?= $oCountry->countryId ?>" <?= http_post('countryId') == $oCountry->countryId ? 'selected' : '' ?> ><?= $oCountry->name ?></option>    
-                    <? 
+                    <?php 
                         }
                     }
                     ?>
@@ -131,8 +131,8 @@
             </form>
         </div>
     </div>
-<? } ?>
-<?
+<?php } ?>
+<?php
 $iPerc = round(count($aSignatures) * 100 / $oPetition->requiredSignatures);
 $sSignatureStatusUpdate = http_session('signatureStatusUpdate', '');
 $sJavascript = <<<EOT

@@ -1,4 +1,4 @@
-<?
+<?php
 
 $iStart = microtime(true);
 # check if controller is required by index.php

@@ -14,7 +14,7 @@
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($aPetitions AS $oPetition) {
             echo '<td>';
             # online offline button
@@ -63,7 +63,7 @@
         </tr>
     </tfoot>
 </table>
-<?
+<?php
 # create necessary javascript
 $sPetitionOnlineMsg = sysTranslations::get('petition_online');
 $sPetitionOfflineMsg = sysTranslations::get('petition_offline');

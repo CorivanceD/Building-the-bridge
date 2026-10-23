@@ -1,4 +1,4 @@
-<?
+<?php
 
 # set document root
 define("DOCUMENT_ROOT", '/var/www/vhosts/buildingthebridge.eu/domains/buildingthebridge.eu/public_html');

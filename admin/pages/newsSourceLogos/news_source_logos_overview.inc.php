@@ -25,7 +25,7 @@
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($aNewsSourceLogos AS $oNewsSourceLogo) {
             echo '<tr>';
             echo '<td>' . _e($oNewsSourceLogo->sourceName) . '</td>';

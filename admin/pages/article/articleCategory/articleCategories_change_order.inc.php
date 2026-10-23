@@ -6,7 +6,7 @@
     <i><?= sysTranslations::get('articles_category_drag') ?></i>
 </p>
 <div id="sortableContainer">
-    <?
+    <?php
 # list pages in unordered list
 
     if (count($aArticleCategories) > 0)
@@ -33,7 +33,7 @@
 <div id="bottomOptions">
     <a class="backBtn" href="<?= ADMIN_FOLDER ?>/<?= http_get('controller') ?>"><?= sysTranslations::get('global_back_to_overview') ?></a><span class="backBtnInfo"> (<?= sysTranslations::get('global_without_saving') ?>)</span>
 </div>
-<?
+<?php
 # add nested sortable javascript initiation code
 $sSortableJavascript = <<<EOT
 <script>

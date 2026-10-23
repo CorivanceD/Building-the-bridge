@@ -5,10 +5,10 @@
         <article class="column-66 page-content float-left contactForm">           
             <?= $oPage->content ?>  
         </article>
-        <? include TEMPLATES_FOLDER . '/elements/rightColumn.inc.php'; ?>       
+        <?php include TEMPLATES_FOLDER . '/elements/rightColumn.inc.php'; ?>       
     </div>
 </section> 
-<?
+<?php
 $sHtml = '';
 ob_start();
 include TEMPLATES_FOLDER . '/elements/errorBox.inc.php';

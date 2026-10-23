@@ -13,7 +13,7 @@
                         <td>
                             <select class="{validate:{required:true}} default" id="systemLanguageId" name="systemLanguageId" title="<?= _e(sysTranslations::get('sysTrans_enter_language_tooltip')) ?>">
                                 <option value="">-- <?= sysTranslations::get('sysTrans_choose_language') ?> --</option>
-                                <?
+                                <?php
                                 foreach (SystemLanguageManager::getLanguagesByFilter() AS $oSystemLanguage) {
                                     echo '<option ' . ($oSystemLanguage->systemLanguageId == $oSystemTranslation->systemLanguageId ? 'selected' : '') . ' value="' . $oSystemLanguage->systemLanguageId . '">' . $oSystemLanguage->name . '</option>';
                                 }
@@ -48,7 +48,7 @@
 <div id="bottomOptions">
     <a class="backBtn" href="<?= ADMIN_FOLDER ?>/<?= http_get('controller') ?>"><?= sysTranslations::get('global_back_to_overview') ?></a><span class="backBtnInfo"> (<?= sysTranslations::get('global_without_saving') ?>)</span>
 </div>
-<?
+<?php
 $sAdminFolder = ADMIN_FOLDER;
 $sController = http_get('controller');
 $iSystemTranslationId = $oSystemTranslation->systemTranslationId;

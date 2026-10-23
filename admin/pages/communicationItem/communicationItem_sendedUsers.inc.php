@@ -12,24 +12,24 @@
                 <tr>
                     <td>Type:</td><td><?= $oCommunicationItem->type ?></td>
                 </tr>
-                <? if ($oCommunicationItem->type == CommunicationItem::COMMUNICATION_TYPE_EMAIL) { ?>
+                <?php if ($oCommunicationItem->type == CommunicationItem::COMMUNICATION_TYPE_EMAIL) { ?>
                 <tr>
                     <td>Onderwerp:</td><td><?= _e($oCommunicationItem->subject) ?></td>
                 </tr>
-                <? } ?>
-                <? if(!empty($oCommunicationItem->sendDate)) { ?>
+                <?php } ?>
+                <?php if(!empty($oCommunicationItem->sendDate)) { ?>
                 <tr>
                     <td>Verzonden:</td><td><?= Date::strToDate($oCommunicationItem->sendDate)->format('%d-%m-%Y') ?></td>
                 </tr>
-                <? } ?>
+                <?php } ?>
                 <tr>
                     <td>Naam afzender:</td><td><?= _e($oCommunicationItem->senderName) ?></td>
                 </tr>
-                <? if ($oCommunicationItem->type == CommunicationItem::COMMUNICATION_TYPE_EMAIL) { ?>
+                <?php if ($oCommunicationItem->type == CommunicationItem::COMMUNICATION_TYPE_EMAIL) { ?>
                 <tr>
                     <td>E-mail afzender:</td><td><?= _e($oCommunicationItem->senderEmail) ?></td>
                 </tr>
-                <? } ?>
+                <?php } ?>
                 <tr>
                     <td>Voorbeeld bericht <?= $oCommunicationItem->type == CommunicationItem::COMMUNICATION_TYPE_EMAIL ? '(kan layout technisch afwijken van werkelijkheid)' : '' ?>:</td><td><a class="pointer fancyBoxLinkIframe fancybox.iframe" href="<?= ADMIN_FOLDER . '/' . http_get('controller') . '/ajax-getMessage?communicationItemId=' . $oCommunicationItem->communicationItemId ?>">Toon bericht</a></td>
                 </tr>
@@ -42,7 +42,7 @@
                 <tr>
                     <td style="width: 300px">Verzonden naar aantal klanten</td><td><?= count($aCustomers) ?></td>
                 </tr>
-                <? if ($oCommunicationItem->type == CommunicationItem::COMMUNICATION_TYPE_EMAIL) { ?>
+                <?php if ($oCommunicationItem->type == CommunicationItem::COMMUNICATION_TYPE_EMAIL) { ?>
                 <tr>
                     <td>Aantal unieke gemeten openingen via meetpixel:</td><td><?= count($oCommunicationItem->getConversionStats()) ?></td>
                 </tr>
@@ -52,10 +52,10 @@
                 <tr>
                     <td>Aantal bounces:</td><td><?= count($oCommunicationItem->getBouncedItems()); ?></td>
                 </tr>
-                <? } ?>
+                <?php } ?>
             </table>
             <hr>
-            <? if ($oCommunicationItem->type == CommunicationItem::COMMUNICATION_TYPE_EMAIL) { ?>
+            <?php if ($oCommunicationItem->type == CommunicationItem::COMMUNICATION_TYPE_EMAIL) { ?>
             <div style="float: left; margin-right: 50px;">
                 Openingspercentage: <?= $iPercentageOpened ?>%
                 <br>
@@ -71,9 +71,9 @@
                 <br>
                 <span class="chart" data-percent="<?= $iPercentageBounced ?>"></span>
             </div>
-            <? } ?>
+            <?php } ?>
 
-            <?
+            <?php
             # check if mail has links
             if(!empty($aRedirectLinks)) {
                 ?>
@@ -83,7 +83,7 @@
                     <tr>
                         <td>
                             <table>
-                                <?
+                                <?php
                                 # write out redirect links and amount of clicked links
                                 foreach($aRedirectLinks as $oRedirectLink) {
                                     echo '<tr><td style="padding-right: 20px">' . $oRedirectLink->originalUrl . '</td><td> ' . CommunicationItemLinkRedirectStatManager::getUniqueAmountOfClicksOfRedirectStat($oCommunicationItem->communicationItemId, $oRedirectLink->communicationItemLinkRedirectId)->amount . ' </td></tr>';
@@ -94,7 +94,7 @@
                         </td>
                     </tr>
                 </table>
-                <?
+                <?php
             }
             ?>
             
@@ -115,7 +115,7 @@
         <fieldset>
             <legend>Dit bericht is verzonden naar de volgende klant<?= !empty($aCustomers) && count($aCustomers) > 1 ? 'en' : '' ?>:</legend>
             <ul style="margin: 12px">
-                <?
+                <?php
                 # write out receivers of this message
                 foreach ($aCustomers as $oCustomer) {
                     if (!empty($oCustomer->created)) {

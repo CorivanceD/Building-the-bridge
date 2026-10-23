@@ -1,4 +1,4 @@
-<?
+<?php
 require_once DOCUMENT_ROOT . '/libs/mpdf571/mpdf.php';
 # check if controller is required by index.php
 if (!defined('ACCESS'))

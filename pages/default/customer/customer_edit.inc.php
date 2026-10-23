@@ -9,7 +9,7 @@
             <div class="column-50 float-left"> 
 
                 <input type="hidden" value="save" name="action" />
-                <?
+                <?php
                 $aErrors = array();
                 if (!empty($aCustomerErrors)) {
                     $aErrors = $aCustomerErrors;
@@ -62,12 +62,12 @@
                         <td><label>Country</label></td>
                         <td><select disabled>
                                 <option value="">Select a country</option>
-                                <?
+                                <?php
                                 $aCountries = CountryManager::getCountries();
                                 foreach ($aCountries as $oCountry) {
                                     ?>
                                     <option value="<?= $oCountry->countryId ?>" <?= ($oCountry->countryId == $oCustomer->countryId) ? 'selected' : '' ?> ><?= $oCountry->name ?></option>    
-<? } ?>
+<?php } ?>
                             </select>
                         </td>
                     </tr>                      
@@ -94,7 +94,7 @@
         </div>
     </form>
 </section>
-<?
+<?php
 $sAccountStatusUpdate = http_session('accountStatusUpdate', '');
 $sJavascript = <<<EOT
 <script>

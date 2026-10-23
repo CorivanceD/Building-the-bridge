@@ -9,7 +9,7 @@
                 <input type="hidden" value="save" name="action" />
                 <input type="hidden" value="<?= $oPage->parentPageId ?>" name="parentPageId" />                
                 <table class="withForm">
-                    <? if ($oPage->isOnlineChangeable()) { ?>
+                    <?php if ($oPage->isOnlineChangeable()) { ?>
                         <tr>
                             <td>Online *</td>
                             <td>
@@ -18,7 +18,7 @@
                             </td>
                             <td><span class="error"><?= $oPage->isPropValid("online") ? '' : sysTranslations::get('global_field_not_completed') ?></span></td>
                         </tr>
-                    <? } ?>
+                    <?php } ?>
                     <tr>
                         <td class="withLabel" style="width: 116px;"><label for="title"><?= sysTranslations::get('global_title') ?> *</label></td>
                         <td><input id="title" class="{validate:{required:true}} autofocus default" title="<?= sysTranslations::get('pages_title_tooltip') ?>" type="text" autocomplete="off" name="title" value="<?= _e($oPage->title) ?>" /></td>
@@ -29,7 +29,7 @@
                         <td><input class="default" id="shortTitle" type="text" name="shortTitle" value="<?= _e($oPage->shortTitle) ?>" /></td>
                         <td></td>
                     </tr>
-                    <? if (!$oPage->getHideRssManagement()) { ?>
+                    <?php if (!$oPage->getHideRssManagement()) { ?>
                         <tr>
                             <td colspan="3">
                                 <fieldset>
@@ -44,11 +44,11 @@
                                             <td coslpan="2">
                                                 <select id="rssFeedDropdown">
                                                     <option style="text-align:center" value="">-- <?= sysTranslations::get('global_none') ?> --</option>
-                                                    <? foreach (RssFeedManager::getRssFeedsByFilter() AS $oRssFeed) { ?>
-                                                        <? if (!$oPage->hasRssFeed($oRssFeed->rssFeedId)) { ?>
+                                                    <?php foreach (RssFeedManager::getRssFeedsByFilter() AS $oRssFeed) { ?>
+                                                        <?php if (!$oPage->hasRssFeed($oRssFeed->rssFeedId)) { ?>
                                                             <option value="<?= $oRssFeed->rssFeedId ?>"><?= $oRssFeed->title ?></option>
-                                                        <? } ?>
-                                                    <? } ?>
+                                                        <?php } ?>
+                                                    <?php } ?>
                                                 </select>                                
                                             </td>        
                                         </tr>
@@ -84,7 +84,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <?
+                                                        <?php
                                                         $aRssFeeds = array();
                                                         foreach ($oPage->getRssFeeds() AS $oRssFeed) {
                                                             $aRssFeeds[] = $oRssFeed->rssFeedId . ":" . $oRssFeed->filter;
@@ -111,23 +111,23 @@
                             </td>
                         </tr>
                         <tr><td colspan="3">&nbsp;</td></tr>
-                    <? } ?>
+                    <?php } ?>
                     <tr>
                         <td colspan="3"><label for="content"><?= sysTranslations::get('global_content') ?></label></td>
                     </tr>
                     <tr>
                         <td colspan="3"><textarea name="content" id="content" class="tiny_MCE_page tiny_MCE"><?= $oPage->content ?></textarea></td>
                     </tr>
-                    <? if ($oCurrentUser->isSEO()) { ?>
+                    <?php if ($oCurrentUser->isSEO()) { ?>
                         <tr>
                             <td colspan="3" style="padding-top: 10px;"><h2><?= sysTranslations::get('global_seo') ?></h2></td>
                         </tr>
-                        <? if ($oPage->pageId) { ?>
+                        <?php if ($oPage->pageId) { ?>
                             <tr>
                                 <td><?= sysTranslations::get('global_current_url') ?></td>
                                 <td><?= $oPage->getUrlPath() ?></td>
                             </tr>
-                        <? } ?>
+                        <?php } ?>
                         <tr>
                             <td class="withLabel"><label for="windowTitle"><?= sysTranslations::get('global_window_title') ?></label> <div class="hasTooltip tooltip" title="<?= sysTranslations::get('global_title_seo') ?>">&nbsp;</div></td>
                             <td colspan="2">
@@ -150,13 +150,13 @@
                             <td class="withLabel"><label for="metaKeywords"><?= sysTranslations::get('global_keywords') ?></label> <div class="hasTooltip tooltip" title="<?= sysTranslations::get('global_keywords_seo') ?>">&nbsp;</div></td>
                             <td colspan="2"><input class="default" id="metaKeywords" type="text" name="metaKeywords" value="<?= _e($oPage->metaKeywords) ?>" /> (<?= sysTranslations::get('global_optional') ?>)</td>
                         </tr>
-                        <? if (!$oPage->getLockUrlPath()) { ?>
+                        <?php if (!$oPage->getLockUrlPath()) { ?>
                             <tr>
                                 <td class="withLabel"><label for="urlPart"><?= sysTranslations::get('global_seo_url') ?></label> <div class="hasTooltip tooltip" title="<?= sysTranslations::get('global_seo_url_tooltip') ?>: <?= CLIENT_HTTPS_URL ?><?= $oPage->parentPageId ? $oPage->getParent()->getUrlPath() : '' ?>/<?= sysTranslations::get('global_seo_url_tooltip_2') ?>">&nbsp;</div></td>
                                 <td><input  class="default" id="urlPart" type="text" name="urlPart" value="<?= _e($oPage->getUrlPart()) ?>" /></td>
                                 <td></td>
                             </tr>
-                        <? } ?>
+                        <?php } ?>
                         <tr>
                             <td class="withLabel"><label for="urlParameters"><?= sysTranslations::get('pages_url_parameters') ?></label> <div class="hasTooltip tooltip" title="<?= sysTranslations::get('pages_url_parameters_tooltip_1') ?> <?= CLIENT_HTTPS_URL ?><?= $oPage->parentPageId ? $oPage->getParent()->getUrlPath() : '' ?><?= sysTranslations::get('pages_url_parameters_tooltip_1') ?>">&nbsp;</div></td>
                             <td><input  class="default" id="urlParameters" type="text" name="urlParameters" value="<?= _e($oPage->getUrlParameters()) ?>" /></td>
@@ -170,8 +170,8 @@
                             </td>
                             <td><span class="error"><?= $oPage->isPropValid("inMenu") ? '' : sysTranslations::get('global_field_not_completed') ?></span></td>
                         </tr>
-                    <? } ?>
-                    <? if ($oCurrentUser->isAdmin()) { ?>
+                    <?php } ?>
+                    <?php if ($oCurrentUser->isAdmin()) { ?>
                         <tr>
                             <td colspan="3" style="padding-top: 10px;"><h2><?= sysTranslations::get('global_admin_settings') ?></h2></td>
                         </tr>
@@ -268,7 +268,7 @@
                             </td>
                             <td><span class="error"><?= $oPage->isPropValid("hideRssManagement") ? '' : sysTranslations::get('global_field_not_completed') ?></span></td>
                         </tr>                        
-                    <? } ?>
+                    <?php } ?>
                     <tr>
                         <td colspan="3">
                             <input type="submit" value="<?= sysTranslations::get('global_save') ?>" name="save" />
@@ -278,11 +278,11 @@
         </fieldset>
         </form>
     </div>
-    <? if (!$oPage->hideImageManagement()) { ?>
+    <?php if (!$oPage->hideImageManagement()) { ?>
         <div class="contentColumn">
             <fieldset>
                 <legend><?= sysTranslations::get('global_images') ?></legend>
-                <?
+                <?php
                 if ($oPage->pageId !== null) {
                     $oImageManagerHTML->includeTemplate();
                 } else {
@@ -291,14 +291,14 @@
                 ?>
             </fieldset>
         </div>
-        <?
+        <?php
     }
     if (!$oPage->hideFileManagement()) {
         ?>
         <div class="contentColumn">
             <fieldset>
                 <legend><?= sysTranslations::get('global_files') ?></legend>
-                <?
+                <?php
                 if ($oPage->pageId !== null) {
                     $oFileManagerHTML->includeTemplate();
                 } else {
@@ -307,7 +307,7 @@
                 ?>
             </fieldset>
         </div>
-        <?
+        <?php
     }
     if (!$oPage->hideLinkManagement()) {
         ?>
@@ -315,7 +315,7 @@
         <div class="contentColumn">
             <fieldset>
                 <legend><?= sysTranslations::get('global_links') ?></legend>
-                <?
+                <?php
                 if ($oPage->pageId !== null) {
                     $oLinkManagerHTML->includeTemplate();
                 } else {
@@ -324,14 +324,14 @@
                 ?>
             </fieldset>
         </div>
-        <?
+        <?php
     }
     if (!$oPage->hideYoutubeLinkManagement()) {
         ?>
         <div class="contentColumn">
             <fieldset>
                 <legend><?= sysTranslations::get('global_youtube') ?></legend>
-                <?
+                <?php
                 if ($oPage->pageId !== null) {
                     $oYoutubeLinkManagerHTML->includeTemplate();
                 } else {
@@ -340,14 +340,14 @@
                 ?>
             </fieldset>
         </div>
-        <?
+        <?php
     }
     ?>
 </div>
 <div id="bottomOptions">
     <a class="backBtn" href="<?= ADMIN_FOLDER ?>/<?= http_get('controller') ?>"><?= sysTranslations::get('global_back_to_overview') ?></a><span class="backBtnInfo"> (<?= sysTranslations::get('global_without_saving') ?>)</span>
 </div>
-<?
+<?php
 $oPageLayout->addJavascriptBottom('
 <script>
     initTinyMCE(".tiny_MCE_page", "/admin/paginas/link-list", "/admin/paginas/image-list/' . $oPage->pageId . '");

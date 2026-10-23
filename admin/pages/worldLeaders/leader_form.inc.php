@@ -30,7 +30,7 @@
             </fieldset>
         </form>
     </div> 
-    <? if (!empty($oWorldLeader->worldLeaderId)) { ?>
+    <?php if (!empty($oWorldLeader->worldLeaderId)) { ?>
     <div class="contentColumn">
         <fieldset>
             <legend><?= sysTranslations::get('global_address') ?></legend>        
@@ -52,7 +52,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?
+                    <?php
                     foreach ($oWorldLeader->getAddresses() AS $oAddress) {
                         echo '<tr>';
                         echo '<td>' . _e($oAddress->getRegion()->name) . '</td>';
@@ -77,7 +77,7 @@
             <br>
         </fieldset>
     </div>
-    <? } ?>
+    <?php } ?>
 </div>
 <div id="bottomOptions">
     <a class="backBtn" href="<?= ADMIN_FOLDER ?>/<?= http_get('controller') ?>"><?= sysTranslations::get('global_back_to_overview') ?></a><span class="backBtnInfo"> (<?= sysTranslations::get('global_without_saving') ?>)</span>

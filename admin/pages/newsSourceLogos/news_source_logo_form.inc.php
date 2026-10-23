@@ -25,7 +25,7 @@
         <div class="contentColumn">
             <fieldset>
                 <legend><?= sysTranslations::get('global_images') ?></legend>
-                <?
+                <?php
                 if ($oNewsSourceLogo->newsSourceLogoId !== null) {
                     $oImageManagerHTML->includeTemplate();
                 } else {

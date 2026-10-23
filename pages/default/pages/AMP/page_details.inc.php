@@ -3,16 +3,16 @@
     <article >
         <div class="column-66 float-left rssFeeds">
             <!-- THE GREAT DEBATE & THE COMMON GROUND -->
-            <? if ($oPage->hasArticles > 0) { ?>
+            <?php if ($oPage->hasArticles > 0) { ?>
                 <h3><?= $oPage->title ?></h3>
                                
                 <hr class="clear"> 
                 <!-- LIST ARTICLES -->
-                <? if (empty($oArticle)) { ?>
+                <?php if (empty($oArticle)) { ?>
                     <ul>
-                        <? foreach ($aArticles AS $oArticle) { ?>
+                        <?php foreach ($aArticles AS $oArticle) { ?>
                             <li><h3><?= $oArticle->title ?></h3><br> 
-                                <?
+                                <?php
                                 $oArticleImage = $oArticle->getImages('first-online');
 
                                 if (!empty($oArticleImage)) {
@@ -21,33 +21,33 @@
                     </amp-img>
                                 
                                     
-                                <? }
+                                <?php }
                                 ?>     
-                                <?
+                                <?php
                                 $oWorldLeaderLetter = $oArticle->getWorldLeaderLetter();
 
                                 if (!empty($oWorldLeaderLetter)) {
                                     ?>
                                     <div class="letter-description">Open letter from <?= $oArticle->getAuthor()->name ?> to <?= $oWorldLeaderLetter->getWorldLeader()->getCompleteName() ?></div>
-                                    <?
+                                    <?php
                                 }
                                 ?>                                     
                                 <span class="pubDate"><?= ucfirst(Date::strToDate($oArticle->pubDate)->format('%B %d, %Y %H:%M')) ?></span> <?= ampify($oArticle->intro) ?>
 
                                 <a class="readMore no-print" href="/amp<?= $oArticle->getUrlPath() ?>" target="_self">Read More</a>
                             </li>
-                        <? } ?>
+                        <?php } ?>
                     </ul>
                                  
                     <!-- SHOW THE ARTICLE -->
-                <? } else { ?>
+                <?php } else { ?>
                 
                     <h1 class="articleTitle"><?= _e($oArticle->title) ?></h1>                    
                     <div class="articleIntro">
                         <span class="pubDate"><?= strftime('%B %d, %Y', strtotime($oArticle->pubDate)) ?></span>
                         <?= ampify($oArticle->intro) ?>
                     </div>    
-                    <?
+                    <?php
                     $oArticleImage = $oArticle->getImages('first-online');
 
                     if (!empty($oArticleImage)) {
@@ -56,44 +56,44 @@
                         data-bind=""width="960" height="700" layout="responsive" alt="<?= empty($oArticleImage->getImageFileByReference('detail')->title) ? $oArticle->getShortTitle() : $oArticleImage->getImageFileByReference('detail')->title ?>">
                     </amp-img><br />
                         
-                    <? }
+                    <?php }
                     ?>
-                    <?
+                    <?php
                     $oWorldLeaderLetter = $oArticle->getWorldLeaderLetter();
 
                     if (!empty($oWorldLeaderLetter)) {
                         ?>
                         <div class="letter-description">Open letter from <?= $oArticle->getAuthor()->name ?> to <?= $oWorldLeaderLetter->getWorldLeader()->getCompleteName() ?></div>
-                        <?
+                        <?php
                     }
                     ?> 
                     <div class="articleContent">
                         <?= ampify($oArticle->content) ?>
                     </div>
                    
-                    <? if (!empty($aFiles) || !empty($aLinks)) { ?>
+                    <?php if (!empty($aFiles) || !empty($aLinks)) { ?>
                         <div class="linksAndFiles">
                             <ul>
-                                <? foreach ($aFiles AS $oFile) { ?>
-                                    <? if ($oFile->online) { ?>
+                                <?php foreach ($aFiles AS $oFile) { ?>
+                                    <?php if ($oFile->online) { ?>
                                         <li><a class="articleLink" href="<?= $oFile->link ?>" target="_self"><?= $oFile->title ? $oFile->title : $oFile->name ?></a></li>
-                                    <? } ?>
-                                <? } ?>
-                                <? foreach ($aLinks AS $oLink) { ?>
-                                    <? if ($oLink->online) { ?>
+                                    <?php } ?>
+                                <?php } ?>
+                                <?php foreach ($aLinks AS $oLink) { ?>
+                                    <?php if ($oLink->online) { ?>
                                         <li><a class="articleLink" href="<?= $oLink->link ?>" target="<?= getLinkTarget($oLink->link) ?>"><?= $oLink->title ? $oLink->title : $oLink->link ?></a></li>
-                                    <? } ?>
-                                <? } ?>
+                                    <?php } ?>
+                                <?php } ?>
                             </ul>                        
                         </div>
-                    <? } ?>     
+                    <?php } ?>     
                         
-                     <? if (!empty($aImages) || !empty($aYoutubeVideos)) { ?>
+                     <?php if (!empty($aImages) || !empty($aYoutubeVideos)) { ?>
                         <div class="photosAndVideos clearfix">                            
                             <amp-image-lightbox id="lightbox1" layout="nodisplay"></amp-image-lightbox>
                             <div class="clearfix">
                             <?php foreach ($aImages AS $oImage) { ?>
-                                <? if ($oImage->online && ($oCropSmall = $oImage->getImageFileByReference('crop_small')) && ($oDetail = $oImage->getImageFileByReference('crop_small'))) {                                     
+                                <?php if ($oImage->online && ($oCropSmall = $oImage->getImageFileByReference('crop_small')) && ($oDetail = $oImage->getImageFileByReference('crop_small'))) {                                     
                                     ?>
                                 <div class="articleImage">
                                     <amp-img on="tap:lightbox1"
@@ -104,11 +104,11 @@
                                            title="<?= $oCropSmall->title ?>"                                           
                                            <?= $oCropSmall->imageSizeAttr ?>></amp-img>                                 
                                 </div>        
-                                <? } ?>
-                            <? } ?>
+                                <?php } ?>
+                            <?php } ?>
                             </div>
-                            <? foreach ($aYoutubeVideos AS $oYoutubeVideo) { ?>
-                                <? if ($oYoutubeVideo->online) { ?>
+                            <?php foreach ($aYoutubeVideos AS $oYoutubeVideo) { ?>
+                                <?php if ($oYoutubeVideo->online) { ?>
                             <div class="clearfix">
                                 <amp-youtube width="480"
                                   height="270"
@@ -116,22 +116,22 @@
                                   data-videoid="<?=$oYoutubeVideo->getYoutubeLinkUniqueId()?>">
                                 </amp-youtube>
                             </div>        
-                                <? } ?>
-                            <? } ?> 
+                                <?php } ?>
+                            <?php } ?> 
                         </div>
-                    <? } ?>       
+                    <?php } ?>       
                                         
-                <? } ?>
-            <? } elseif (!empty($aRssFeeds)) {
+                <?php } ?>
+            <?php } elseif (!empty($aRssFeeds)) {
                 ?>
                 <h1 class="sectionTitle"><?= $oPage->title ?></h1>
                 <hr>
                 <ul>
-                    <? foreach ($aRssFeedItems AS $oRssFeedItem) { ?>
+                    <?php foreach ($aRssFeedItems AS $oRssFeedItem) { ?>
                         <li id="rssitem-<?= $oRssFeedItem->rssFeedItemId ?>"><h2 class="feedItemTitle"><?= ampify($oRssFeedItem->title) ?></h2>                    
                             <span class="pubDate"><?= ucfirst(Date::strToDate($oRssFeedItem->pubDate)->format('%B %d, %Y %H:%M')) ?></span> <?= ampify($oRssFeedItem->description) ?><br>
                             <a class="readMore no-print inlineblock" href="<?= $oRssFeedItem->link ?>" target="_blank">Read More</a>
-                            <?
+                            <?php
                             if (preg_match('/^.*\bisrael\b.*$/i', $oRssFeedItem->description) === 1) {
                                 echo '<amp-img class="feedFlag" src="/images/layout/countryflags/israel.jpg" alt="Israel" height="28" width="42"></amp-img>';                                 
                             }
@@ -187,24 +187,24 @@
                             ?>
 
                         </li>
-                    <? } ?>
+                    <?php } ?>
                 </ul>                        
-                <? if (count($aRssFeedItems) > 1) {
+                <?php if (count($aRssFeedItems) > 1) {
                     ?>
                     <div class="cf pagination-perPage no-print">
-                        <?
+                        <?php
                         echo generatePaginationHTML($iPageCount, $iCurrPage);
                         
                         ?>
                     </div>
                     <br class="clear">
-                <? } ?>
+                <?php } ?>
                 <!-- COMMON GROUND -->
-            <? } ?>
+            <?php } ?>
         
            
         </div>
-        <? include TEMPLATES_FOLDER . '/elements/rightColumn-AMP.inc.php'; ?>
+        <?php include TEMPLATES_FOLDER . '/elements/rightColumn-AMP.inc.php'; ?>
     </article>
     <!-- /MAIN CONTENT -->
 </section>

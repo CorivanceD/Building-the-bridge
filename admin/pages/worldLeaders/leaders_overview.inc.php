@@ -12,9 +12,9 @@
                 <td>
                     <select id="filterRegionId" name="leaderFilter[regionId]"  title="">
                         <option value="">-- <?= sysTranslations::get('global_region_tooltip') ?>--</option>
-                        <? foreach (CountryManager::getRegions() AS $oRegion) { ?>
+                        <?php foreach (CountryManager::getRegions() AS $oRegion) { ?>
                             <option value="<?= $oRegion->regionId ?>" <?= $oRegion->regionId == $aLeaderFilter['regionId'] ? 'selected' : '' ?>><?= $oRegion->name ?></option>
-                        <? } ?>
+                        <?php } ?>
                     </select>
                 </td>
             </tr>              
@@ -23,12 +23,12 @@
                 <td>
                     <select id="filterCountryId" name="leaderFilter[countryId]"  title="<?= sysTranslations::get('customer_choose_country') ?>">
                         <option value="">-- <?= sysTranslations::get('customer_choose_country') ?> --</option>
-                        <?
+                        <?php
                         if (!empty($aCountries)) {
                             foreach ($aCountries AS $oCountry) {
                                 ?>
                                 <option value="<?= $oCountry->countryId ?>" <?= $oCountry->countryId === $aLeaderFilter['countryId'] ? 'selected' : '' ?> ><?= $oCountry->name ?></option>
-                                <?
+                                <?php
                             }
                         }
                         ?>
@@ -52,26 +52,26 @@
             <label for="regionId"><?= sysTranslations::get('global_region') ?>  *</label>
             <select class="{validate:{required:true}}" id="regionId" name="regionId">
                 <option value="">-- <?= sysTranslations::get('global_region_tooltip') ?>--</option>
-                <? foreach (CountryManager::getRegions() as $oRegion) { ?>
+                <?php foreach (CountryManager::getRegions() as $oRegion) { ?>
                     <option value="<?= $oRegion->regionId ?>" <?= $oRegion->regionId == http_post('regionId') ? 'selected' : '' ?>><?= $oRegion->name ?></option>
-                <? } ?>
+                <?php } ?>
             </select>            
             <br><br> 
             <input type="hidden" name="action" value="import" />            
             <label for="importFile"><b>File (.xlsx)</b></label>&nbsp;&nbsp;<input type="file" name="importFile" id="importFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
             <br><br><input type="submit" value="Import" name="import" id="import"/><br><br>
         </form>
-        <? if (!empty($aErrorLog)) { ?>
+        <?php if (!empty($aErrorLog)) { ?>
             <br/>    
             <em>
                 <b>Errors</b><br/>
-                <? foreach ($aErrorLog as $sLog) { ?>
+                <?php foreach ($aErrorLog as $sLog) { ?>
                     <?= $sLog ?><br/>
-                <? }
+                <?php }
                 ?> 
             </em>
             <br/>
-            <?
+            <?php
         }
         ?>        
     </fieldset>
@@ -93,7 +93,7 @@
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($aLeaders AS $oLeader) {
             echo '<tr>';
             echo '<td>' . _e($oLeader->getCompleteName()) . '</td>';
@@ -130,7 +130,7 @@
         </tr>
     </tfoot>
 </table>
-<?
+<?php
 $sUrl = getCurrentUrl();
 $sTooltip = sysTranslations::get('customer_choose_country');
 $sJavascript = <<<EOT

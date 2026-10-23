@@ -30,7 +30,7 @@
                     <tr>
                         <td class="withLabel" ><label for="countryId"><?= sysTranslations::get('global_country') ?></label> </td>
                         <td colspan="2"><input id="countryId"  type="text" autocomplete="off" disabled value="
-                            <? 
+                            <?php 
                         if (!empty($oPetition->countryId)) { 
                             $oCountry = CountryManager::getCountry($oPetition->countryId); 
                             echo $oCountry->name;                                     
@@ -67,9 +67,9 @@
                     <tr>
                         <td colspan="3">
                             <input type="submit" id="saveButton" value="<?= sysTranslations::get('global_save') ?>" name="saveButton" />
-                            <? if (http_get('param1') === 'bewerken') { ?>
+                            <?php if (http_get('param1') === 'bewerken') { ?>
                             <input type="button" id="createReport" value="Generate report" name="createReport" />
-                            <? } ?>
+                            <?php } ?>
                         </td>
                     </tr>
                 </table>
@@ -79,7 +79,7 @@
     <div class="contentColumn">
         <fieldset>
             <legend><?= sysTranslations::get('global_images') ?></legend>
-            <?
+            <?php
             if ($oPetition->petitionId !== null) {
                 $oImageManagerHTML->includeTemplate();
             } else {
@@ -92,7 +92,7 @@
 <div id="bottomOptions">
     <a class="backBtn" href="<?= ADMIN_FOLDER ?>/<?= http_get('controller') ?>"><?= sysTranslations::get('global_back_to_overview') ?></a><span class="backBtnInfo"> (<?= sysTranslations::get('global_without_saving') ?>)</span>
 </div>
-<?
+<?php
 $sReportUrl = CLIENT_HTTPS_URL.'/admin/'.http_get('controller').'/export/'.http_get('param2');
 $jsLang = empty($oCurrentUser) ? 'nl' : $oCurrentUser->getLanguage()->abbr;
 $oPageLayout->addJavascriptBottom('

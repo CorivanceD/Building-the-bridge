@@ -3,7 +3,7 @@
     <h3>LATEST OPEN LETTERS</h3>
     <hr>
     <ul class="worldLeaders">
-        <?
+        <?php
         $iFoundRows = false;
 
         foreach (ArticleManager::getArticlesByFilter(array('articleCategoryId' => ArticleCategory::WORLD_LEADER_LETTERS_CATEGORY, 'status' => Article::ARTICLE_STATUS_PUBLISHED, 'parentPageId' => Page::WORLD_LEADER_PAGE), 10, 0, $iFoundRows, array('pubDate' => 'DESC')) as $oArticle) {
@@ -11,7 +11,7 @@
             <li>
                 <div class="pubDate"><?= Date::strToDate($oArticle->pubDate)->format('%d-%m') ?></div><a href="<?= $oArticle->getUrlPath() ?>"><?= $oArticle->title ?></a>
             </li>
-        <? } ?>
+        <?php } ?>
         <a class="button" href="/send-letter">VIRTUAL POST OFFICE</a>
     </ul>
 
@@ -44,7 +44,7 @@
     <h3>Latest Blog Articles</h3>
     <hr>
     <ul class="latestArticles">
-        <?
+        <?php
         $iFoundRows = false;
 
         foreach (ArticleManager::getArticlesByFilter(array('notLetters' => 1, 'status' => Article::ARTICLE_STATUS_PUBLISHED, 'notParentPageId' => Page::WORLD_LEADER_PAGE), 11, 0, $iFoundRows, array('pubDate' => 'DESC')) as $oArticle) {
@@ -52,14 +52,14 @@
             <li>
                 <div class="pubDate"><?= Date::strToDate($oArticle->pubDate)->format('%d-%m') ?></div><a href="<?= $oArticle->getUrlPath() ?>"><?= $oArticle->title ?></a>
             </li>
-        <? } ?>
+        <?php } ?>
     </ul>
     <div class="hide">
 
         <h3>Latest Comments</h3>
         <hr>
         <ul class="comments">
-            <? foreach (ArticleManager::getArticleCommentsByFilter(array(), 7) as $oArticleComment) { ?>
+            <?php foreach (ArticleManager::getArticleCommentsByFilter(array(), 7) as $oArticleComment) { ?>
                 <li><img class="commentAvatar" src="<?= (empty($oArticleComment->authorId) || empty($oArticleComment->getAuthor()->imageId)) ? '/images/layout/no_user_photo.jpg' : $oArticleComment->getAuthor()->getImage()->getImageFileByReference('cms_thumb')->link ?>">
                     <a href="<?= $oArticleComment->getArticle()->getUrlPath() ?>#comment-<?= $oArticleComment->articleCommentId ?>">
                         <span class="commentDesc"><?= firstXWords($oArticleComment->comment, 10); ?></span>
@@ -67,42 +67,42 @@
                         <span class="commentFirm">Comment by <?= $oArticleComment->authorName ?></span>
                     </a>
                 </li>
-            <? } ?>
+            <?php } ?>
         </ul>
     </div>
-    <?
+    <?php
     $oChat = ChatManager::getActiveChat();
     if (!empty($oChat)) {
     ?>
         <div id="liveChat" class="hide">
             <h3>LIVE CHAT</h3>
             <hr>
-            <? if ($oChat->opened) { ?>
+            <?php if ($oChat->opened) { ?>
                 <h3 class="chatTopic"><span id="topic"><?= $oChat->topic ?></span></h3>
                 <div id="chatPannel">
                 </div>
                 <div id="chatControls">
                     <form method="POST" action="/chat">
-                        <? if (empty($oCurrentCustomer)) { ?>
+                        <?php if (empty($oCurrentCustomer)) { ?>
                             <input type="hidden" name="action" value="loginFirst">
-                        <?
+                        <?php
                         } else {
                         ?>
                             <input type="hidden" name="action" value="sendMessage">
-                        <?
+                        <?php
                         }
                         ?>
                         <input type="text" id="message" name="message" value="" maxlength="144">
                         <input type="submit" id="sendMessage" name="send" value="Send">
                     </form>
                 </div>
-            <? } else { ?>
+            <?php } else { ?>
                 <div class="block">
                     <?= $oChat->closedMessage ?>
                 </div>
-            <? } ?>
+            <?php } ?>
         </div>
-    <? } ?>
+    <?php } ?>
     <br>
     <br>
     <!-- <div  class="facebook_container">
@@ -110,7 +110,7 @@
     </div>  -->
 
 </div>
-<?
+<?php
 $sJavascript = '<script>';
 
 if (!empty($oCurrentCustomer)) {

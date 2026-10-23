@@ -20,7 +20,7 @@
                     <tr>
                         <td class="withLabel" style="width: 120px;"><label for="email"><?= sysTranslations::get('global_email') ?> *</label></td>
                         <td><input size="50" id="email" class="autofocus {validate:{required:true,email:true,remote:'<?= ADMIN_FOLDER . '/' . http_get('controller') ?>?ajax=checkEmail<?= $oCustomer->customerId === null ? '' : '&customerId=' . $oCustomer->customerId ?>',messages:{required:'<?= sysTranslations::get('global_email_required_tooltip') ?>',email:'<?= sysTranslations::get('global_valid_email_tooltip') ?>',remote:'<?= sysTranslations::get('global_email_required_tooltip') ?>'}}}" title="<?= sysTranslations::get('global_enter_email_tooltip') ?>" type="text" autocomplete="off" name="email" value="<?= _e($oCustomer->email) ?>" /></td>
-                        <?
+                        <?php
                         $sEmailPropError = '';
                         if (!$oCustomer->isPropValid("email"))
                             $sEmailPropError .= ($sEmailPropError == '' ? '' : ', ') . sysTranslations::get('global_field_not_completed');
@@ -96,7 +96,7 @@
                         <td class="withLabel"><label for="countryId"><?= sysTranslations::get('global_country') ?> *</label></td>  
                         <td colspan="2"><select name="countryId">
                                 <option value="">-- <?= sysTranslations::get('customer_choose_country') ?> --</option>
-                                <?
+                                <?php
                                 foreach (CountryManager::getCountries() AS $oCountry) {
                                     echo '<option ' . ($oCustomer->countryId === $oCountry->countryId ? 'selected' : '') . ' value="' . $oCountry->countryId . '">' . $oCountry->name . '</option>';
                                 }
@@ -128,12 +128,12 @@
                         <td colspan="3">
                             <?= sysTranslations::get('customer_signed_group') ?>
                             <br>
-                            <? foreach(CustomerGroupManager::getAllCustomerGroups() as $oCustomerGroup) { ?>
+                            <?php foreach(CustomerGroupManager::getAllCustomerGroups() as $oCustomerGroup) { ?>
                                 <label for="customerGroup<?= $oCustomerGroup->customerGroupId ?>">
                                     <input type="checkbox" name="customerGroupIds[]" id="customerGroup<?= $oCustomerGroup->customerGroupId ?>" value="<?= $oCustomerGroup->customerGroupId ?>" <?= $oCustomer->isLinkedToCustomerGroup($oCustomerGroup->customerGroupId) ? 'checked="checked"' : '' ?>><?= _e($oCustomerGroup->title) ?>
                                 </label>
                                 <br>
-                            <? } ?>
+                            <?php } ?>
                         </td>
                     </tr>
                     <tr>
@@ -149,12 +149,12 @@
                         <td>
                             <input class="alignRadio {validate:{required:true}}" title="<?= sysTranslations::get('customer_contact_email_tooltip') ?>" type="radio" <?= $oCustomer->contactByEmail ? 'CHECKED' : '' ?> id="contactByEmail_1" name="contactByEmail" value="1" /> <label for="contactByEmail_1"><?= sysTranslations::get('global_yes') ?></label>
                             <input class="alignRadio {validate:{required:true}}" title="<?= sysTranslations::get('customer_contact_email_tooltip') ?>" type="radio" <?= !$oCustomer->contactByEmail ? 'CHECKED' : '' ?> id="contactByEmail_0" name="contactByEmail" value="0" /> <label for="contactByEmail_0"><?= sysTranslations::get('global_no') ?></label>
-                            <? if($oCustomer->didSignOffForEmail) { ?>
+                            <?php if($oCustomer->didSignOffForEmail) { ?>
                             <span class="importantMessage"><?= sysTranslations::get('customer_client_logoff') ?></span>
-                            <? } ?>
-                            <? if(is_numeric($oCustomer->bounceRuleId) && !empty($oCustomer->bounceRuleTitle) && !empty($oCustomer->bounceRuleDescription)) { ?>
+                            <?php } ?>
+                            <?php if(is_numeric($oCustomer->bounceRuleId) && !empty($oCustomer->bounceRuleTitle) && !empty($oCustomer->bounceRuleDescription)) { ?>
                             <span class="importantMessage">(De klant staat op de bouncelijst vanwege de reden "<?= _e($oCustomer->bounceRuleTitle) ?>" en omschrijving "<?= _e($oCustomer->bounceRuleDescription) ?>)"</span>
-                            <? } ?>
+                            <?php } ?>
                         </td>
                         <td><span class="error"><?= $oCustomer->isPropValid("online") ? '' : sysTranslations::get('global_field_not_completed') ?></span></td>
                     </tr>
@@ -183,7 +183,7 @@
         <div class="contentColumn">
             <fieldset>
                 <legend><?= sysTranslations::get('global_images') ?></legend>
-                <?
+                <?php
                 if ($oCustomer->customerId !== null) {
                     $oImageManagerHTML->includeTemplate();
                 } else {
@@ -196,7 +196,7 @@
 <div id="bottomOptions">
     <a class="backBtn" href="<?= ADMIN_FOLDER ?>/<?= http_get('controller') ?>"><?=  sysTranslations::get('global_back_to_overview') ?></a><span class="backBtnInfo"> (<?= sysTranslations::get('global_without_saving') ?>)</span>
 </div>
-<?
+<?php
 # create necessary javascript
 $sBottomJavascript = <<<EOT
 <script type="text/javascript">

@@ -53,7 +53,7 @@
                 </table>
             </form>
         </fieldset>
-        <? if (!empty($oRssFeed->rssFeedId)) { ?>
+        <?php if (!empty($oRssFeed->rssFeedId)) { ?>
             <br/>
 
             <fieldset style="margin-bottom: 20px;">
@@ -84,7 +84,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?
+                        <?php
                         foreach ($aRssFeedItems AS $oRssFeedItem) {
                             echo '<tr>';
                             echo '<td>' . Date::strToDate($oRssFeedItem->pubDate)->format('%d-%m-%Y %H:%M') . '</td>';
@@ -121,7 +121,7 @@
             </fieldset>
 
             <br/>
-        <? } ?>
+        <?php } ?>
     </div>
 </div>
 <div id="bottomOptions">

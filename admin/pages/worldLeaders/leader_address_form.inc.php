@@ -17,9 +17,9 @@
                         <td class="withLabel"><label for="regionId"><?= sysTranslations::get('global_region') ?> * </label></td>
                         <td><select class="{validate:{required:true}}" id="regionId" name="regionId">
                                 <option value="">-- <?= sysTranslations::get('global_region_tooltip')?>-- </option>
-                                <? foreach (CountryManager::getRegions() as $oRegion) {?>
+                                <?php foreach (CountryManager::getRegions() as $oRegion) {?>
                                 <option value="<?= $oRegion->regionId ?>" <?= $oRegion->regionId == $oWorldLeaderAddress->regionId ? 'selected' : '' ?>><?= $oRegion->name ?></option>
-                                <? } ?>
+                                <?php } ?>
                             </select></td>
                         <td><span class="error"><?= $oWorldLeaderAddress->isPropValid("regionId") ? '' : sysTranslations::get('global_field_not_completed') ?></span></td>
                     </tr>                       
@@ -27,9 +27,9 @@
                         <td class="withLabel"><label for="countryId"><?= ucfirst(sysTranslations::get('customer_region_country')) ?></label> *</td>
                              <td><select class="{validate:{required:true}}" id="countryId" name="countryId">
                                 <option value="">-- <?= sysTranslations::get('customer_choose_country')?>-- </option>
-                                <? foreach ($aCountries as $oCountry) {?>
+                                <?php foreach ($aCountries as $oCountry) {?>
                                 <option value="<?= $oCountry->countryId ?>" <?= $oCountry->countryId == $oWorldLeaderAddress->countryId ? 'selected' : '' ?>><?= $oCountry->name ?></option>
-                                <? } ?>
+                                <?php } ?>
                             </select></td>
                         <td><span class="error"><?= $oWorldLeaderAddress->isPropValid("countryId") ? '' : sysTranslations::get('global_field_not_completed') ?></span></td>
                     </tr>                     
@@ -51,9 +51,9 @@
                         <td class="withLabel"><label for="addressCountryId"><?= ucfirst(sysTranslations::get('customer_country')) ?></label> *</td>
                              <td><select class="{validate:{required:true}}" id="addressCountryId" name="addressCountryId">
                                 <option value="">-- <?= sysTranslations::get('customer_choose_country')?>-- </option>
-                                <? foreach (CountryManager::getCountries() as $oCountry) {?>
+                                <?php foreach (CountryManager::getCountries() as $oCountry) {?>
                                 <option value="<?= $oCountry->countryId ?>" <?= $oCountry->countryId == $oWorldLeaderAddress->addressCountryId ? 'selected' : '' ?>><?= $oCountry->name ?></option>
-                                <? } ?>
+                                <?php } ?>
                             </select></td>
                         <td><span class="error"><?= $oWorldLeaderAddress->isPropValid("addressCountryId") ? '' : sysTranslations::get('global_field_not_completed') ?></span></td>
                     </tr>                     
@@ -70,7 +70,7 @@
 <div id="bottomOptions">
     <a class="backBtn" href="<?= ADMIN_FOLDER ?>/<?= http_get('controller') ?>/bewerken/<?= $oWorldLeaderAddress->worldLeaderId ?>"><?=  sysTranslations::get('global_go_back') ?></a><span class="backBtnInfo"> (<?= sysTranslations::get('global_without_saving') ?>)</span>
 </div>
-<?
+<?php
 $sUrl = getCurrentUrl();
 $sTooltip = sysTranslations::get('customer_choose_country');
 $sJavascript = <<<EOT

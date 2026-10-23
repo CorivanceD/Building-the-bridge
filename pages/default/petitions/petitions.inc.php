@@ -10,20 +10,20 @@
                 <form id="petitionForm" method="POST" action="<?=  getCurrentUrl()?>">
                     <select id="petitionId" name="petitionId">
                     <option>--- Choose a petition ---</option>
-                    <?
+                    <?php
                     foreach ($aPetitions as $oPetition) { ?>
                     <option value="<?= $oPetition->petitionId ?>"><?= $oPetition->title ?></option>
-                    <?    
+                    <?php    
                     }
                     ?>
                     </select>
                 </form>
         </div>
-        <? include TEMPLATES_FOLDER . '/elements/rightColumn.inc.php'; ?>
+        <?php include TEMPLATES_FOLDER . '/elements/rightColumn.inc.php'; ?>
     </article>
     <!-- /MAIN CONTENT -->
 </section>
-<?
+<?php
 $sJavascript = <<<EOT
 <script>
 $('#petitionId').change(

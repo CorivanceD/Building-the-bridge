@@ -34,7 +34,7 @@
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($aArticleComments AS $oArticleComment) {
             echo '<tr>';
             echo '<td>';
@@ -76,7 +76,7 @@
         </tr>
     </tfoot>
 </table>
-<?
+<?php
 # create necessary javascript
 $sController = http_get('controller');
 $sArticleCommentsOnline = sysTranslations::get('articles_online');

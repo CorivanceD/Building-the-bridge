@@ -10,12 +10,12 @@
         <div class="clearfix">
             <div style="float: left;">
                 <table class="uploadForm <?= $this->iMaxImages > 0 && (count($this->aImages) >= $this->iMaxImages) ? 'hide' : '' ?> withForm">
-                    <?
+                    <?php
                     if (!$this->bMultipleFileUpload) {
                         ?>
                         <tr>
                             <td>
-                                <?
+                                <?php
                                 if (!empty($this->sExtraUploadLine)) {
                                     echo '<p>' . $this->sExtraUploadLine . '</p>';
                                 }
@@ -38,7 +38,7 @@
                             </td>
                         </tr>
 
-                        <?
+                        <?php
                     }
 
                     # optional extra options for after upload
@@ -58,10 +58,10 @@
                                 <input class="alignCheckbox" type="checkbox" <?= $this->bCropAfterUploadChecked ? 'CHECKED' : '' ?> name="cropAfterUpload" id="cropAfterUpload" value="1" /> <label for="cropAfterUpload"><?= sysTranslations::get('global_image_direct_cut') ?></label>
                             </td>
                         </tr>
-                        <?
+                        <?php
                     }
                     ?>
-                    <?
+                    <?php
                     if (!$this->bMultipleFileUpload) {
                         ?>
                         <tr>
@@ -70,7 +70,7 @@
                                 <input <?= $this->iMaxImages > 0 && (count($this->aImages) >= $this->iMaxImages) ? 'DISABLED' : '' ?> id="saveImageBtn_<?= $this->iContainerIDAddition ?>" type="submit" name="saveImage" value="<?= sysTranslations::get('global_upload_image') ?>" />
                             </td>
                         </tr>
-                        <?
+                        <?php
                     } else {
                         ?>
                         <tr>
@@ -81,27 +81,27 @@
                         <tr>
                             <td><div class="progressInfo"></div></td>
                         </tr>
-                        <?
+                        <?php
                     }
                     ?>
                 </table>
             </div>
-            <? if ($this->bCoverImageShow) { ?>
+            <?php if ($this->bCoverImageShow) { ?>
                 <div class="coverImageContainer<?= $this->oCoverImageImageFile ? '' : ' hide' ?>" style="float: right;">
                     <div class="placeholder">
                         <div class="placeholderTitle"><b><?= $this->sCoverImageTitle ?></b> <div class="hasTooltip tooltip" title="<?= sysTranslations::get('global_replace_image') ?>">&nbsp;</div></div>
                         <div class="imagePlaceholder">
-                            <? if ($this->oCoverImageImageFile) { ?>
+                            <?php if ($this->oCoverImageImageFile) { ?>
                                 <img data-imageid="<?= $this->oCoverImageImageFile->imageId ?>" src="<?= $this->oCoverImageImageFile->link ?>" />
-                            <? } ?>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
-            <? } ?>
+            <?php } ?>
         </div>
     </form>
     <hr>
-    <?
+    <?php
     $sTooltipTitle = '';
     $sTooltipTitle .= ($sTooltipTitle != '' ? '<br />' : '') . sysTranslations::get('global_drag_images');
     if ($this->iMaxImages > 0)
@@ -109,7 +109,7 @@
     ?>
     <div class="imagesText<?= count($this->aImages) ? '' : ' hide' ?>">
         <h3><?= sysTranslations::get('global_images_already_uploaded') ?> <?= $this->iMaxImages > 0 ? ' (<span class="imagesCountLeft">' . count($this->aImages) . '/' . $this->iMaxImages . '</span>) ' : '' ?><div class="hasTooltip tooltip" title="<?= $sTooltipTitle ?>">&nbsp;</div></h3>
-        <?
+        <?php
         if ($this->sExtraUploadedLine) {
             echo '<p>' . $this->sExtraUploadedLine . '</p>';
         }
@@ -119,11 +119,11 @@
         <i><?= sysTranslations::get('global_no_images_uploaded') ?></i>
     </div>
     <div class="images <?= $this->sortable ? 'sortable' : '' ?>">
-        <?
+        <?php
         foreach ($this->aImages AS $oImage) {
             ?>
             <div id="placeholder-<?= $oImage->imageId ?>" imageId="<?= $oImage->imageId ?>" class="placeholder">
-                <?
+                <?php
                 if (!$oImage->hasImageFiles($this->aNeededImageFileReferences)) {
                     echo '<img class="notAllCrops" src="' . ADMIN_FOLDER . '/images/layout/icons/exclamation_icon.png" alt="'.sysTranslations::get('global_no_cutouts').'" title="'.sysTranslations::get('global_no_cutouts').'" />';
                 }
@@ -134,7 +134,7 @@
                     </div>
                 </div>
                 <div class="actionsPlaceholder">
-                    <?
+                    <?php
                     if ($this->onlineChangeable) {
                         if ($oImage->isOnlineChangeable()) {
                             echo '<a class="action_icon ' . ($oImage->online ? 'online' : 'offline') . '_icon onlineOfflineBtn" onclick="setOnlineImage(this); return false;" online="' . ($oImage->getImageFileByReference('original')->online ? 0 : 1) . '" href="' . $this->changeOnlineLink . '"></a>';
@@ -166,12 +166,12 @@
                     ?>
                 </div>
             </div>
-            <?
+            <?php
         }
         ?>
     </div>
 </div>
-<?
+<?php
 # include editImageForm once
 include_once $this->sEditImageFormLocation;
 

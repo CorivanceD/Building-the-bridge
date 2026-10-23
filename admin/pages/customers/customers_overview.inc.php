@@ -33,7 +33,7 @@
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($aCustomers AS $oCustomer) {
             echo '<tr>';
             echo '<td>';
@@ -71,7 +71,7 @@
         </tr>
     </tfoot>
 </table>
-<?
+<?php
 # create necessary javascript
 $sController = http_get('controller');
 $sCustomersOnline = sysTranslations::get('customer_online');

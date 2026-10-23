@@ -3,9 +3,9 @@
     <article>
         <div class="column-66 float-left rssFeeds">
             <!-- THE GREAT DEBATE & THE COMMON GROUND -->
-            <? if ($oPage->hasArticles > 0) { ?>
+            <?php if ($oPage->hasArticles > 0) { ?>
                 <h3 class="float-left" style="margin:6px 10px 0px 0px"><?= $oPage->title ?></h3>
-                <? if (getCurrentUrlPath() === '/world-leaders') { ?>
+                <?php if (getCurrentUrlPath() === '/world-leaders') { ?>
                     <form style="display:inline-block;margin-top:6px" id="contentTypeForm" method="POST" action="<?= CLIENT_HTTP_URL ?>">
                         <select id="contentType" name="contentType">
                             <option value="<?= CONTENT_HOPE ?>">Ballots Not Bullets</option>
@@ -15,127 +15,127 @@
                             <option value="<?= CONTENT_SEND_LETTER ?>">Send Yours</option>
                         </select>
                     </form>
-                <? } ?>
-                <? if (!empty($aArticleCategories)) { ?>
+                <?php } ?>
+                <?php if (!empty($aArticleCategories)) { ?>
                     <div class="categorySelector float-left">
                         <form method="POST" id="categoryForm" action="/<?= http_get('controller') ?>">
                             <select id="articleCategoryId" name="articleCategoryId">
                                 <option value="">All the categories</option>
-                                <? foreach ($aArticleCategories as $oArticleCategory) { ?>
+                                <?php foreach ($aArticleCategories as $oArticleCategory) { ?>
                                     <option <?= $_SESSION['articleCategoryId'][http_get('controller')] == $oArticleCategory->articleCategoryId ? 'selected' : '' ?> value="<?= $oArticleCategory->articleCategoryId ?>"><?= $oArticleCategory->getFullName() ?></option>
-                                <? } ?>
+                                <?php } ?>
                             </select>
                         </form>
                     </div>
-                <? } ?>
+                <?php } ?>
                 <hr class="clear">
                 <!-- LIST ARTICLES -->
-                <? if (empty($oArticle)) { ?>
+                <?php if (empty($oArticle)) { ?>
                     <ul>
-                        <? foreach ($aArticles as $oArticle) { ?>
+                        <?php foreach ($aArticles as $oArticle) { ?>
                             <li>
                                 <h3><?= $oArticle->title ?></h3><br>
-                                <?
+                                <?php
                                 $oArticleImage = $oArticle->getImages('first-online');
 
                                 if (!empty($oArticleImage)) {
                                 ?>
                                     <img class="articleHeadImage" src="<?= $oArticleImage->getImageFileByReference('detail')->link ?>" alt="<?= empty($oArticleImage->getImageFileByReference('detail')->title) ? $oArticle->getShortTitle() : $oArticleImage->getImageFileByReference('detail')->title ?>" <?= $oArticleImage->getImageFileByReference('detail')->imageSizeAttr ?>>
-                                <? }
+                                <?php }
                                 ?>
-                                <?
+                                <?php
                                 $oWorldLeaderLetter = $oArticle->getWorldLeaderLetter();
 
                                 if (!empty($oWorldLeaderLetter)) {
                                 ?>
                                     <div class="letter-description">Open letter from <?= $oArticle->getAuthor()->name ?> to <?= $oWorldLeaderLetter->getWorldLeader()->getCompleteName() ?></div>
-                                <?
+                                <?php
                                 }
                                 ?>
                                 <span class="pubDate"><?= ucfirst(Date::strToDate($oArticle->pubDate)->format('%B %d, %Y %H:%M')) ?></span> <?= $oArticle->intro ?>
 
                                 <a class="readMore no-print" href="<?= $oArticle->getUrlPath() ?>" target="_self">Read More</a>
                             </li>
-                        <? } ?>
+                        <?php } ?>
                     </ul>
-                    <? if (count($aArticles) > 0) {
+                    <?php if (count($aArticles) > 0) {
                     ?>
                         <div class="cf pagination-perPage no-print">
-                            <?
+                            <?php
                             echo generatePaginationHTML($iPageCount, $iCurrPage);
                             include TEMPLATES_FOLDER . '/elements/perPage.inc.php';
                             ?>
                         </div>
                         <br class="clear">
-                    <? } ?>
+                    <?php } ?>
                     <!-- SHOW THE ARTICLE -->
-                <? } else {
+                <?php } else {
                 ?>
                     <h1 class="articleTitle"><?= _e($oArticle->title) ?></h1>
                     <div class="articleIntro">
                         <span class="pubDate"><?= strftime('%B %d, %Y', strtotime($oArticle->pubDate)) ?></span>
                         <?= $oArticle->intro ?>
                     </div>
-                    <?
+                    <?php
                     $oArticleImage = $oArticle->getImages('first-online');
 
                     if (!empty($oArticleImage)) {
                     ?>
                         <img class="articleHeadImage" src="<?= $oArticleImage->getImageFileByReference('detail')->link ?>" alt="<?= empty($oArticleImage->getImageFileByReference('detail')->title) ? $oArticle->getShortTitle() : $oArticleImage->getImageFileByReference('detail')->title ?>" <?= $oArticleImage->getImageFileByReference('detail')->imageSizeAttr ?>>
-                    <? }
+                    <?php }
                     ?>
-                    <?
+                    <?php
                     $oWorldLeaderLetter = $oArticle->getWorldLeaderLetter();
 
                     if (!empty($oWorldLeaderLetter)) {
                     ?>
                         <div class="letter-description">Open letter from <?= $oArticle->getAuthor()->name ?> to <?= $oWorldLeaderLetter->getWorldLeader()->getCompleteName() ?></div>
-                    <?
+                    <?php
                     }
                     ?>
                     <div class="articleContent">
                         <?= $oArticle->content ?>
                     </div>
-                    <? //echo '<p><i>Author: ' . $oArticle->getAuthor()->name . '</i></p>';  
+                    <?php //echo '<p><i>Author: ' . $oArticle->getAuthor()->name . '</i></p>';  
                     ?>
                     <!-- <a href="/<?= http_get('controller') ?>" class="read-more">To article list</a>  -->
 
-                    <? if (!empty($aFiles) || !empty($aLinks)) { ?>
+                    <?php if (!empty($aFiles) || !empty($aLinks)) { ?>
                         <div class="linksAndFiles">
                             <ul>
-                                <? foreach ($aFiles as $oFile) { ?>
-                                    <? if ($oFile->online) { ?>
+                                <?php foreach ($aFiles as $oFile) { ?>
+                                    <?php if ($oFile->online) { ?>
                                         <li><a class="articleLink" href="<?= $oFile->link ?>" target="_self"><?= $oFile->title ? $oFile->title : $oFile->name ?></a></li>
-                                    <? } ?>
-                                <? } ?>
-                                <? foreach ($aLinks as $oLink) { ?>
-                                    <? if ($oLink->online) { ?>
+                                    <?php } ?>
+                                <?php } ?>
+                                <?php foreach ($aLinks as $oLink) { ?>
+                                    <?php if ($oLink->online) { ?>
                                         <li><a class="articleLink" href="<?= $oLink->link ?>" target="<?= getLinkTarget($oLink->link) ?>"><?= $oLink->title ? $oLink->title : $oLink->link ?></a></li>
-                                    <? } ?>
-                                <? } ?>
+                                    <?php } ?>
+                                <?php } ?>
                             </ul>
                         </div>
-                    <? } ?>
-                    <? if (!empty($aImages) || !empty($aYoutubeVideos)) { ?>
+                    <?php } ?>
+                    <?php if (!empty($aImages) || !empty($aYoutubeVideos)) { ?>
                         <div class="photosAndVideos clearfix">
-                            <? foreach ($aImages as $oImage) { ?>
-                                <? if ($oImage->online && ($oCropSmall = $oImage->getImageFileByReference('crop_small')) && ($oDetail = $oImage->getImageFileByReference('crop_small'))) { ?>
+                            <?php foreach ($aImages as $oImage) { ?>
+                                <?php if ($oImage->online && ($oCropSmall = $oImage->getImageFileByReference('crop_small')) && ($oDetail = $oImage->getImageFileByReference('crop_small'))) { ?>
                                     <a class="fancyBoxLink articleImage" href="<?= $oImage->getImageFileByReference('detail')->link ?>" data-fancybox-group="page" title="<?= $oCropSmall->title ?>">
                                         <img src="<?= $oCropSmall->link ?>" alt="<?= $oCropSmall->title ?>" <?= $oCropSmall->imageSizeAttr ?> />
 
                                     </a>
-                                <? } ?>
-                            <? } ?>
-                            <? foreach ($aYoutubeVideos as $oYoutubeVideo) { ?>
-                                <? if ($oYoutubeVideo->online) { ?>
+                                <?php } ?>
+                            <?php } ?>
+                            <?php foreach ($aYoutubeVideos as $oYoutubeVideo) { ?>
+                                <?php if ($oYoutubeVideo->online) { ?>
                                     <a class="youtubeVideo fancyBoxLink fancybox.iframe" href="<?= $oYoutubeVideo->getEmbedLink() ?>" title="<?= $oYoutubeVideo->title ?>">
                                         <img class="playVideo" src="/images/layout/play-video.png" alt="Play Video" height="47" width="68" />
                                         <img src="<?= $oYoutubeVideo->getThumbLink(0) ?>" />
                                     </a>
-                                <? } ?>
-                            <? } ?>
+                                <?php } ?>
+                            <?php } ?>
                         </div>
-                    <? } ?>
+                    <?php } ?>
                     <div class="share clearfix">
                         <h3>SPREAD THE WORD: 'ENOUGH IS ENOUGH'</h3>
                         <hr>
@@ -150,7 +150,7 @@
                         </div>
                     </div>
                     <br><br>
-                    <? if ($oArticle->authorId != User::ANONYMOUS_USER_ID) { ?>
+                    <?php if ($oArticle->authorId != User::ANONYMOUS_USER_ID) { ?>
                         <div class="aboutTheAuthor">
                             <h3>ABOUT THE AUTHOR</h3>
                             <hr>
@@ -165,7 +165,7 @@
 
                         </div>
                         <br><br>
-                    <? } ?>
+                    <?php } ?>
 
                     <div class="newsletter-signup">
                         <h3>A FREE SUBSCRIPTION TO THE BUILDING THE BRIDGE NEWSLETTER</h3>
@@ -226,7 +226,7 @@
                         <h3>RELATED ARTICLES</h3>
                         <hr>
                         <ul>
-                            <?
+                            <?php
                             $iFoundRows = false;
 
                             foreach (ArticleManager::getRelatedArticles($oArticle->articleId) as $oSelectedArticle) {
@@ -234,7 +234,7 @@
                                 <li>
                                     <div class="pubDate"><?= Date::strToDate($oSelectedArticle->pubDate)->format('%d-%m') ?></div><a href="<?= $oSelectedArticle->getUrlPath() ?>"><?= $oSelectedArticle->title ?></a>
                                 </li>
-                            <? } ?>
+                            <?php } ?>
                         </ul>
                     </div>
                     <br><br>
@@ -244,14 +244,14 @@
                         <p>Fill in the field below to share your opinion and post your comment.</p>
                         <form class="validateForm" method="POST">
                             <input type="hidden" name="action" value="postComment" />
-                            <? include TEMPLATES_FOLDER . '/elements/errorBox.inc.php'; ?>
+                            <?php include TEMPLATES_FOLDER . '/elements/errorBox.inc.php'; ?>
                             <input style="display:none" autocomplete="off" type="text" name="rumpelstiltskin-empty" value="" />
                             <input style="display:none" autocomplete="off" type="text" name="rumpelstiltskin-filled" value="repelsteeltje" />
                             <input type="hidden" name="articleId" value="<?= $oArticle->articleId ?>" />
-                            <? if (empty($oCurrentCustomer)) { ?>
+                            <?php if (empty($oCurrentCustomer)) { ?>
                                 <input type="text" name="authorName" data-rule-required="true" data-msg-required="You must enter your name" placeholder="Your name" value="">
                                 <input type="email" name="authorEmail" data-rule-required="true" data-msg-required="You must enter your email address" placeholder="Your email address" data-rule-email="true" data-msg-email="Please, enter a valid email address" value="">
-                            <? } ?>
+                            <?php } ?>
                             <textarea id="postAComment" name="comment" data-rule-required="true" data-msg-required="You must write your comment" placeholder="Your comment" rows="8" maxlength="500"><?= $sComment ?></textarea>
                             <input type="submit" name="post" value="Submit" />
                         </form>
@@ -260,7 +260,7 @@
                     <div class="comments hide">
                         <h3>COMMENTS</h3>
                         <hr>
-                        <?
+                        <?php
                         $bOffline = false;
 
                         if (!empty($oCurrentUser) && ($oCurrentUser->isAdmin() || $oCurrentUser->userProfile == User::USER_EDITOR)) {
@@ -268,7 +268,7 @@
                         }
                         ?>
                         <p>This article has <?= count($oArticle->getComments($bOffline)) ?> comments at this time. We invoke you to participate the discussion and leave your comment below. Share your opinion and let the world know.</p>
-                        <? foreach ($oArticle->getComments($bOffline) as $oArticleComment) { ?>
+                        <?php foreach ($oArticle->getComments($bOffline) as $oArticleComment) { ?>
                             <div id="comment-<?= $oArticleComment->articleCommentId ?>" class="articleComment">
                                 <img src="<?= (empty($oArticleComment->authorId) || empty($oArticleComment->getAuthor()->imageId)) ? '/images/layout/no_user_photo.jpg' : $oArticleComment->getAuthor()->getImage()->getImageFileByReference('cms_thumb')->link ?>" width="100" height="100">
                                 <div class="commentContent">
@@ -283,21 +283,21 @@
                                     <div class="statusUpdate"></div>
                                 </div>
                             </div>
-                        <? } ?>
+                        <?php } ?>
                     </div>
-                <? } ?>
+                <?php } ?>
                 <!--- PAGE WITH RSS FEEDS -->
-            <? } elseif (!empty($aRssFeeds)) {
+            <?php } elseif (!empty($aRssFeeds)) {
             ?>
                 <h1 class="sectionTitle"><?= $oPage->title ?></h1>
                 <hr>
                 <ul>
-                    <? foreach ($aRssFeedItems as $oRssFeedItem) { ?>
+                    <?php foreach ($aRssFeedItems as $oRssFeedItem) { ?>
                         <li id="rssitem-<?= $oRssFeedItem->rssFeedItemId ?>">
                             <h2 class="feedItemTitle"><?= $oRssFeedItem->title ?></h2>
                             <span class="pubDate"><?= ucfirst(Date::strToDate($oRssFeedItem->pubDate)->format('%B %d, %Y %H:%M')) ?></span> <?= $oRssFeedItem->description ?><br>
                             <a class="readMore no-print" style="display:inline-block" href="<?= $oRssFeedItem->link ?>" target="_blank">Read More</a>
-                            <?
+                            <?php
                             if (preg_match('/^.*\bisrael\b.*$/i', $oRssFeedItem->description) === 1) {
                                 echo '<img class="feedFlag" src="/images/layout/countryflags/israel.jpg" alt="Israel" height="28" width="42">';
                             }
@@ -353,38 +353,38 @@
                             ?>
 
                         </li>
-                    <? } ?>
+                    <?php } ?>
                 </ul>
-                <? if (count($aRssFeedItems) > 1) {
+                <?php if (count($aRssFeedItems) > 1) {
                 ?>
                     <div class="cf pagination-perPage no-print">
-                        <?
+                        <?php
                         echo generatePaginationHTML($iPageCount, $iCurrPage);
                         include TEMPLATES_FOLDER . '/elements/perPage.inc.php';
                         ?>
                     </div>
                     <br class="clear">
-                <? } ?>
+                <?php } ?>
                 <!-- COMMON GROUND -->
-            <? } elseif ($oPage->getUrlPath() === '/common-ground') {
+            <?php } elseif ($oPage->getUrlPath() === '/common-ground') {
             ?>
                 <h3><?= $oPage->title ?></h3>
                 <hr>
                 <ul>
-                    <? foreach ($aLinks as $oLink) { ?>
+                    <?php foreach ($aLinks as $oLink) { ?>
                         <li>
                             <a class="pageLink" href="<?= $oLink->link ?>" target="_blank"><?= $oLink->title ?></a>
                         </li>
-                    <? } ?>
+                    <?php } ?>
                 </ul>
                 <!-- CONFIRM COMMENT -->
-            <? } elseif ($oPage->getUrlPath() === '/confirm-comment') { ?>
+            <?php } elseif ($oPage->getUrlPath() === '/confirm-comment') { ?>
                 <h3><?= $oPage->title ?></h3>
                 <hr>
                 <?= $oPage->content ?>
                 <div id="confirmComment">
                     <form method="GET" class="validateForm">
-                        <? include TEMPLATES_FOLDER . '/elements/errorBox.inc.php'; ?>
+                        <?php include TEMPLATES_FOLDER . '/elements/errorBox.inc.php'; ?>
                         <label for="email">E-Mail address *</label>
                         <input type="email" name="email" value="" data-rule-required="true" data-msg-required="You must enter your email address" data-rule-email="true" data-msg-email="Enter a valid e-mail address">
                         <label for="code">Confirmation code *</label>
@@ -393,13 +393,13 @@
                     </form>
                 </div>
                 <!-- NORMAL PAGE -->
-            <? } else {
+            <?php } else {
             ?>
                 <h1 class="sectionTitle"><?= $oPage->title ?></h1>
                 <hr>
                 <?= $oPage->content ?>
                 <br>
-                <? if ($oPage->getUrlPath() === '/please-like-us') { ?>
+                <?php if ($oPage->getUrlPath() === '/please-like-us') { ?>
                     <div class="socialShare hide">
                         <div class="fb-like" data-href="<?= CLIENT_HTTPS_URL ?>" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
                         <a href="https://twitter.com/share" class="twitter-share-button" data-url="<?= CLIENT_HTTPS_URL ?>" data-text="Building the Bridge">Tweet</a>
@@ -407,69 +407,69 @@
                         <a href="<?= http_session('confirmedCommentUrl', CLIENT_HTTPS_URL) ?>" class="submitLink" target="_self">CONTINUE TO YOUR COMMENT</a>
                     </div>
 
-                <? } ?>
+                <?php } ?>
                 <br>
-                <? if ($oPage->hasSubPages()) { ?>
+                <?php if ($oPage->hasSubPages()) { ?>
                     <ul>
-                        <? foreach ($oPage->getSubpages() as $oPage) { ?>
+                        <?php foreach ($oPage->getSubpages() as $oPage) { ?>
                             <li>
                                 <a class="pageLink" href="<?= $oPage->getUrlPath() ?>" target="_self"><?= $oPage->title ?></a>
                             </li>
-                        <? } ?>
+                        <?php } ?>
                     </ul>
-                <? } ?>
-                <?
+                <?php } ?>
+                <?php
                 $oPageImage = $oPage->getImages('first-online');
 
                 if (!empty($oPageImage)) {
                 ?>
                     <img class="articleHeadImage" src="<?= $oPageImage->getImageFileByReference('detail')->link ?>" alt="<?= empty($oPageImage->getImageFileByReference('detail')->title) ? $oPage->title : $oPageImage->getImageFileByReference('detail')->title ?>" <?= $oPageImage->getImageFileByReference('detail')->imageSizeAttr ?>>
-                <? }
+                <?php }
                 ?>
 
-                <? if (!empty($aFiles) || !empty($aLinks)) { ?>
+                <?php if (!empty($aFiles) || !empty($aLinks)) { ?>
                     <div class="linksAndFiles">
                         <ul>
-                            <? foreach ($aFiles as $oFile) { ?>
-                                <? if ($oFile->online) { ?>
+                            <?php foreach ($aFiles as $oFile) { ?>
+                                <?php if ($oFile->online) { ?>
                                     <li><a class="articleLink" href="<?= $oFile->link ?>" target="_self"><?= $oFile->title ? $oFile->title : $oFile->name ?></a></li>
-                                <? } ?>
-                            <? } ?>
-                            <? foreach ($aLinks as $oLink) { ?>
-                                <? if ($oLink->online) { ?>
+                                <?php } ?>
+                            <?php } ?>
+                            <?php foreach ($aLinks as $oLink) { ?>
+                                <?php if ($oLink->online) { ?>
                                     <li><a class="articleLink" href="<?= $oLink->link ?>" target="<?= getLinkTarget($oLink->link) ?>"><?= $oLink->title ? $oLink->title : $oLink->link ?></a></li>
-                                <? } ?>
-                            <? } ?>
+                                <?php } ?>
+                            <?php } ?>
                         </ul>
                     </div>
-                <? } ?>
-                <? if (!empty($aImages) || !empty($aYoutubeVideos)) { ?>
+                <?php } ?>
+                <?php if (!empty($aImages) || !empty($aYoutubeVideos)) { ?>
                     <div class="photosAndVideos clearfix">
-                        <? foreach ($aImages as $oImage) { ?>
-                            <? if ($oImage->online && ($oCropSmall = $oImage->getImageFileByReference('crop_small')) && ($oDetail = $oImage->getImageFileByReference('crop_small'))) { ?>
+                        <?php foreach ($aImages as $oImage) { ?>
+                            <?php if ($oImage->online && ($oCropSmall = $oImage->getImageFileByReference('crop_small')) && ($oDetail = $oImage->getImageFileByReference('crop_small'))) { ?>
                                 <a class="fancyBoxLink articleImage" href="<?= $oImage->getImageFileByReference('detail')->link ?>" data-fancybox-group="page" title="<?= $oCropSmall->title ?>">
                                     <img src="<?= $oCropSmall->link ?>" alt="<?= $oCropSmall->title ?>" <?= $oCropSmall->imageSizeAttr ?> />
 
                                 </a>
-                            <? } ?>
-                        <? } ?>
-                        <? foreach ($aYoutubeVideos as $oYoutubeVideo) { ?>
-                            <? if ($oYoutubeVideo->online) { ?>
+                            <?php } ?>
+                        <?php } ?>
+                        <?php foreach ($aYoutubeVideos as $oYoutubeVideo) { ?>
+                            <?php if ($oYoutubeVideo->online) { ?>
                                 <a class="youtubeVideo fancyBoxLink fancybox.iframe" href="<?= $oYoutubeVideo->getEmbedLink() ?>" title="<?= $oYoutubeVideo->title ?>">
                                     <img class="playVideo" src="/images/layout/play-video.png" width="68" height="47" alt="Play Video" />
                                     <img src="<?= $oYoutubeVideo->getThumbLink(0) ?>" />
                                 </a>
-                            <? } ?>
-                        <? } ?>
+                            <?php } ?>
+                        <?php } ?>
                     </div>
-                <? } ?>
-            <? } ?>
+                <?php } ?>
+            <?php } ?>
         </div>
-        <? include TEMPLATES_FOLDER . '/elements/rightColumn.inc.php'; ?>
+        <?php include TEMPLATES_FOLDER . '/elements/rightColumn.inc.php'; ?>
     </article>
     <!-- /MAIN CONTENT -->
 </section>
-<?
+<?php
 $sURL = getCurrentUrl();
 $sJavascript = '';
 

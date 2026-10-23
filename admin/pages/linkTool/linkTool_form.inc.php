@@ -50,7 +50,7 @@
                         <td>
                             <select id="linkCategoryId" name="linkCategoryId" class="{validate:{required:true,url:true}} default">
                                 <option value="">-- alle categorieën --</option>
-                                <?
+                                <?php
                                 foreach (CustomerLinkCategoryManager::getCustomerLinkCategoriesByFilter(array('onlyParent' => 1)) AS $oCategory) {
                                     echo '<option ' . ( $iMainCategoryId == $oCategory->customerLinkCategoryId ? 'SELECTED' : '') . ' value="' . $oCategory->customerLinkCategoryId . '">' . _e($oCategory->name) . '</option>';
                                 }
@@ -66,7 +66,7 @@
                             <?= (!empty($oParentCategory) && CustomerLinkCategoryManager::getCustomerLinkCategoriesByFilter(array('parentId' => $oParentCategory->customerLinkCategoryId)) != null) ? 'class="{validate:{required:true}} default"' : ''
                             ?>>
                                 <option value="">-- alle subcategorieën --</option>
-                                <?
+                                <?php
                                 if (!empty($oParentCategory)) {
                                     foreach (CustomerLinkCategoryManager::getCustomerLinkCategoriesByFilter(array('parentId' => $oParentCategory->customerLinkCategoryId)) AS $oSubCategory) {
                                         echo '<option ' . ( $iSubCategoryId == $oSubCategory->customerLinkCategoryId ? 'SELECTED' : '') . ' value="' . $oSubCategory->customerLinkCategoryId . '">' . _e($oSubCategory->name) . '</option>';
@@ -97,7 +97,7 @@
         </div>
     </div>
 
-    <?
+    <?php
 # create necessary javascript
     $sURL = '/admin/'.http_get('controller');
     $sBottomJavascript = <<<EOT

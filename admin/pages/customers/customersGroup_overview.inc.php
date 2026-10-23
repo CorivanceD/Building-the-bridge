@@ -9,7 +9,7 @@
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($aCustomerGroups AS $oCustomerGroup) {
             $iCustomers = $oCustomerGroup->getAmountOfClients();
             $iOnlineCustomers = $oCustomerGroup->getAmountOfClients(true);

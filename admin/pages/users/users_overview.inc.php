@@ -12,7 +12,7 @@
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($aUsers AS $oUser) {
             $sProfile = '';
             

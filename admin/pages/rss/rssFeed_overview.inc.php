@@ -26,7 +26,7 @@
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($aRssFeeds AS $oRssFeed) {
             echo '<tr>';
             echo '<td>' . _e($oRssFeed->title) . '</td>';

@@ -23,7 +23,7 @@
                         <td>
                             <select name="parentModuleId" id="parentModuleId">
                                 <option value="">-- <?= sysTranslations::get('modules_no_main') ?> --</option>
-                                <?
+                                <?php
                                 foreach (ModuleManager::getModulesByFilter(array('showAll' => 1, 'parentModuleId' => -1)) AS $oParentModule) {
                                     if ($oParentModule->moduleId == $oModule->moduleId)
                                         continue; //skip current module
@@ -42,7 +42,7 @@
                     <tr>
                         <td>&nbsp;</td>
                         <td>
-                            <input type="hidden" name="showInMenu" value="0" /><? // extra hidden field for workaround with checkboxes and _load function in controller        ?>
+                            <input type="hidden" name="showInMenu" value="0" /><?php // extra hidden field for workaround with checkboxes and _load function in controller        ?>
                             <input class="alignCheckbox" type="checkbox" id="showInMenu" name="showInMenu" <?= ($oModule->showInMenu ? 'CHECKED' : '') ?> value="1" /> <label for="showInMenu"><?= sysTranslations::get('modules_show_menu') ?></label>
                         </td>
                     </tr>

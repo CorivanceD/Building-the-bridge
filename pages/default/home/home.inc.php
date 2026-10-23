@@ -5,7 +5,7 @@
     <!-- PAGES WITH RSS FEEDS -->
     <div class="column-66 float-left rssFeeds">
         <h1 class="sectionTitle" style="display:inline-block;"><?= http_session('searchArticles', false) ? 'Found ' . $iFoundArticles . ' articles' : 'WELCOME TO' ?></h1>&nbsp;
-        <? //if (!http_session('searchArticles', false)) { 
+        <?php //if (!http_session('searchArticles', false)) { 
         ?>
         <form style="display:inline-block;" id="contentTypeForm" method="POST" action="<?= CLIENT_HTTP_URL ?>">
             <select id="contentType" name="contentType">
@@ -16,28 +16,28 @@
                 <option value="<?= CONTENT_SEND_LETTER ?>" <?= intval(http_session('contentType')) === CONTENT_SEND_LETTER ? 'selected' : '' ?>>Send Yours</option>
             </select>
         </form>
-        <? //} 
+        <?php //} 
         ?>
         <hr>
-        <?
+        <?php
         $bFirst = 1;
         foreach ($aLastArticles as $oArticle) {
         ?>
             <div class="homePageArticle">
                 <h2 class="articleTitle"><?= _e($oArticle->title) ?></h2>
-                <?
+                <?php
                 $oArticleImage = $oArticle->getImages('first-online');
 
                 if (!empty($oArticleImage)) {
                 ?>
                     <img class="articleHeadImage" src="<?= $oArticleImage->getImageFileByReference('detail')->link ?>" alt="<?= empty($oArticleImage->getImageFileByReference('detail')->title) ? $oArticle->getShortTitle() : $oArticleImage->getImageFileByReference('detail')->title ?>" <?= $oArticleImage->getImageFileByReference('detail')->imageSizeAttr ?>>
-                <? }
+                <?php }
                 ?>
                 <div class="articleIntro">
-                    <? if ($bFirst !== 1) {
+                    <?php if ($bFirst !== 1) {
                     ?>
                         <span class="pubDate"><?= strftime('%B %d, %Y', strtotime($oArticle->pubDate)) ?></span>
-                    <?
+                    <?php
                     } else {
                         $bFirst = 0;
                     }
@@ -46,10 +46,10 @@
                 </div>
                 <a class="readMore no-print" href="<?= $oArticle->getUrlPath() ?>">Read More</a>
             </div>
-        <? }
+        <?php }
         ?>
         <div style="display: none">
-            <? if (!empty($aRssFeedItems)) { ?>
+            <?php if (!empty($aRssFeedItems)) { ?>
                 <br>
                 <br>
                 <h3><?= http_session('searchArticles', false) ? 'Found ' . $iFoundRssFeedItems . ' rss feed items' : 'LATEST RSS FEED ITEMS UPDATED IN REAL TIME' ?></h3>
@@ -57,14 +57,14 @@
                 <br>
                 <ul>
 
-                    <? foreach ($aRssFeedItems as $oRssFeedItem) {
+                    <?php foreach ($aRssFeedItems as $oRssFeedItem) {
                     ?>
 
                         <li>
                             <h3><?= $oRssFeedItem->title ?></h3>
                             <span class="pubDate"><?= ucfirst(Date::strToDate($oRssFeedItem->pubDate)->format('%B %d, %Y %H:%M')) ?></span> <?= $oRssFeedItem->description ?><br>
                             <a class="readMore no-print" style="display:inline-block" href="<?= $oRssFeedItem->link ?>" target="_blank">Read More</a><br>
-                            <?
+                            <?php
                             if (preg_match('/^.*\bisrael\b.*$/i', $oRssFeedItem->description) === 1) {
                                 echo '<img class="feedFlag" src="/images/layout/countryflags/israel.jpg" alt="Israel" height="28" width="42">';
                             }
@@ -120,17 +120,17 @@
                             ?>
                         </li>
 
-                    <?
+                    <?php
                     } ?>
                 </ul>
-            <? }
+            <?php }
             ?>
 
         </div>
     </div>
-    <? include TEMPLATES_FOLDER . '/elements/rightColumn.inc.php'; ?>
+    <?php include TEMPLATES_FOLDER . '/elements/rightColumn.inc.php'; ?>
 </section>
-<?
+<?php
 $sJavascript = <<<EOT
 <script>
 $('#contentType').change(

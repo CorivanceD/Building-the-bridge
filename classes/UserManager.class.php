@@ -1,4 +1,4 @@
-<?
+<?php
 
 /* Models and managers used by the UserManager model */
 require_once 'User.class.php';

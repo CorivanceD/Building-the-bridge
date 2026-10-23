@@ -10,30 +10,30 @@
                         <td><input style="width:120px" size="50" id="chatTopic" class="{validate:{required:true}}" title="<?= sysTranslations::get('chat_topic_tooltip') ?>" type="text" name="chatTopic" value="<?= empty($oActiveChat->topic) ? '' : $oActiveChat->topic ?>" /></td>
                         <td><input type="submit" id="startChat" value="<?= sysTranslations::get('chat_start_new_chat') ?>" name="startChat" /></td>
                     </tr>
-                    <? if (!$oChat->isPropValid("topic")) { ?>
+                    <?php if (!$oChat->isPropValid("topic")) { ?>
                         <tr>
                             <td colspan="3"><span class="error"><?= sysTranslations::get('global_field_not_completed') ?></span></td>
                         </tr>
-                    <? } ?>
-                    <? if (!empty($oActiveChat)) { ?>
+                    <?php } ?>
+                    <?php if (!empty($oActiveChat)) { ?>
                         <tr>
                             <td class="withLabel" style="width:150px"><label for="closedMessage"><?= sysTranslations::get('chat_closed_message') ?> *</label> <div class="hasTooltip tooltip" title="<?= sysTranslations::get('chat_closed_tooltip') ?>">&nbsp;</div></td>
                             <td colspan="2"><input style="width:240px" id="closedMessage" class="{validate:{required:true}}" title="<?= sysTranslations::get('chat_closed_tooltip') ?>" type="text" name="closedMessage" value="<?= empty($oActiveChat->closedMessage) ? '' : $oActiveChat->closedMessage ?>" /></td>
                         </tr>
-                    <? } ?>
+                    <?php } ?>
                     <tr>
                         <td colspan="3" class="withLabel"><label><b>Current topic:</b></label>  &nbsp;<i id="currentTopic"><?= empty($oActiveChat) ? '' : $oActiveChat->topic ?></i>                      
                             &nbsp;&nbsp;&nbsp;<label><b>Current status:</b></label>&nbsp;<i id="currentStatus"><?= empty($oActiveChat) ? '' : ($oActiveChat->opened ? '<span style="color:green">Opened</span>' : '<span style="color:red">Closed</span>') ?></i>
                             &nbsp;&nbsp;&nbsp;
-                            <? if ($oActiveChat->opened) { ?>
+                            <?php if ($oActiveChat->opened) { ?>
                                 <input type="submit" id="closeChat" value="<?= sysTranslations::get('chat_close_chat') ?>" name="stopChat" />
-                            <? } else { ?>
+                            <?php } else { ?>
                                 <input type="submit" id="openChat" value="<?= sysTranslations::get('chat_open_chat') ?>" name="openChat" />
-                            <? } ?>
+                            <?php } ?>
 
                         </td>
                     </tr>
-                    <? if (!empty($oActiveChat)) { ?>
+                    <?php if (!empty($oActiveChat)) { ?>
                         <tr>
                             <td colspan="3"><div id="chatPannel"></div></td>
                         </tr>
@@ -41,13 +41,13 @@
                             <td colspan="3"><input type="text" id="message" name="message" value="" style="width:345px" maxlength="144" <?= $oActiveChat->opened ? '' : 'disabled' ?>>
                                 <input type="button" id="sendMessage" name="send" value="Send" <?= $oActiveChat->opened ? '' : 'disabled' ?> ></td>
                         </tr>
-                    <? } ?>
+                    <?php } ?>
                 </table>
             </fieldset>
         </form>        
     </div>
 </div>
-<?
+<?php
 $bChatOpened = empty($oActiveChat) ? 'false' : ($oActiveChat->opened ? 'true' : 'false');
 $sUrl = getCurrentUrl();
 $sJavascript = <<<EOT

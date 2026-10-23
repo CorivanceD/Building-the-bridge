@@ -1,4 +1,4 @@
-<?
+<?php
 
 /* Models and managers used by the SettingManager model */
 require_once 'Setting.class.php';

@@ -47,7 +47,7 @@
                 <input title="<?= sysTranslations::get('settings_facebook_link_tooltip') ?>" type="text" id="socialMediaFacebook" name="settings[socialMediaFacebook]" size="20" value="<?= _e(Settings::get('socialMediaFacebook')) ?>" />
             </td>
         </tr>        
-        <? if ($oCurrentUser->isAdmin()) { ?>
+        <?php if ($oCurrentUser->isAdmin()) { ?>
             <tr>
                 <td style="padding-top: 10px;" colspan="2"><b><?= sysTranslations::get('settings_admin') ?></b></td>
             </tr>
@@ -57,7 +57,7 @@
                     <input class="{validate:{required:true,digits:true}} default" id="pagesMaxLevels" name="settings[pagesMaxLevels]" style="width: 30px;" type="text" value="<?= _e(Settings::get('pagesMaxLevels')) ?>" />
                 </td>
             </tr>   
-        <? } ?>
+        <?php } ?>
         <tr>
             <td>&nbsp;</td>
             <td colspan="2">

@@ -18,7 +18,7 @@
                         <td>
                             <select name="systemTranslationFilter[systemLanguageId]">
                                 <option value="">-- <?= sysTranslations::get('sysTrans_all_languages') ?> --</option>
-                                <?
+                                <?php
                                 foreach (SystemLanguageManager::getLanguagesByFilter() AS $oSystemLanguage) {
                                     echo '<option ' . ($oSystemLanguage->systemLanguageId == $aSystemTranslationFilter['systemLanguageId'] ? 'selected' : '') . ' value="' . $oSystemLanguage->systemLanguageId . '">' . $oSystemLanguage->name . '</option>';
                                 }
@@ -38,7 +38,7 @@
         <fieldset>
             <legend><?= sysTranslations::get('sysTrans_full_system_translations') ?></legend>
             <ul style="padding-left: 15px; margin-bottom: 10px;">
-                <?
+                <?php
                 foreach (SystemLanguageManager::getLanguagesByFilter() AS $oSystemLanguage) {
                     echo '<li><a href="' . ADMIN_FOLDER . '/' . http_get('controller') . '/edit-full-system-translation/' . $oSystemLanguage->systemLanguageId . '">' . $oSystemLanguage->name . '</a></li>';
                 }
@@ -60,7 +60,7 @@
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($aSystemTranslations AS $oSystemTranslation) {
             echo '<tr>';
             echo '<td>' . $oSystemTranslation->getLanguage()->name . '</td>';

@@ -29,7 +29,7 @@
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($aTemplates AS $oTemplate) {
             echo '<tr>';
             echo '<td>' . $oTemplate->templateId . '</td>';
@@ -94,7 +94,7 @@
         </form>
     </div>
 </div>
-<?
+<?php
 
 $sJavascript = <<<EOT
 <script>

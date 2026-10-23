@@ -9,7 +9,7 @@
             <br>
             <form method="POST" class="validateForm">
                 <input type="hidden" name="action" value="login">
-                <?
+                <?php
                 // hack for multiple errorBoxes on one page
                 $aErrors = array();
                 if (!empty($aErrorsLogin))
@@ -41,7 +41,7 @@
             <br>
             <form method="POST" action="<?= getCurrentUrlPath() ?>" class="validateForm">
                 <input type="hidden" value="register" name="action" />
-                <?
+                <?php
                 // hack for multiple errorBoxes on one page
                 $aErrors = array();
                 if (!empty($aErrorsSignup))
@@ -95,12 +95,12 @@
                         <td><select data-rule-required="true" data-msg-required="You must select a country" id="signup-country" name="countryId"
                                     style="width: 190px;">
                                 <option value="">Select a country</option>
-                                <?
+                                <?php
                                 $aCountries = CountryManager::getCountries();
                                 foreach ($aCountries as $oCountry) {
                                     ?>
                                     <option value="<?= $oCountry->countryId ?>" <?= ($oCountry->countryId == $oCustomer->countryId) ? 'selected' : '' ?> ><?= $oCountry->name ?></option>    
-                                <? } ?>
+                                <?php } ?>
                             </select>
                         </td>
                     </tr>                          
@@ -119,7 +119,7 @@
         </div>
     </div>
 </section>
-<?
+<?php
 $sJavascript = <<<EOT
 <script>
     var statusUpdate = '$sAccountStatusUpdate';

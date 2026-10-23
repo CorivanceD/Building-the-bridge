@@ -15,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-            <?
+            <?php
             # has unlinked customers
             if(!empty($aCustomersNotInThisGroup)) {
                 # loop through instances
@@ -48,7 +48,7 @@
     </table>
 </form>
 
-<?
+<?php
 # create necessary javascript
 $sBottomJavascript = <<<EOT
 <script type="text/javascript">

@@ -5,7 +5,7 @@
         <?= $oPage->content ?>
         <form method="POST" class="validateForm">
             <input type="hidden" value="updatePassword" name="action" />
-            <?
+            <?php
             // hack for multiple errorBoxes on one page
             $aErrors = array();
             if (!empty($aErrorsChangePass))

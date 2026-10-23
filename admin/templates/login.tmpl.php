@@ -14,7 +14,7 @@
         <![endif]-->
     </head>
     <body>
-        <? include_once ADMIN_TEMPLATES_FOLDER . '/elements/header.inc.php'; ?>
+        <?php include_once ADMIN_TEMPLATES_FOLDER . '/elements/header.inc.php'; ?>
         <div id="header-pusher"></div>
         <div class="styled-box" id="login-container">
             <div class="box-header">

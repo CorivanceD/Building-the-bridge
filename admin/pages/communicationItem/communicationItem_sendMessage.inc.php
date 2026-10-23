@@ -12,26 +12,26 @@
                 <tr>
                     <td>Type:</td><td><?= $oCommunicationItem->type ?></td>
                 </tr>
-                <? if ($oCommunicationItem->type == CommunicationItem::COMMUNICATION_TYPE_EMAIL) { ?>
+                <?php if ($oCommunicationItem->type == CommunicationItem::COMMUNICATION_TYPE_EMAIL) { ?>
                     <tr>
                         <td>Onderwerp:</td><td><?= _e($oCommunicationItem->subject) ?></td>
                     </tr>
-                <? } ?>
+                <?php } ?>
                 <tr>
                     <td>Afzendernaam:</td><td><?= _e($oCommunicationItem->senderName) ?></td>
                 </tr>
-                <? if ($oCommunicationItem->type == CommunicationItem::COMMUNICATION_TYPE_EMAIL) { ?>
+                <?php if ($oCommunicationItem->type == CommunicationItem::COMMUNICATION_TYPE_EMAIL) { ?>
                     <tr>
                         <td>Afzender e-mail:</td><td><?= _e($oCommunicationItem->senderEmail) ?></td>
                     </tr>
-                <? } ?>
+                <?php } ?>
                 <tr>
                     <td>Bericht:</td><td><a class="pointer fancyBoxLinkIframe fancybox.iframe" href="<?= ADMIN_FOLDER . '/' . http_get('controller') . '/ajax-getMessage?communicationItemId=' . $oCommunicationItem->communicationItemId ?>">Toon bericht</a></td>
                 </tr>
                 <tr>
                     <td colspan="3">&nbsp;</td>
                 </tr>
-                <? if ($oCommunicationItem->type == CommunicationItem::COMMUNICATION_TYPE_SMS) { ?>
+                <?php if ($oCommunicationItem->type == CommunicationItem::COMMUNICATION_TYPE_SMS) { ?>
                 <tr>
                     <td colspan="3">
                         <input type="submit" value="Verzend bericht naar geselecteerde ontvangers" name="buttonSubmit" id="sendMessage" />
@@ -39,21 +39,21 @@
                         <p class="hide" id="ajaxSendMessageText" style="font-weight: bold">Het bericht wordt verzonden, laat dit scherm open staan</p>
                     </td>
                 </tr>
-                <? } else { ?>
+                <?php } else { ?>
                 <tr>
                     <td colspan="3">
-                        <? if($oCommunicationItem->hasValidSPFrecord()) { ?>
+                        <?php if($oCommunicationItem->hasValidSPFrecord()) { ?>
                             <form method="POST">
                                 <input type="hidden" name="action" value="sendTrusted" />
                                 <button id="buttonSendTrusted" class="send">Verzend bericht naar geselecteerde ontvangers</button>
                                 <input type="submit" class="hide" value="Verzend bericht naar geselecteerde ontvangers" name="buttonSubmit" id="buttonSubmit" />
                             </form>
-                        <? } else { ?>
+                        <?php } else { ?>
                             <p class="error">Het SPF record is niet (goed) ingesteld. U kunt daarom het bericht niet versturen.</p>
-                        <? } ?>
+                        <?php } ?>
                     </td>
                 </tr>
-                <? } ?>
+                <?php } ?>
                 <tr>
                     <td colspan="3">&nbsp;</td>
                 </tr>
@@ -69,13 +69,13 @@
             <fieldset>
                 <br>
                 <legend>
-                    <? if ($oCommunicationItem->sending) { ?>
+                    <?php if ($oCommunicationItem->sending) { ?>
                         Het bericht zal gecontinueerd worden naar de volgende klant<?= !empty($aUniqueReceivers) && count($aUniqueReceivers) > 1 ? 'en' : '' ?>:
-                    <? } else { ?>
+                    <?php } else { ?>
                         Dit bericht zal verzonden worden naar de volgende klant<?= !empty($aUniqueReceivers) && count($aUniqueReceivers) > 1 ? 'en' : '' ?>:
-                    <? } ?>
+                    <?php } ?>
                 </legend>
-                <?
+                <?php
                 # write out receivers of this message
                 if (!empty($aUniqueReceivers)) {
                     echo '<ul id="receiversList" style="margin-left: 20px">';
@@ -153,7 +153,7 @@
     <a class="backBtn" href="<?= ADMIN_FOLDER ?>/<?= http_get('controller') ?>">Terug naar het berichten overzicht</a><span class="backBtnInfo"> (zonder opslaan)</span>
 </div>
 
-<?
+<?php
 $sAdminFolder = ADMIN_FOLDER;
 $sController = http_get('controller');
 $iCommunicationItemId = http_get('param2');
@@ -174,7 +174,7 @@ $sJsArrayValues = rtrim($sJsArrayValues, ',');
     var customerIds = [<?= $sJsArrayValues ?>];
 </script>
 
-<?
+<?php
 # error? define where to go from
 if ($oCommunicationItem->sending == 1) {
 

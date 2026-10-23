@@ -6,7 +6,7 @@
     <i><?= sysTranslations::get('pages_drag_title') ?></i>
 </p>
 <div id="nestedSortableContainer">
-    <?
+    <?php
 # list pages in unordered list
 
     function makeListTree($aPages, $iLevel, $iMaxLevels) {
@@ -60,7 +60,7 @@
 <div id="bottomOptions">
     <a class="backBtn" href="<?= ADMIN_FOLDER ?>/<?= http_get('controller') ?>"><?= sysTranslations::get('global_back_to_overview') ?></a><span class="backBtnInfo"> (<?= sysTranslations::get('global_without_saving') ?>)</span>
 </div>
-<?
+<?php
 # add nested sortable javascript source code
 $oPageLayout->addJavascriptBottom('<script src="' . ADMIN_JS_FOLDER . '/jquery-ui-nestedSortable.min.js"></script>');
 

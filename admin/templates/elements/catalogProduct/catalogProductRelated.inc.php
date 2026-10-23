@@ -10,7 +10,7 @@
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($aRelatedProducts as $key => $oRelatedProduct) {
             $aProductImages = $oRelatedProduct->getImages();
             $aRelatedProductsImage[$key] = new stdClass();
@@ -30,7 +30,7 @@
             <tr>
                 <td colspan=3><i><?= sysTranslations::get('catalog_no_related_products') ?></i></td>
             </tr>
-            <?
+            <?php
         } else {
             foreach ($aRelatedProductsImage as $oRelatedProductImage) {
                 ?>
@@ -51,15 +51,15 @@
                         <a href="#" onclick="deleteRelatedProduct('<?= $oRelatedProductImage->productId ?>'); return false;" class="action_icon delete_icon"></a> 
                     </td>
                 </tr>
-                <?
+                <?php
             }
         }
         ?>
     </tbody>
 </table>
-<? if (http_get('ajax')) { ?>
+<?php if (http_get('ajax')) { ?>
     <!-- I re-add the sort -->
     <script>
         $("table.sorted").tablesorter();
     </script>
-<? } ?>
+<?php } ?>

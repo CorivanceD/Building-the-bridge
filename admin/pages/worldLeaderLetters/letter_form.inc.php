@@ -21,9 +21,9 @@
                         <td>
                             <select id="countryId" class="{validate:{required:true}}" name="countryId"  title="<?= sysTranslations::get('letter_choose_addressee') ?>">
                                 <option value="">-- <?= sysTranslations::get('customer_choose_country') ?> --</option>
-                                <? foreach ($aCountries AS $oCountry) { ?>
+                                <?php foreach ($aCountries AS $oCountry) { ?>
                                     <option value="<?= $oCountry->countryId ?>" <?= $oCountry->countryId === $iCountryId ? 'selected' : '' ?> ><?= $oCountry->name ?></option>
-                                <? } ?>
+                                <?php } ?>
                             </select>
                         </td>
                     </tr>                    
@@ -32,9 +32,9 @@
                         <td>
                             <select id="worldLeaderId" class="{validate:{required:true}}" name="worldLeaderId"  title="<?= sysTranslations::get('letter_choose_addressee') ?>">
                                 <option value="">-- <?= sysTranslations::get('letter_choose_addressee') ?> --</option>
-                                <? foreach ($aWorldLeaders AS $oWorldLeader) { ?>
+                                <?php foreach ($aWorldLeaders AS $oWorldLeader) { ?>
                                     <option value="<?= $oWorldLeader->worldLeaderId ?>" <?= $oWorldLeader->worldLeaderId === $iWorldLeaderId ? 'selected' : '' ?> ><?= $oWorldLeader->name ?></option>
-                                <? } ?>
+                                <?php } ?>
                             </select>
                         <td><span class="error"><?= $oWorldLeaderLetter->isPropValid("worldLeaderId") ? '' : sysTranslations::get('global_field_not_completed') ?></span></td>                            
                     </tr>
@@ -44,9 +44,9 @@
                         <td>
                             <select id="worldLeaderAddressId" name="worldLeaderAddressId"  title="<?= sysTranslations::get('letter_choose_address') ?>">
                                 <option value="">-- <?= sysTranslations::get('letter_choose_address') ?> --</option>
-                                <? foreach ($aAddresses AS $oAddress) { ?>
+                                <?php foreach ($aAddresses AS $oAddress) { ?>
                                     <option value="<?= $oAddress->worldLeaderAddressId ?>" <?= $oAddress->worldLeaderAddressId === $iWorldLeaderAddressId ? 'selected' : '' ?> ><?= $oAddress->name ?></option>
-                                <? } ?>
+                                <?php } ?>
                             </select>
                         </td>
                     </tr>    
@@ -74,12 +74,12 @@
                     <tr>
                         <td colspan="3"><h2><?= sysTranslations::get('user_seo') ?></h2></td>
                     </tr>
-                    <? if (!empty($oArticle->articleCategoryId)) { ?>
+                    <?php if (!empty($oArticle->articleCategoryId)) { ?>
                         <tr>
                             <td><?= sysTranslations::get('global_current_url') ?></td>
                             <td><?= $oArticle->getUrlPath() ?></td>
                         </tr>
-                    <? } ?>                        
+                    <?php } ?>                        
                     <tr>
                         <td class="withLabel"><label for="windowTitle"><?= sysTranslations::get('global_window_title') ?></label> <div class="hasTooltip tooltip" title="<?= sysTranslations::get('global_title_seo') ?>">&nbsp;</div></td>
                         <td colspan="2">
@@ -105,20 +105,20 @@
                     <tr>
                         <td colspan="3">
                             <input type="submit" id="saveButton" value="<?= sysTranslations::get('global_save') ?>" name="saveButton" />
-                            <? if (!empty($oArticle->articleId)) { ?>
+                            <?php if (!empty($oArticle->articleId)) { ?>
                                 &nbsp;<input type="submit" id="sendToReview" value="<?= sysTranslations::get('articles_send_to_review') ?>" name="sendToReview" />
-                            <? } ?>
+                            <?php } ?>
                         </td>
                     </tr>
                 </table>
             </fieldset>
         </form>
     </div>
-    <? ?>
+    <?php ?>
     <div class="contentColumn">
         <fieldset>
             <legend><?= sysTranslations::get('global_images') ?></legend>
-            <?
+            <?php
             if ($oArticle->articleId !== null) {
 
                 $oImageManagerHTML->includeTemplate();
@@ -131,7 +131,7 @@
     <div class="contentColumn">
         <fieldset>
             <legend><?= sysTranslations::get('global_files') ?></legend>
-            <?
+            <?php
             if ($oArticle->articleId !== null) {
                 $oFileManagerHTML->includeTemplate();
             } else {
@@ -143,7 +143,7 @@
     <div class="contentColumn">
         <fieldset>
             <legend><?= sysTranslations::get('global_links') ?></legend>
-            <?
+            <?php
             if ($oArticle->articleId !== null) {
                 $oLinkManagerHTML->includeTemplate();
             } else {
@@ -155,7 +155,7 @@
     <div class="contentColumn">
         <fieldset>
             <legend><?= sysTranslations::get('global_youtube') ?></legend>
-            <?
+            <?php
             if ($oArticle->articleId !== null) {
                 $oYoutubeLinkManagerHTML->includeTemplate();
             } else {
@@ -168,7 +168,7 @@
 <div id="bottomOptions">
     <a class="backBtn" href="<?= ADMIN_FOLDER ?>/<?= http_get('controller') ?>"><?= sysTranslations::get('global_back_to_overview') ?></a><span class="backBtnInfo"> (<?= sysTranslations::get('global_without_saving') ?>)</span>
 </div>
-<?
+<?php
 $jsLang = empty($oCurrentUser) ? 'nl' : $oCurrentUser->getLanguage()->abbr;
 $sCurrentUrl = getCurrentUrl();
 $sChooseCountry = sysTranslations::get('customer_choose_country');

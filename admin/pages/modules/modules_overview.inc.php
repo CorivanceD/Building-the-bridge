@@ -14,7 +14,7 @@
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($aModules AS $oModule) {
             echo '<tr>';
             echo '<td>' . $oModule->moduleId . '</td>';

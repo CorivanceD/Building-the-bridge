@@ -12,7 +12,7 @@
                 <td>
                     <select class="default" id="linkCategoryId" name="linkFilter[linkCategoryId]">
                         <option value="">-- alle categorieën --</option>
-                        <?
+                        <?php
                         foreach (CustomerLinkCategoryManager::getCustomerLinkCategoriesByFilter(array('onlyParent' => 1)) AS $oCategory) {
                             echo '<option ' . ($aLinkFilter['linkCategoryId'] == $oCategory->customerLinkCategoryId ? 'SELECTED' : '') . ' value="' . $oCategory->customerLinkCategoryId . '">' . _e($oCategory->name) . '</option>';
 
@@ -26,7 +26,7 @@
                 <td>
                     <select class="default" id="linkSubCategoryId" name="linkFilter[linkSubCategoryId]">
                         <option value="">-- alle subcategorieën --</option>
-                        <?
+                        <?php
                         if (!empty($oParentCategory)) {
                             foreach (CustomerLinkCategoryManager::getCustomerLinkCategoriesByFilter(array('parentId' => $oParentCategory->customerLinkCategoryId)) AS $oSubCategory) {
                                 echo '<option ' . ($aLinkFilter['linkSubCategoryId'] == $oSubCategory->customerLinkCategoryId ? 'SELECTED' : '') . ' value="' . $oSubCategory->customerLinkCategoryId . '">' . _e($oSubCategory->name) . '</option>';
@@ -61,7 +61,7 @@
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($aCustomerLinks AS $oCustomerLink) {
             echo '<tr>';
             # online offline button
@@ -103,7 +103,7 @@
         </tr>
     </tfoot>
 </table>
-<?
+<?php
 # create necessary javascript
 $sURL = getCurrentUrlPath();
 $sBottomJavascript = <<<EOT

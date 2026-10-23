@@ -1,4 +1,4 @@
-<?
+<?php
 
 # check if there is a logged in user
 if (http_get("logout")) {

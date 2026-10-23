@@ -18,7 +18,7 @@
     <hr>
     <h3><?= sysTranslations::get('global_links_already_added') ?> <div class="hasTooltip tooltip" title="<?= sysTranslations::get('global_drag_links') ?>">&nbsp;</div></h3>    
     <ul class="links <?= $this->sortable ? 'sortable' : '' ?>">
-        <?
+        <?php
         foreach ($this->aLinks AS $oLink) {
             ?>
             <li id="placeholder-<?= $oLink->mediaId ?>" data-mediaid="<?= $oLink->mediaId ?>" data-title="<?= _e($oLink->title) ?>" data-link="<?= _e($oLink->link) ?>" class="placeholder">
@@ -26,7 +26,7 @@
                     <span class="mediaType link"></span><a class="title" target="_blank" href="<?= $oLink->link ?>"><?= ($oLink->title ? $oLink->title : $oLink->link) ?></a>
                 </div>
                 <div class="actionsPlaceholder">
-                    <?
+                    <?php
                     if ($this->onlineChangeable) {
                         if ($oLink->isOnlineChangeable()) {
                             echo '<a class="action_icon ' . ($oLink->online ? 'online' : 'offline') . '_icon onlineOfflineBtn" onclick="setOnlineLink(this); return false;" data-online="' . ($oLink->online ? 0 : 1) . '" href="' . $this->changeOnlineLink . '"></a>';
@@ -51,12 +51,12 @@
                     ?>
                 </div>
             </li>
-            <?
+            <?php
         }
         ?>
     </ul>
 </div>
-<?
+<?php
 # include editLinkForm once
 include_once $this->sEditLinkFormLocation;
 

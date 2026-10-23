@@ -41,7 +41,7 @@
     </head>
     <body>
         <div style="width: 500px; margin: 50px auto; text-align: center">
-            <?
+            <?php
             switch($iMessageNumber) {
                 case 1:
                     echo 'You are unsubscribed';

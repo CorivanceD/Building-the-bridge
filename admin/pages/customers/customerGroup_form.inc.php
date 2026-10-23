@@ -23,7 +23,7 @@
         </form>
     </div>
 </div>
-<? if(is_numeric($oCustomerGroup->customerGroupId)) { ?>
+<?php if(is_numeric($oCustomerGroup->customerGroupId)) { ?>
 <table class="sorted" style="margin-top: 20px">
     <thead>
         <tr class="topRow">
@@ -38,7 +38,7 @@
         </tr>
     </thead>
     <tbody>
-        <? foreach($aClients as $oClient) { ?>
+        <?php foreach($aClients as $oClient) { ?>
         <tr>
             <td><a href="<?= ADMIN_FOLDER ?>/klanten/bewerken/<?= $oClient->customerId ?>"><?= $oClient->getFullName() ?></a></td>
             <td><?= $oClient->email ?></td>
@@ -46,10 +46,10 @@
             <td><?= $oClient->contactByEmail == 1 ? sysTranslations::get('global_yes') : sysTranslations::get('global_no') ?></td>
             <td><?= $oClient->contactBySms == 1 ? sysTranslations::get('global_yes') : sysTranslations::get('global_no') ?></td>
         </tr>
-        <? } ?>
+        <?php } ?>
     </tbody>
 </table>
-<? } ?>
+<?php } ?>
 <div id="bottomOptions">
     <a class="backBtn" href="<?= ADMIN_FOLDER ?>/<?= http_get('controller') ?>"><?= sysTranslations::get('customer_back_overview') ?></a><span class="backBtnInfo"> (<?= sysTranslations::get('global_without_saving') ?>)</span>
 </div>

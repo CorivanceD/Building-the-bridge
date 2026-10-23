@@ -5,7 +5,7 @@
         <?= $oPage->content ?>
         <form method="POST" class="validateForm">
             <input type="hidden" value="confirm" name="action" />
-            <?
+            <?php
             $aErrors = array();
             if (!empty($aErrorsActivate)) {
                 $aErrors = $aErrorsActivate;

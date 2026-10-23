@@ -8,7 +8,7 @@
             <br/>
             <form method="post" class="validateForm">
                 <input type="hidden" name="action" value="sendForm">
-                <? include TEMPLATES_FOLDER . '/elements/errorBox.inc.php'; ?>
+                <?php include TEMPLATES_FOLDER . '/elements/errorBox.inc.php'; ?>
                 <table class="withForm contactForm column-100">
                     <tr>
                         <td style="width:120px"><label for="sender">Name or alias *</label></td>
@@ -41,7 +41,7 @@
                         <td>
                             <select id="linkCategoryId" name="linkCategoryId" data-rule-required="true" data-msg-required="You must choose a category">
                                 <option value="">-- choose a category --</option>
-                                <?
+                                <?php
                                 foreach (CustomerLinkCategoryManager::getCustomerLinkCategoriesByFilter(array('onlyParent' => 1)) AS $oCategory) {
                                     echo '<option ' . ( http_post('linkCategoryId') == $oCategory->customerLinkCategoryId ? 'SELECTED' : '') . ' value="' . $oCategory->customerLinkCategoryId . '">' . _e($oCategory->name) . '</option>';
                                 }
@@ -53,17 +53,17 @@
                         <td class="withLabel">Sub-Category</td>
                         <td>
                             <select <?= empty($oParentCategory) ? 'disabled' : '' ?> id="linkSubCategoryId" name="linkSubCategoryId" data-rule-required="true" data-msg-required="You must choose a subcategory">
-                                <?
+                                <?php
                                 if (!empty($oParentCategory)) { ?>                                
                                 <option value="">-- choose a subcategory --</option>
-                                <?
+                                <?php
                                     foreach (CustomerLinkCategoryManager::getCustomerLinkCategoriesByFilter(array('parentId' => $oParentCategory->customerLinkCategoryId)) AS $oSubCategory) {
                                         echo '<option ' . ( http_post('linkSubCategoryId') == $oSubCategory->customerLinkCategoryId ? 'SELECTED' : '') . ' value="' . $oSubCategory->customerLinkCategoryId . '">' . _e($oSubCategory->name) . '</option>';
                                     }
                                 }
                                 else { ?>
                                     <option value="">-- inapplicable --</option>
-                                <?
+                                <?php
                                 }
                                 ?>
                             </select>
@@ -94,10 +94,10 @@
                 </table>
             </form>
         </div>
-        <? include TEMPLATES_FOLDER . '/elements/rightColumn.inc.php'; ?>
+        <?php include TEMPLATES_FOLDER . '/elements/rightColumn.inc.php'; ?>
     </article>
 </section>
-<?
+<?php
 # create necessary javascript
 $sURL = '/' . http_get('controller');
 $sBottomJavascript = <<<EOT

@@ -1,4 +1,4 @@
-<?
+<?php
 
 /* Models and managers used by the ModuleManager model */
 require_once 'Module.class.php';
