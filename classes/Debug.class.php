@@ -25,7 +25,7 @@ class Debug {
      */
 
     public static function logError($iErrorno, $sError, $sFile, $iLine, $sExtraInfo = null, $iHowToLog = self::LOG_IN_DATABASE) {
-        $iHowToLog = self::LOG_IN_DATABASE;
+        $iLogMode = self::LOG_IN_DATABASE;
         if (!isset(self::$aErrorOccurrences[$iErrorno])) {
             self::$aErrorOccurrences[$iErrorno] = 0;
         }
@@ -74,7 +74,7 @@ class Debug {
         }
 
         if (self::$aErrorOccurrences[$iErrorno] <= self::ERROR_OCCURRENCES_LIMIT) {
-            switch ($iHowToLog) {
+            switch ($iLogMode) {
                 case self::LOG_IN_DATABASE:
                     self::writeErrorToDatabase($iErrorno, $sError, $sFile, $iLine, $sBackTrace, $sExtraInfo);
                     break;

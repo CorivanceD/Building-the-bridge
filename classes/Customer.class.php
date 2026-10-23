@@ -194,7 +194,7 @@ class Customer extends Model {
         $this->city = 'Unknown';
         $this->age = self::AGE_UNKNOWN;
         $this->online = 1;
-        $this->password = hashPasswordForDb(md5($this->email));
+        $this->password = hashPasswordForDb(md5((string) $this->email));
         $this->countryId = -1;
     }
     

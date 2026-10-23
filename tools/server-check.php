@@ -11,7 +11,8 @@ row('PHP version', PHP_VERSION, version_compare(PHP_VERSION, '8.3.0', '>=') && v
 row('PHP SAPI', PHP_SAPI, strpos(PHP_SAPI, 'fpm') !== false ? 'OK' : 'WARN');
 
 foreach (array('mysqli', 'gd', 'mbstring', 'zip', 'xml', 'dom', 'simplexml', 'xmlwriter', 'fileinfo', 'iconv', 'curl', 'json', 'opcache') as $ext) {
-    row('ext: ' . $ext, extension_loaded($ext) ? 'loaded' : '-', extension_loaded($ext) ? 'OK' : 'MISSING');
+    $loaded = $ext === 'opcache' ? (extension_loaded('Zend OPcache') || extension_loaded('opcache')) : extension_loaded($ext);
+    row('ext: ' . $ext, $loaded ? 'loaded' : '-', $loaded ? 'OK' : 'MISSING');
 }
 
 if (function_exists('gd_info')) {
