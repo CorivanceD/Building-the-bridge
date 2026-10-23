@@ -79,16 +79,20 @@ Do this once, in a quiet period.
 4. **Full package.** Upload and Extract Files the full zip (including `vendor/`; use `--split` if needed, section 4). Make sure `inc/secrets.inc.php` exists (section 2). Between this upload and the PHP switch in step 6 the site may show errors, which is why this happens in the maintenance window; keep steps 4–6 close together.
 5. **Remove the three old library folders** in File Manager: `libs/mpdf571`, `libs/PHPExcel`, `inc/PHPExcel`.
 6. **Switch PHP.** **Websites & Domains**, `buildingthebridge.eu`, **PHP Settings**. Choose **PHP 8.4.x** and handler **FPM application served by Apache** (or nginx), click **OK**.
-7. **Scheduled Tasks.** **Tools & Settings**, **Scheduled Tasks**, open the task for each script and change the command to the "After" value:
+7. **Scheduled Tasks.** **Websites & Domains**, then **Scheduled Tasks** (or type "Scheduled" in the Plesk search box). There are 4 tasks of type **Run a PHP script**, one per script in `admin/cronjobs/`. Before changing anything, note each task's Script path and schedule (for rollback). On the old setup every Script path started with `/opt/alt/php53/usr/bin/php `. For each task:
+   1. Click the task.
+   2. **Use PHP version**: choose **8.4.27**.
+   3. **Script path**: remove the old PHP program and the space after it (`/opt/alt/php53/usr/bin/php `), so the field holds only the script, for example `/var/www/vhosts/buildingthebridge.eu/domains/buildingthebridge.eu/public_html/admin/cronjobs/updateRssFeeds.cron.php`. Or use the folder button to pick the file.
+   4. Keep the schedule, then click **OK**.
 
-| Script | Before | After |
+| Script | Schedule | Script path after the change |
 |---|---|---|
-| checkBounces | `<old php path> <webroot>/admin/cronjobs/checkBounces.cron.php` | `/opt/plesk/php/8.4/bin/php <webroot>/admin/cronjobs/checkBounces.cron.php` |
-| sendBulkMail | `<old php path> <webroot>/admin/cronjobs/sendBulkMail.cron.php` | `/opt/plesk/php/8.4/bin/php <webroot>/admin/cronjobs/sendBulkMail.cron.php` |
-| sendCommunicationLogs | `<old php path> <webroot>/admin/cronjobs/sendCommunicationLogs.cron.php` | `/opt/plesk/php/8.4/bin/php <webroot>/admin/cronjobs/sendCommunicationLogs.cron.php` |
-| updateRssFeeds | `<old php path> <webroot>/admin/cronjobs/updateRssFeeds.cron.php` | `/opt/plesk/php/8.4/bin/php <webroot>/admin/cronjobs/updateRssFeeds.cron.php` |
+| updateRssFeeds | every 15 minutes | `<webroot>/admin/cronjobs/updateRssFeeds.cron.php` |
+| sendBulkMail | every minute | `<webroot>/admin/cronjobs/sendBulkMail.cron.php` |
+| checkBounces | daily 05:45 | `<webroot>/admin/cronjobs/checkBounces.cron.php` |
+| sendCommunicationLogs | monthly (1st, 00:00) | `<webroot>/admin/cronjobs/sendCommunicationLogs.cron.php` |
 
-`<webroot>` is `/var/www/vhosts/buildingthebridge.eu/domains/buildingthebridge.eu/public_html`. `<old php path>` is whatever the task uses now (for example the `alt-php53` binary path); write it down before changing, in case of rollback. Click **Run Now** on one task to test it.
+`<webroot>` is `/var/www/vhosts/buildingthebridge.eu/domains/buildingthebridge.eu/public_html`. The list must no longer show `php53` anywhere. Test with **Run Now** on **updateRssFeeds** only (it just fetches news feeds); never use Run Now on checkBounces or sendBulkMail, which contact the real email service. Cron tasks run on the server directly, so they work even while the website itself is blocked or offline.
 
 8. **Verification checklist.**
    - [ ] Home page loads
@@ -107,7 +111,7 @@ Do this once, in a quiet period.
 About 10 minutes, browser only. Use it if the checklist fails and the cause is not quickly fixable.
 
 1. **Websites & Domains**, `buildingthebridge.eu`, **PHP Settings**, choose the old **alt-php53-fpm** (PHP 5.3) version, which the server ran before the cutover, click **OK**.
-2. **Tools & Settings**, **Scheduled Tasks**: put back the old command (the "Before" column in section 5).
+2. **Websites & Domains**, **Scheduled Tasks**: in each task, set **Use PHP version** back to the old version and restore the Script path you noted in section 5, step 7.
 3. **Backup Manager**, pick the backup taken before the change, click **Restore**, choose **Files** only (the site files), start it. Wait for it to finish.
 4. Restore the **database** only if it changed in between (new orders, imports or admin edits that should be undone): tick **Databases** as well, or use phpMyAdmin, **Import**, with the `.sql` you exported in section 3. If nobody used the admin, skip this.
 5. Re-check `inc/secrets.inc.php`: if the restore brought back the old files, the old config holds the passwords itself and the file is simply unused.
