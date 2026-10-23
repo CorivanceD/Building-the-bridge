@@ -47,3 +47,7 @@ nbproject/
 /.env
 /docker/db/init/*
 !/docker/db/init/.gitkeep
+
+# PHP 8.3 migration
+/vendor/
+/release/

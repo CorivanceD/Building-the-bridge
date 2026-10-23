@@ -49,8 +49,8 @@ ErrorDocument 405 /index.php?controller=errors&param1=405
 #deny access to specific files/folders
 SetEnvIf Request_URI "^/admin/.+\.[a-z]+$" deny
 SetEnvIf Request_URI "^/admin/(index.php|images|css|js|plugins|robots.txt|favicon.png|cronjobs)" allow
-SetEnvIf Request_URI "^/(classes|controllers|pages|templates|inc|nbproject)" deny
-SetEnvIf Request_URI "(.mwb|.uml)" deny
+SetEnvIf Request_URI "^/(classes|controllers|pages|templates|inc|nbproject|vendor|docs|docker|tools|release)" deny
+SetEnvIf Request_URI "(\.mwb|\.uml|composer\.(json|lock)|Dockerfile|docker-compose\.yml|\.env)" deny
 Order deny,allow
 Deny from env=deny
 Allow from env=allow
