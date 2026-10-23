@@ -94,8 +94,8 @@ define("DEBUG_QUERIES", 0);
 define("DO_NOT_EMAIL_HTTP_ERRORS", $iDaysSinceLIVE >= 31); // optionally change the lenght of time, in days, of the http error emails
 
 # error reporting
-error_reporting(E_ALL | E_STRICT);
-set_error_handler('error_handler', E_ALL | E_STRICT);
+error_reporting(E_ALL);
+set_error_handler('error_handler', E_ALL);
 register_shutdown_function('shutdown_handler');
 
 # Communication item settings
