@@ -160,7 +160,7 @@ class MessageBird
      * @param              integer /DateTime $dateTime
      * @param DateTimeZone $timeZone
      */
-    public function setTimestamp($dateTime, DateTimeZone $timeZone = null)
+    public function setTimestamp($dateTime, ?DateTimeZone $timeZone = null)
     {
         if (! ($dateTime instanceof DateTime)) {
             $dateTime = new DateTime($dateTime, $timeZone);

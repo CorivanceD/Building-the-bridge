@@ -7,7 +7,7 @@ function row($label, $value, $status) {
 }
 
 echo "Server check (no secrets shown)\n\n";
-row('PHP version', PHP_VERSION, version_compare(PHP_VERSION, '8.3.0', '>=') && version_compare(PHP_VERSION, '8.4.0', '<') ? 'OK' : 'WARN');
+row('PHP version', PHP_VERSION, version_compare(PHP_VERSION, '8.4.0', '>=') && version_compare(PHP_VERSION, '8.5.0', '<') ? 'OK' : 'WARN');
 row('PHP SAPI', PHP_SAPI, strpos(PHP_SAPI, 'fpm') !== false ? 'OK' : 'WARN');
 
 foreach (array('mysqli', 'gd', 'mbstring', 'zip', 'xml', 'dom', 'simplexml', 'xmlwriter', 'fileinfo', 'iconv', 'curl', 'json', 'opcache') as $ext) {
@@ -26,7 +26,7 @@ if (function_exists('gd_info')) {
     }
 }
 
-row('short_open_tag', ini_get('short_open_tag') ? 'On' : 'Off', 'OK'); # value only, not required on 8.3
+row('short_open_tag', ini_get('short_open_tag') ? 'On' : 'Off', 'OK'); # value only, not required on 8.4
 row('upload_max_filesize', ini_get('upload_max_filesize'), 'OK');
 row('memory_limit', ini_get('memory_limit'), 'OK');
 

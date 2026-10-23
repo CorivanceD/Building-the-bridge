@@ -61,34 +61,34 @@ define("RECAPTCHA_SECRET", 'REAL-RECAPTCHA-SECRET');
 
 **If the upload is too large for the browser** (the upload stalls or Plesk shows a size error): ask the developer to run `tools/release.sh --split 20` (20 is the maximum MB per file; use a smaller number if it still fails). This writes `vendor.zip` and several `btb-...-partN.zip` files. Upload and Extract Files `vendor.zip` first (only when it is included), then each part in order, removing each zip after extracting. `DELETED.txt` is inside part 1.
 
-## 5. PHP 8.3 cutover runbook
+## 5. PHP 8.4 cutover runbook
 
 Do this once, in a quiet period.
 
-1. **Preflight.** Running the check while the site is on PHP 5.6 cannot verify the PHP 8.3 extensions, so the check runs with the site briefly on 8.3. On your PC, get `tools/server-check.php` from the repo or package and keep it ready to upload.
-   1. In **Websites & Domains**, `buildingthebridge.eu`, **PHP Settings**, confirm that **PHP 8.3.x** is offered in the version list.
+1. **Preflight.** Running the check while the site is on the old PHP (currently `alt-php53-fpm`, PHP 5.3) cannot verify the PHP 8.4 extensions, so the check runs with the site briefly on 8.4. On your PC, get `tools/server-check.php` from the repo or package and keep it ready to upload.
+   1. In **Websites & Domains**, `buildingthebridge.eu`, **PHP Settings**, confirm that **PHP 8.4.x** is offered in the version list.
    2. In File Manager, open the webroot, **Upload** `server-check.php`.
-   3. Briefly switch the domain to **PHP 8.3.x** with handler **FPM application served by Apache** (or nginx), click **OK**, then open `https://buildingthebridge.eu/server-check.php`. **Warning:** the old site shows errors for these 1–2 minutes while PHP is switched.
+   3. Briefly switch the domain to **PHP 8.4.x** with handler **FPM application served by Apache** (or nginx), click **OK**, then open `https://buildingthebridge.eu/server-check.php`. **Warning:** the old site shows errors for these 1–2 minutes while PHP is switched.
    4. Look for MISSING rows. If mysqli, gd (JPEG/PNG/FreeType), mbstring, zip, xml/dom/xmlwriter, fileinfo, iconv or curl is MISSING, stop and ask the hosting provider to enable it before going on.
-   5. Switch PHP back to the previous version right away (**PHP Settings**, the PHP 5.6 version, **OK**) and confirm the home page works again.
+   5. Switch PHP back to the previous version right away (**PHP Settings**, the old `alt-php53-fpm` (PHP 5.3) version, **OK**) and confirm the home page works again.
    6. **Remove** `server-check.php` from the webroot.
 
-   The script runs on both PHP 5.6 and 8.3, so it is harmless to open on either; only the 8.3 run verifies the extensions.
+   The script runs on both the old PHP 5.3 and 8.4, so it is harmless to open on either; only the 8.4 run verifies the extensions.
 2. **Maintenance window.** Tell users the site will be briefly unavailable.
 3. **Backup** (section 3). Download it.
 4. **Full package.** Upload and Extract Files the full zip (including `vendor/`; use `--split` if needed, section 4). Make sure `inc/secrets.inc.php` exists (section 2). Between this upload and the PHP switch in step 6 the site may show errors, which is why this happens in the maintenance window; keep steps 4–6 close together.
 5. **Remove the three old library folders** in File Manager: `libs/mpdf571`, `libs/PHPExcel`, `inc/PHPExcel`.
-6. **Switch PHP.** **Websites & Domains**, `buildingthebridge.eu`, **PHP Settings**. Choose **PHP 8.3.x** and handler **FPM application served by Apache** (or nginx), click **OK**.
+6. **Switch PHP.** **Websites & Domains**, `buildingthebridge.eu`, **PHP Settings**. Choose **PHP 8.4.x** and handler **FPM application served by Apache** (or nginx), click **OK**.
 7. **Scheduled Tasks.** **Tools & Settings**, **Scheduled Tasks**, open the task for each script and change the command to the "After" value:
 
 | Script | Before | After |
 |---|---|---|
-| checkBounces | `<old php path> <webroot>/admin/cronjobs/checkBounces.cron.php` | `/opt/plesk/php/8.3/bin/php <webroot>/admin/cronjobs/checkBounces.cron.php` |
-| sendBulkMail | `<old php path> <webroot>/admin/cronjobs/sendBulkMail.cron.php` | `/opt/plesk/php/8.3/bin/php <webroot>/admin/cronjobs/sendBulkMail.cron.php` |
-| sendCommunicationLogs | `<old php path> <webroot>/admin/cronjobs/sendCommunicationLogs.cron.php` | `/opt/plesk/php/8.3/bin/php <webroot>/admin/cronjobs/sendCommunicationLogs.cron.php` |
-| updateRssFeeds | `<old php path> <webroot>/admin/cronjobs/updateRssFeeds.cron.php` | `/opt/plesk/php/8.3/bin/php <webroot>/admin/cronjobs/updateRssFeeds.cron.php` |
+| checkBounces | `<old php path> <webroot>/admin/cronjobs/checkBounces.cron.php` | `/opt/plesk/php/8.4/bin/php <webroot>/admin/cronjobs/checkBounces.cron.php` |
+| sendBulkMail | `<old php path> <webroot>/admin/cronjobs/sendBulkMail.cron.php` | `/opt/plesk/php/8.4/bin/php <webroot>/admin/cronjobs/sendBulkMail.cron.php` |
+| sendCommunicationLogs | `<old php path> <webroot>/admin/cronjobs/sendCommunicationLogs.cron.php` | `/opt/plesk/php/8.4/bin/php <webroot>/admin/cronjobs/sendCommunicationLogs.cron.php` |
+| updateRssFeeds | `<old php path> <webroot>/admin/cronjobs/updateRssFeeds.cron.php` | `/opt/plesk/php/8.4/bin/php <webroot>/admin/cronjobs/updateRssFeeds.cron.php` |
 
-`<webroot>` is `/var/www/vhosts/buildingthebridge.eu/domains/buildingthebridge.eu/public_html`. `<old php path>` is whatever the task uses now (for example `/opt/plesk/php/5.6/bin/php`); write it down before changing, in case of rollback. Click **Run Now** on one task to test it.
+`<webroot>` is `/var/www/vhosts/buildingthebridge.eu/domains/buildingthebridge.eu/public_html`. `<old php path>` is whatever the task uses now (for example the `alt-php53` binary path); write it down before changing, in case of rollback. Click **Run Now** on one task to test it.
 
 8. **Verification checklist.**
    - [ ] Home page loads
@@ -106,7 +106,7 @@ Do this once, in a quiet period.
 
 About 10 minutes, browser only. Use it if the checklist fails and the cause is not quickly fixable.
 
-1. **Websites & Domains**, `buildingthebridge.eu`, **PHP Settings**, choose the old **PHP 5.6** version, click **OK**.
+1. **Websites & Domains**, `buildingthebridge.eu`, **PHP Settings**, choose the old **alt-php53-fpm** (PHP 5.3) version, which the server ran before the cutover, click **OK**.
 2. **Tools & Settings**, **Scheduled Tasks**: put back the old command (the "Before" column in section 5).
 3. **Backup Manager**, pick the backup taken before the change, click **Restore**, choose **Files** only (the site files), start it. Wait for it to finish.
 4. Restore the **database** only if it changed in between (new orders, imports or admin edits that should be undone): tick **Databases** as well, or use phpMyAdmin, **Import**, with the `.sql` you exported in section 3. If nobody used the admin, skip this.

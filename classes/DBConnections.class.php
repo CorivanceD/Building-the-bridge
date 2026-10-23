@@ -25,7 +25,7 @@ class DBConnections {
      * @param DBConnection $oDb connection object
      * @param string $sName connection name
      */
-    public static function set(DBConnection $oDb = null, $sName = 'default') {
+    public static function set(?DBConnection $oDb = null, $sName = 'default') {
         if ($oDb instanceof DBConnection) {
             self::$aDBConnections[$sName] = $oDb;
         } else {
