@@ -36,7 +36,7 @@ if (http_post('action') == 'import') {
     $iErrors = 0;
     $iWarnings = 0;
 
-    include DOCUMENT_ROOT . '/libs/PHPExcel/PHPExcel.php';
+    require_once DOCUMENT_ROOT . '/vendor/autoload.php';
 
     $bTestMode = http_get('testMode', false);
     if (!empty($_FILES['file']) && $_FILES['file']['error'] === 0) {
@@ -49,25 +49,25 @@ if (http_post('action') == 'import') {
         try {
             switch ($sExtension) {
                 case 'xls':
-                    $oReader = PHPExcel_IOFactory::createReader('Excel5');
+                    $oReader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('Xls');
                     $oReader->setReadDataOnly(true);
-                    $oPHPExcel = $oReader->load($sFileLocation);
+                    $oSpreadsheet = $oReader->load($sFileLocation);
                     break;
                 case 'xlsx':
-                    $oReader = PHPExcel_IOFactory::createReader('Excel2007');
+                    $oReader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('Xlsx');
                     $oReader->setReadDataOnly(true);
-                    $oPHPExcel = $oReader->load($sFileLocation);
+                    $oSpreadsheet = $oReader->load($sFileLocation);
                     break;
                 default:
-                    $oPHPExcel = PHPExcel_IOFactory::load($sFileLocation);
+                    $oSpreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($sFileLocation);
                     break;
             }
-        } catch (PHPExcel_Reader_Exception $e) {
+        } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {
             $aErrors[] = 'Bestand kon niet worden gelezen';
         }
 
-        if (!empty($oPHPExcel)) {
-            $oSheet = $oPHPExcel->getSheet(0);
+        if (!empty($oSpreadsheet)) {
+            $oSheet = $oSpreadsheet->getSheet(0);
 
             // prepare rows
             $aColumns = array();

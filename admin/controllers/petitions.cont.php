@@ -1,5 +1,5 @@
 <?php
-require_once DOCUMENT_ROOT . '/libs/mpdf571/mpdf.php';
+require_once DOCUMENT_ROOT . '/vendor/autoload.php';
 # check if controller is required by index.php
 if (!defined('ACCESS'))
     die;
@@ -260,29 +260,47 @@ if (http_get("param1") == 'bewerken' || http_get("param1") == 'toevoegen') {
     $iPetitionId = intval(http_get("param2", 0)); //no value, set offline by default
     $oPetition = PetitionManager::getPetitionById($iPetitionId); 
     $aRequiredSignatures = $oPetition->getSignatures();
-    @$oSignaturePdf = new mPDF('', 'A4', 0, '', 21, 9, 60, 40, 14, 12);
-    @$oSignaturePdf->SetTitle('Petition Signatures: ' . $oPetition->title);
-    @$oSignaturePdf->use_kwt = true;
-    @$oSignaturePdf->shrink_tables_to_fit = 1;
-    @$oSignaturePdf->setAutoTopMargin = 'stretch';
-    $sStylesheet = file_get_contents(DOCUMENT_ROOT. ADMIN_CSS_FOLDER . '/petition_pdf.css');
-    @$oSignaturePdf->WriteHTML($sStylesheet, 1);
+    $sMpdfTemp = DOCUMENT_ROOT . ADMIN_TEMP . '/mpdf';
+    if (!is_dir($sMpdfTemp)) {
+        mkdir($sMpdfTemp, 0775, true);
+    }
+    try {
+        $oSignaturePdf = new \Mpdf\Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4',
+            'margin_left' => 21,
+            'margin_right' => 9,
+            'margin_top' => 60,
+            'margin_bottom' => 40,
+            'margin_header' => 14,
+            'margin_footer' => 12,
+            'tempDir' => $sMpdfTemp,
+        ]);
+        $oSignaturePdf->SetTitle('Petition Signatures: ' . $oPetition->title);
+        $oSignaturePdf->use_kwt = true;
+        $oSignaturePdf->shrink_tables_to_fit = 1;
+        $oSignaturePdf->setAutoTopMargin = 'stretch';
+        $sStylesheet = file_get_contents(DOCUMENT_ROOT. ADMIN_CSS_FOLDER . '/petition_pdf.css');
+        $oSignaturePdf->WriteHTML($sStylesheet, \Mpdf\HTMLParserMode::HEADER_CSS);
 
-    /* $sOrderHeader = file_get_contents(TEMPLATES_FOLDER . '/elements/order_pdf_header.tmpl.html'); */
-    ob_start();
-    include_once ADMIN_TEMPLATES_FOLDER . '/elements/petitions/petition_pdf_header.tmpl.php';
-    $sHtml = ob_get_contents();
-    ob_end_clean();
-    @$oSignaturePdf->SetHTMLHeader($sHtml);
+        /* $sOrderHeader = file_get_contents(TEMPLATES_FOLDER . '/elements/order_pdf_header.tmpl.html'); */
+        ob_start();
+        include_once ADMIN_TEMPLATES_FOLDER . '/elements/petitions/petition_pdf_header.tmpl.php';
+        $sHtml = ob_get_contents();
+        ob_end_clean();
+        $oSignaturePdf->SetHTMLHeader($sHtml);
 
-    ob_start();
-    include_once ADMIN_TEMPLATES_FOLDER . '/elements/petitions/petition_pdf_body.tmpl.php';
-    $sHtml = ob_get_contents();
-    ob_end_clean();
-    @$oSignaturePdf->WriteHTML($sHtml);
-    $sPdfFooter = file_get_contents(ADMIN_TEMPLATES_FOLDER . '/elements/petitions/petition_pdf_footer.tmpl.html');
-    @$oSignaturePdf->SetHTMLFooter($sPdfFooter);    
-    @$oSignaturePdf->Output('petition-'.$oPetition->petitionId.'.pdf', 'D');
+        ob_start();
+        include_once ADMIN_TEMPLATES_FOLDER . '/elements/petitions/petition_pdf_body.tmpl.php';
+        $sHtml = ob_get_contents();
+        ob_end_clean();
+        $oSignaturePdf->WriteHTML($sHtml);
+        $sPdfFooter = file_get_contents(ADMIN_TEMPLATES_FOLDER . '/elements/petitions/petition_pdf_footer.tmpl.html');
+        $oSignaturePdf->SetHTMLFooter($sPdfFooter);
+        $oSignaturePdf->Output('petition-'.$oPetition->petitionId.'.pdf', \Mpdf\Output\Destination::DOWNLOAD);
+    } catch (\Mpdf\MpdfException $e) {
+        Debug::logError("", "Petition PDF export error", __FILE__, __LINE__, $e->getMessage(), Debug::LOG_IN_EMAIL);
+    }
     die;
 } else {
     $iPerPage = http_session('petitionsPerPage', 10);

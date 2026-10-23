@@ -46,7 +46,7 @@ if (http_post('action') == 'ajax-getRegionCountries' && is_numeric(http_post('re
 if (http_post('action') == 'import') {
 
     if (http_post('regionId', false)) {
-        require_once INC_FOLDER . '/PHPExcel/PHPExcel.php';
+        require_once DOCUMENT_ROOT . '/vendor/autoload.php';
 
         # upload file or return error
         $oUpload = new Upload($_FILES['importFile'], ADMIN_TEMP, null, null, false);
@@ -54,7 +54,7 @@ if (http_post('action') == 'import') {
         # save file to database on success
         if ($oUpload->bSuccess) {
             try {
-                $oExcelDoc = PHPExcel_IOFactory::load(DOCUMENT_ROOT . $oUpload->sNewFilePath);
+                $oExcelDoc = \PhpOffice\PhpSpreadsheet\IOFactory::load(DOCUMENT_ROOT . $oUpload->sNewFilePath);
                 $oExcelDoc->setActiveSheetIndex(0);
                 $oExcelSheet = $oExcelDoc->getActiveSheet();
 
