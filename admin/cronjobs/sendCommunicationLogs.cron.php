@@ -20,7 +20,7 @@ $sDateLastMonth = date("Y-m-d", strtotime("-1 months"));
 $iTimeStamp = strtotime($sDateLastMonth);
 
 # get name of last month
-$sLastMonth = strftime('%B', $iTimeStamp);
+$sLastMonth = legacy_strftime('%B', $iTimeStamp);
 
 # fetch result
 $aSendedCommunicationItems = CommunicationItemManager::getCommunicationItemsByMonthAndYear($sDateLastMonth);

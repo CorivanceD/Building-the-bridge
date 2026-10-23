@@ -9,6 +9,7 @@ class PageLayout {
     public $sPagePath; //path to page include
     public $sStatusUpdate; //status update
     public $sModuleName; //name of the module
+    public $sTemplateName; //name of the template (set by some admin controllers)
     public $sMetaKeywords; //meta keywords related to the content
     public $sMetaDescription; //meta description related to the content
     public $sCanonical; //canonical (url path) tag for canonical pages (don't show this on the original page)

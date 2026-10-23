@@ -287,8 +287,8 @@ if (http_get('controller', null) === 'confirm-comment') {
 
      
         
-    if (is_numeric(str_replace("-amp","",http_get('lastparam')))) {
-        $iArticleId = intval(str_replace("-amp","",http_get('lastparam')));
+    if (is_numeric(str_replace("-amp","",http_get('lastparam', '')))) {
+        $iArticleId = intval(str_replace("-amp","",http_get('lastparam', '')));
 
         if (!empty($oCurrentUser) && ($oCurrentUser->isAdmin() || $oCurrentUser->userProfile == User::USER_EDITOR || $oCurrentUser->userProfile == User::USER_CLIENT_ADMIN)) {
             $aArticles = ArticleManager::getArticlesByFilter(array('articleId' => $iArticleId));

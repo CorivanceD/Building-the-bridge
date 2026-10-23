@@ -38,7 +38,7 @@
                 </div>
             </div>
             <footer>
-                &copy; <?= strftime("%Y") ?> <a onclick="target='_blank';" href="http://www.a-side.nl">A-side media</a> || De online specialisten
+                &copy; <?= legacy_strftime("%Y") ?> <a onclick="target='_blank';" href="http://www.a-side.nl">A-side media</a> || De online specialisten
             </footer>
         </div>
         <script src="<?= ADMIN_JS_FOLDER ?>/base_functions.js"></script>

@@ -216,7 +216,7 @@
                             echo '<li class="' . ($oPage->hasSubpages() ? 'hasSubpages' : '') . '"><a class="' . ($aPages[0]->level == 2 ? 'subPageLink ' : '') . ($aUrl[$oPage->level] == $oPage->getUrlPath() || '/' . http_get('controller') == $oPage->getUrlPath() . 'home' ? 'active' : '') . '" href="' . $oPage->getUrlPath() . '">' . $oPage->getShortTitle() . '</a>';
 
                             //if ($aUrl[$iLevel] == $oPage->getUrlPath() || '/' . http_get('controller') == $oPage->getUrlPath() . 'home') {
-                            if (count($oPage->hasSubpages()) > 0) {
+                            if ($oPage->hasSubpages()) {
                                 makeMainMenu($oPage->getSubPages()); //call function recursive
                             }
 

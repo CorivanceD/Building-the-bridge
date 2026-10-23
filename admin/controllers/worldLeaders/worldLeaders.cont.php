@@ -66,10 +66,10 @@ if (http_post('action') == 'import') {
 
                 //map the field names with the column letters
                 foreach ($aLetters as $sLetter) {
-                    $sField = strtolower(trim($oExcelSheet->getCell($sLetter . $iCurrRow)->getValue()));
+                    $sField = strtolower(trim((string) $oExcelSheet->getCell($sLetter . $iCurrRow)->getValue()));
 
                     if (strlen($sField) > 0) {
-                        $aFieldMapping[strtolower(trim($oExcelSheet->getCell($sLetter . $iCurrRow)->getValue()))] = $sLetter;
+                        $aFieldMapping[strtolower(trim((string) $oExcelSheet->getCell($sLetter . $iCurrRow)->getValue()))] = $sLetter;
                     }
                 }
 
@@ -78,18 +78,18 @@ if (http_post('action') == 'import') {
                 $iOrder = 1;
 
                 do {
-                    $oWorldLeader = WorldLeaderManager::getWorldLeaderByName(trim($oExcelSheet->getCell($aFieldMapping['contact'] . $iCurrRow)->getValue()));
+                    $oWorldLeader = WorldLeaderManager::getWorldLeaderByName(trim((string) $oExcelSheet->getCell($aFieldMapping['contact'] . $iCurrRow)->getValue()));
 
                     if (empty($oWorldLeader)) {
                         $oWorldLeader = new WorldLeader();
                     }
 
-                    $oWorldLeader->prefix = trim($oExcelSheet->getCell($aFieldMapping['prefix'] . $iCurrRow)->getValue());
-                    $oWorldLeader->name = trim($oExcelSheet->getCell($aFieldMapping['contact'] . $iCurrRow)->getValue());
-                    $oWorldLeader->email = trim($oExcelSheet->getCell($aFieldMapping['e-mail'] . $iCurrRow)->getValue());
-                    $oWorldLeader->position = trim($oExcelSheet->getCell($aFieldMapping['title'] . $iCurrRow)->getValue());
-                    $oWorldLeader->company = trim($oExcelSheet->getCell($aFieldMapping['company'] . $iCurrRow)->getValue());
-                    $oWorldLeader->department = trim($oExcelSheet->getCell($aFieldMapping['department'] . $iCurrRow)->getValue());
+                    $oWorldLeader->prefix = trim((string) $oExcelSheet->getCell($aFieldMapping['prefix'] . $iCurrRow)->getValue());
+                    $oWorldLeader->name = trim((string) $oExcelSheet->getCell($aFieldMapping['contact'] . $iCurrRow)->getValue());
+                    $oWorldLeader->email = trim((string) $oExcelSheet->getCell($aFieldMapping['e-mail'] . $iCurrRow)->getValue());
+                    $oWorldLeader->position = trim((string) $oExcelSheet->getCell($aFieldMapping['title'] . $iCurrRow)->getValue());
+                    $oWorldLeader->company = trim((string) $oExcelSheet->getCell($aFieldMapping['company'] . $iCurrRow)->getValue());
+                    $oWorldLeader->department = trim((string) $oExcelSheet->getCell($aFieldMapping['department'] . $iCurrRow)->getValue());
 
                     if ($oWorldLeader->isValid()) {
                         WorldLeaderManager::saveWorldLeader($oWorldLeader);
@@ -99,7 +99,7 @@ if (http_post('action') == 'import') {
 
                     if ($oWorldLeader->getAddresses() != null) {
                         foreach ($oWorldLeader->getAddresses() as $oAddress) {
-                            if (trim($oExcelSheet->getCell($aFieldMapping['address 1'] . $iCurrRow)->getValue()) == $oAddress->address && $oAddress->regionId == http_post('regionId')) {
+                            if (trim((string) $oExcelSheet->getCell($aFieldMapping['address 1'] . $iCurrRow)->getValue()) == $oAddress->address && $oAddress->regionId == http_post('regionId')) {
                                 $oWorldLeaderAddress = $oAddress;
                                 break;
                             }
@@ -107,22 +107,22 @@ if (http_post('action') == 'import') {
                     }
 
                     $oWorldLeaderAddress->worldLeaderId = $oWorldLeader->worldLeaderId;
-                    $oWorldLeaderAddress->address = trim($oExcelSheet->getCell($aFieldMapping['address 1'] . $iCurrRow)->getValue());
-                    $oWorldLeaderAddress->name = trim($oExcelSheet->getCell($aFieldMapping['address 1'] . $iCurrRow)->getValue());
-                    $oWorldLeaderAddress->city = trim($oExcelSheet->getCell($aFieldMapping['city'] . $iCurrRow)->getValue());
-                    $oWorldLeaderAddress->postalCode = trim($oExcelSheet->getCell($aFieldMapping['zip code'] . $iCurrRow)->getValue());
+                    $oWorldLeaderAddress->address = trim((string) $oExcelSheet->getCell($aFieldMapping['address 1'] . $iCurrRow)->getValue());
+                    $oWorldLeaderAddress->name = trim((string) $oExcelSheet->getCell($aFieldMapping['address 1'] . $iCurrRow)->getValue());
+                    $oWorldLeaderAddress->city = trim((string) $oExcelSheet->getCell($aFieldMapping['city'] . $iCurrRow)->getValue());
+                    $oWorldLeaderAddress->postalCode = trim((string) $oExcelSheet->getCell($aFieldMapping['zip code'] . $iCurrRow)->getValue());
                     $oWorldLeaderAddress->regionId = http_post('regionId');
                     $oWorldLeaderAddress->order = $iOrder++;
 
-                    $oAddressCountry = CountryManager::getCountryByName(trim($oExcelSheet->getCell($aFieldMapping['country'] . $iCurrRow)->getValue()));
+                    $oAddressCountry = CountryManager::getCountryByName(trim((string) $oExcelSheet->getCell($aFieldMapping['country'] . $iCurrRow)->getValue()));
 
                     if (!empty($oAddressCountry)) {
                         $oWorldLeaderAddress->addressCountryId = $oAddressCountry->countryId;
                     } else {
-                        $aErrorLog[] = 'Error (line ' . $iCurrRow . '): Country not found ' . trim($oExcelSheet->getCell($aFieldMapping['country'] . $iCurrRow)->getValue());
+                        $aErrorLog[] = 'Error (line ' . $iCurrRow . '): Country not found ' . trim((string) $oExcelSheet->getCell($aFieldMapping['country'] . $iCurrRow)->getValue());
                     }
 
-                    $sCountryName = trim($oExcelSheet->getCell($aFieldMapping['country2'] . $iCurrRow)->getValue());
+                    $sCountryName = trim((string) $oExcelSheet->getCell($aFieldMapping['country2'] . $iCurrRow)->getValue());
 
                     if (strlen($sCountryName) > 0) {
                         $oCountry = CountryManager::getCountryByName($sCountryName);
@@ -132,25 +132,25 @@ if (http_post('action') == 'import') {
                         } elseif (!empty($oAddressCountry)) {
                             $oWorldLeaderAddress->countryId = $oAddressCountry->countryId;
                         } else {
-                            $aErrorLog[] = 'Error (line ' . $iCurrRow . '): Country not found ' . trim($oExcelSheet->getCell($aFieldMapping['country2'] . $iCurrRow)->getValue());
+                            $aErrorLog[] = 'Error (line ' . $iCurrRow . '): Country not found ' . trim((string) $oExcelSheet->getCell($aFieldMapping['country2'] . $iCurrRow)->getValue());
                         }
                     }
                     else {
                         if (!empty($oAddressCountry)) {
                             $oWorldLeaderAddress->countryId = $oAddressCountry->countryId;
                         } else {
-                            $aErrorLog[] = 'Error (line ' . $iCurrRow . '): Country not found ' . trim($oExcelSheet->getCell($aFieldMapping['country2'] . $iCurrRow)->getValue());
+                            $aErrorLog[] = 'Error (line ' . $iCurrRow . '): Country not found ' . trim((string) $oExcelSheet->getCell($aFieldMapping['country2'] . $iCurrRow)->getValue());
                         }
                     }
 
                     if ($oWorldLeaderAddress->isValid()) {
                         WorldLeaderAddressManager::saveWorldLeaderAddress($oWorldLeaderAddress);
                     } else {
-                        $aErrorLog[] = 'Error (line ' . $iCurrRow . '): Address not imported for ' . trim($oExcelSheet->getCell($aFieldMapping['contact'] . $iCurrRow)->getValue()) . '. Invalid props.: ' . implode(', ', $oWorldLeaderAddress->getInvalidProps());
+                        $aErrorLog[] = 'Error (line ' . $iCurrRow . '): Address not imported for ' . trim((string) $oExcelSheet->getCell($aFieldMapping['contact'] . $iCurrRow)->getValue()) . '. Invalid props.: ' . implode(', ', $oWorldLeaderAddress->getInvalidProps());
                     }
 
                     $iCurrRow++;
-                    $sNextContact = trim($oExcelSheet->getCell($aFieldMapping['contact'] . $iCurrRow)->getValue());
+                    $sNextContact = trim((string) $oExcelSheet->getCell($aFieldMapping['contact'] . $iCurrRow)->getValue());
                 } while (!empty($sNextContact));
                 unlink(DOCUMENT_ROOT . $oUpload->sNewFilePath);
                 $_SESSION['statusUpdate'] = 'Import complete';

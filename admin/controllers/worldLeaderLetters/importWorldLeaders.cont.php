@@ -23,7 +23,7 @@ foreach (ArticleCategoryManager::getArticleCategoriesByFilter() as $oArticleCate
         $aName = array_slice($aCountryAndName, 1);
         $sName = implode(' ', $aName);
 
-        echo $sCountryName . ' - ' . $oCountry->name . ', ' . $sName . ', ' . $sPosition . '<br>';
+        echo $sCountryName . ' - ' . $oCountry?->name . ', ' . $sName . ', ' . $sPosition . '<br>';
 
         $oWorldLeader = WorldLeaderManager::getWorldLeaderByName($sName);
         

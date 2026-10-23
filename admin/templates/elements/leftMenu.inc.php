@@ -8,7 +8,7 @@
             foreach ($oCurrentUser->getModules() AS $oMainModuleForMenu) {
 
                 $bHasChildren = count($oMainModuleForMenu->getChildren()) > 0;
-                $bIsActive = strtolower($oMainModuleForMenu->name) == strtolower(http_get("controller"));
+                $bIsActive = strtolower($oMainModuleForMenu->name) == strtolower(http_get("controller", ''));
                 $bAfterWithChildren = false;
 
                 $sClasses = '';
@@ -16,19 +16,19 @@
                 $sClasses .= $bHasChildren ? 'hasChildren ' : 'no-children '; //check children
                 $sClasses .= $iT == 1 ? 'first ' : ''; //first listitem
                 $sClasses .= $iT == count($oCurrentUser->getModules()) ? 'last ' : ''; // last list item
-                $sClasses .= $bIsActive || $oMainModuleForMenu->hasChild(strtolower(http_get("controller"))) ? 'active ' : ''; // this item is active
+                $sClasses .= $bIsActive || $oMainModuleForMenu->hasChild(strtolower(http_get("controller", ''))) ? 'active ' : ''; // this item is active
 
                 echo'<li class="' . $sClasses . '">';
                 echo '<div><a href="' . ADMIN_FOLDER . '/' . $oMainModuleForMenu->name . '">' . sysTranslations::get($oMainModuleForMenu->linkName) . '</a></div>';
 
                 $bAfterWithChildren = false;
-                if ($bIsActive || ($bHasChildren && $oMainModuleForMenu->hasChild(strtolower(http_get("controller"))))) {
+                if ($bIsActive || ($bHasChildren && $oMainModuleForMenu->hasChild(strtolower(http_get("controller", ''))))) {
 
                     echo '<ul class="subItems">';
 
                     foreach ($oMainModuleForMenu->getChildren() AS $oChild) {
                         $sClassesSub = '';
-                        $sClassesSub .= strtolower($oChild->name) == strtolower(http_get("controller")) ? 'active ' : ''; // this item is active
+                        $sClassesSub .= strtolower($oChild->name) == strtolower(http_get("controller", '')) ? 'active ' : ''; // this item is active
                         echo '<li class="' . $sClassesSub . '">';
                         echo '<div><a href="' . ADMIN_FOLDER . '/' . $oChild->name . '">' . sysTranslations::get($oChild->linkName) . '</a></div>';
                         echo '</li>';

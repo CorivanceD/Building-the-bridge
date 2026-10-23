@@ -53,7 +53,7 @@ if (is_numeric($iPageId) && ($oPage = PageManager::getPageById($iPageId))) {
                 $oNewItem = $oRssFeed->createNewItem();
                 $oNewItem->setTitle($oArticle->title);
                 $oNewItem->setLink(CLIENT_HTTPS_URL . $oArticle->getUrlPath());
-                $oNewItem->setDescription($oArticle->intro);
+                $oNewItem->setDescription((string) $oArticle->intro);
                 $oNewItem->setDate(Date::strToDate($oArticle->pubDate)->format('%Y-%m-%d %H:%M:%S'));
                 $oNewItem->setAuthor($oArticle->getAuthor()->name, $oArticle->getAuthor()->email);
                 $oRssFeed->addItem($oNewItem);

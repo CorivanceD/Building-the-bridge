@@ -850,7 +850,7 @@ function decimal2valuta($fDecimal, $sLang = 'nl', $bWithCurrencySymbol = true) {
  * @return string 
  */
 function _e($mValue) {
-    return htmlentities($mValue, ENT_QUOTES, 'UTF-8');
+    return htmlentities($mValue ?? '', ENT_QUOTES, 'UTF-8');
 }
 
 /**
@@ -888,7 +888,7 @@ function ampify($html='') {
     $html = str_ireplace(
         $aReplace,
         $aReplaceWidth,
-        $html
+        (string) $html
     );
     # Add closing tags to amp-img custom element
     $html = preg_replace('/<amp-img(.*?)>/', '<amp-img layout="responsive"$1></amp-img>',$html);

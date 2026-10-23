@@ -36,7 +36,7 @@
                 <div class="articleIntro">
                     <?php if ($bFirst !== 1) {
                     ?>
-                        <span class="pubDate"><?= strftime('%B %d, %Y', strtotime($oArticle->pubDate)) ?></span>
+                        <span class="pubDate"><?= legacy_strftime('%B %d, %Y', strtotime($oArticle->pubDate)) ?></span>
                     <?php
                     } else {
                         $bFirst = 0;

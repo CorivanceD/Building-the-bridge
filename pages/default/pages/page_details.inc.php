@@ -73,7 +73,7 @@
                 ?>
                     <h1 class="articleTitle"><?= _e($oArticle->title) ?></h1>
                     <div class="articleIntro">
-                        <span class="pubDate"><?= strftime('%B %d, %Y', strtotime($oArticle->pubDate)) ?></span>
+                        <span class="pubDate"><?= legacy_strftime('%B %d, %Y', strtotime($oArticle->pubDate)) ?></span>
                         <?= $oArticle->intro ?>
                     </div>
                     <?php

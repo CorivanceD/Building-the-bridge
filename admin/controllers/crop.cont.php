@@ -27,10 +27,10 @@ if (http_post('action') == 'setCrop') {
 }
 $iCropCurrent = http_get('crop', 0);
 $iCropPrev = $iCropCurrent > 0 ? $iCropCurrent - 1 : false;
-$iCropNext = $iCropCurrent < count($aCropSettings) - 1 ? $iCropCurrent + 1 : false;
+$iCropNext = $iCropCurrent < count((array) $aCropSettings) - 1 ? $iCropCurrent + 1 : false;
 
 # check if cropsettings is richt type
-if (!$aCropSettings[$iCropCurrent] instanceof CropSettings) {
+if (!(($aCropSettings[$iCropCurrent] ?? null) instanceof CropSettings)) {
     http_redirect(ADMIN_FOLDER . "/");
 }
 

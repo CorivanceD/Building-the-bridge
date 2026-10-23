@@ -53,7 +53,7 @@ class WorldLeader extends Model {
     public function getCompleteName() {
         $sCompleteName = '';
         
-        if (strpos($this->position, $this->prefix) === false) {
+        if (strpos((string) $this->position, $this->prefix) === false) {
             $sCompleteName .= $this->prefix . ' ';
         }
         
