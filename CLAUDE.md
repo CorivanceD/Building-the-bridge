@@ -17,6 +17,7 @@ The production webroot (`public_html`) of **buildingthebridge.eu**, a legacy (20
 - DB settings come from env vars (`DB_HOST`, `DB_USER`, `DB_DATABASE`, ...) read in `inc/config.inc.php`, with production values as fallbacks. The connection is made in `classes/DBConnections.class.php`.
 - Several entry points hardcode the production path `/var/www/vhosts/buildingthebridge.eu/domains/buildingthebridge.eu/public_html` as `DOCUMENT_ROOT`. These are `admin/index.php`, the `admin/cronjobs/*.cron.php` scripts and the `compress-images*.fix.php` scripts. The Docker container mounts the repo at that same path, so they work unchanged there; anywhere else, change the path first. The front-end `index.php` uses `dirname(__FILE__)`.
 - `compress-images.fix.php` and `compress-images-layout.fix.php` are one-off maintenance scripts with `$bDoItNow = true`. They delete DB rows and files, so never run them casually.
+- Deploying (no git on the server): see `docs/DEPLOYMENT.md`; build packages with `tools/release.sh`.
 
 ## Front-end and static assets
 
