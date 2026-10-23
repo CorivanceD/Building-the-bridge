@@ -30,7 +30,19 @@ if [ "$(docker info --format '{{.Swarm.LocalNodeState}}')" != "active" ]; then
 fi
 
 docker build --build-arg PHP_VERSION="${PHP_VERSION:-5.6}" -t btb-web:local .
+
+# Swarm does not restart a service when only the image contents changed under the same tag.
+web_existed=false
+if docker service inspect btb_web >/dev/null 2>&1; then
+  web_existed=true
+fi
+
 docker stack deploy -c docker-compose.yml --resolve-image never btb
+
+if [ "$web_existed" = true ]; then
+  echo "Restarting web service with the rebuilt image..."
+  docker service update --force --image btb-web:local btb_web >/dev/null
+fi
 
 echo
 echo "Stack btb deployed. Give the containers a minute to start."
