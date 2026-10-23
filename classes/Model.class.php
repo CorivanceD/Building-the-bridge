@@ -5,6 +5,7 @@
  * Use this class as an extend on a model class for loading data into the object.
  */
 
+#[\AllowDynamicProperties]
 abstract class Model {
 
     protected $bIsValid = null;
@@ -33,7 +34,7 @@ abstract class Model {
         $oReflection = new ReflectionObject($this);
         foreach ($aData as $sPropName => $mValue) {
             if (property_exists($this, $sPropName) && $oReflection->getProperty($sPropName)->isPublic())
-                $this->$sPropName = ($bStripTags ? strip_tags($mValue) : $mValue);
+                $this->$sPropName = (is_string($mValue) && $bStripTags ? strip_tags($mValue) : $mValue);
         }
     }
 

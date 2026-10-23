@@ -3,6 +3,7 @@
 /* Models and managers used by the Image model */
 require_once 'ImageManager.class.php';
 
+#[\AllowDynamicProperties]
 class Image {
 
     public $imageId;

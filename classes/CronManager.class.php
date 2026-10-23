@@ -63,7 +63,7 @@ class CronManager {
             // limit log file to 1000 lines
             $iMaxLines = 5000;
             $aLines = file($sFile);
-            if (count($aLines) > $iMaxLines) {
+            if (is_array($aLines) && count($aLines) > $iMaxLines) {
                 file_put_contents($sFile, implode('', array_slice($aLines, -$iMaxLines, $iMaxLines)));
             }
         }
@@ -71,7 +71,7 @@ class CronManager {
         // folder is writable
         if (is_writable(DOCUMENT_ROOT . self::LOG_FOLDER)) {
             $rFile = @fopen($sFile, 'a+');
-            $sLine = strftime('%c - ') . $sLine . PHP_EOL;
+            $sLine = legacy_strftime('%c - ') . $sLine . PHP_EOL;
             @fwrite($rFile, $sLine);
             @fclose($rFile);
 

@@ -25,6 +25,7 @@ class DBConnection extends mysqli {
      * @param string $sDatabase
      */
     function __construct($sHost = DB_HOST, $sUser = DB_USER, $sPass = DB_PASS, $sDatabase = DB_DATABASE) {
+        mysqli_report(MYSQLI_REPORT_OFF); // keep manual error checks working (PHP 8.1+ throws by default)
         @parent::__construct($sHost, $sUser, $sPass, $sDatabase);
 
         /* error in connection, send email to error address */
@@ -44,6 +45,7 @@ class DBConnection extends mysqli {
      * @param boolean $bSkipErrorLogging (true for all errors, false for no errors, array for some errors)
      * @return mixed 1 array, 1 array with arrays, 1 array with objects, 1 object, mysqlresult, nothing
      */
+    #[\ReturnTypeWillChange]
     function query($sQuery, $sReturnformat = null, $sClassName = "stdClass", $sSkipErrorMessage = false, $bSkipErrorLogging = false) {
 
         $iQSMT = microtime(true);

@@ -206,10 +206,10 @@ function http_redirect($sRedirectURL, $bUtm = false, $b301 = false) {
 function prettyUrlPart($sUrlPart, $bConvertToUTF8 = false) {
 
     if ($bConvertToUTF8) {
-        $sUrlPart = utf8_encode($sUrlPart);
+        $sUrlPart = mb_convert_encoding($sUrlPart, 'UTF-8', 'ISO-8859-1');
     }
 
-    $sUrlPart = htmlentities($sUrlPart, ENT_COMPAT, "UTF-8", false); //make HTMLentities to remove accents
+    $sUrlPart = htmlentities((string) $sUrlPart, ENT_COMPAT, "UTF-8", false); //make HTMLentities to remove accents
     $sUrlPart = preg_replace('#&szlig;#i', 'ss', $sUrlPart); //replace `ß` for `ss` (next row is not enough, replaces `ß` for `sz`)
     $sUrlPart = preg_replace('#&([a-z]{1,2})(?:acute|lig|grave|ring|tilde|uml|cedil|caron);#i', '\1', $sUrlPart); //remove accents
     $sUrlPart = html_entity_decode($sUrlPart, ENT_COMPAT, "UTF-8"); //decode to normal character again
@@ -614,8 +614,16 @@ function isClient() {
  * @param string $sExtraInfo
  */
 function error_handler($iErrorLevel, $sError, $sFile, $iLine, $sExtraInfo = '') {
-    if (!error_reporting())
+    // PHP 8: @-suppressed errors no longer make error_reporting() return 0, so check the level against the mask
+    if (!(error_reporting() & $iErrorLevel))
         return false;
+
+    // deprecations are only logged to file, never emailed or shown
+    if ($iErrorLevel === E_DEPRECATED || $iErrorLevel === E_USER_DEPRECATED) {
+        @file_put_contents(ASIDE_LOG_FOLDER . '/php-deprecated.log', '[' . date('Y-m-d H:i:s') . '] ' . $sFile . ':' . $iLine . ' ' . $sError . PHP_EOL, FILE_APPEND);
+        return true;
+    }
+
     $sErrorMsg = '<br />';
     switch ($iErrorLevel) {
         case E_WARNING:
@@ -637,6 +645,45 @@ function error_handler($iErrorLevel, $sError, $sFile, $iLine, $sExtraInfo = '') 
         Debug::logError($iErrorLevel, $sErrorMsg, $sFile, $iLine, _d($sExtraInfo, 1, 1), Debug::LOG_IN_EMAIL);
         Debug::logError($iErrorLevel, $sErrorMsg, $sFile, $iLine, _d($sExtraInfo, 1, 1), Debug::LOG_IN_DATABASE);
     }
+}
+
+/**
+ * replacement for strftime (deprecated in PHP 8.1), maps the used % codes to date() with English names
+ * unsupported codes are left in the output literally and trigger an E_USER_NOTICE
+ * @param string $sFormat strftime format
+ * @param int $iTimestamp (optional, default = now)
+ * @return string
+ */
+function legacy_strftime($sFormat, $iTimestamp = null) {
+    $iTimestamp = ($iTimestamp === null ? time() : (int) $iTimestamp);
+    return preg_replace_callback('#%([a-zA-Z%])#', function ($aMatch) use ($iTimestamp, $sFormat) {
+        switch ($aMatch[1]) {
+            case 'a': return date('D', $iTimestamp); // short weekday name
+            case 'A': return date('l', $iTimestamp); // full weekday name
+            case 'b':
+            case 'h': return date('M', $iTimestamp); // short month name
+            case 'B': return date('F', $iTimestamp); // full month name
+            case 'c': return date('D M ', $iTimestamp) . sprintf('%2d', date('j', $iTimestamp)) . date(' H:i:s Y', $iTimestamp); // C locale date and time
+            case 'd': return date('d', $iTimestamp); // day of month 01-31
+            case 'e': return sprintf('%2d', date('j', $iTimestamp)); // day of month, space padded
+            case 'H': return date('H', $iTimestamp); // hour 00-23
+            case 'I': return date('h', $iTimestamp); // hour 01-12
+            case 'j': return sprintf('%03d', date('z', $iTimestamp) + 1); // day of year 001-366
+            case 'm': return date('m', $iTimestamp); // month 01-12
+            case 'M': return date('i', $iTimestamp); // minutes 00-59
+            case 'p': return date('A', $iTimestamp); // AM/PM
+            case 'S': return date('s', $iTimestamp); // seconds 00-59
+            case 'u': return date('N', $iTimestamp); // weekday 1-7, monday = 1
+            case 'w': return date('w', $iTimestamp); // weekday 0-6, sunday = 0
+            case 'W': return sprintf('%02d', intdiv(date('z', $iTimestamp) + 7 - ((date('w', $iTimestamp) + 6) % 7), 7)); // week number, first monday starts week 1
+            case 'y': return date('y', $iTimestamp); // 2 digit year
+            case 'Y': return date('Y', $iTimestamp); // 4 digit year
+            case '%': return '%';
+            default:
+                trigger_error('legacy_strftime: unsupported format code `' . $aMatch[0] . '` in `' . $sFormat . '`', E_USER_NOTICE);
+                return $aMatch[0];
+        }
+    }, $sFormat);
 }
 
 /**
@@ -740,7 +787,7 @@ function randomPassword($iLength = 10, $iMinLowerChars = 1, $iMinUpperChars = 1,
  * @return string
  */
 function generateMetaDescription($sContent) {
-    return trim(htmlspecialchars(firstXCharacters(firstXWords(preg_replace('#(\<\/p\>|\<br ?\/?\>)#i', ' ', preg_replace('#(\n|\r)#i', '', $sContent)), 20, '', ''), 156, ''), ENT_QUOTES, 'UTF-8'));
+    return trim(htmlspecialchars(firstXCharacters(firstXWords(preg_replace('#(\<\/p\>|\<br ?\/?\>)#i', ' ', preg_replace('#(\n|\r)#i', '', (string) $sContent)), 20, '', ''), 156, ''), ENT_QUOTES, 'UTF-8'));
 }
 
 /**

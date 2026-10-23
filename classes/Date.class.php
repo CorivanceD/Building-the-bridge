@@ -47,6 +47,13 @@ class Date {
      */
     public $iSecond;
 
+    /*
+     * day of year 001-366, day of week 0-6 (sunday = 0), week number 00-53 (set by the constructor)
+     */
+    public $iDayOfYear;
+    public $iDayOfWeek;
+    public $iWeekNumber;
+
     function __construct($mDate = null, $sFormat = null) {
         /* create Date object from dat/time string */
         if ($mDate) {
@@ -410,11 +417,8 @@ class Date {
      * @return string
      */
     public function format($sFormat) {
-        // hack for using %e on windows systems
-        if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
-            $sFormat = preg_replace('#(?<!%)((?:%%)*)%e#', '\1%#d', $sFormat);
-        }
-        return strftime($sFormat, $this->iTime);
+        // legacy_strftime supports %e on every platform, so the old windows hack is not needed
+        return legacy_strftime($sFormat, $this->iTime);
     }
 
     /**

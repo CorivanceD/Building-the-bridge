@@ -130,10 +130,10 @@ class ArticleCategory extends Model {
      */
     public function generateUrlPart() {       
         //return $this->urlPartText ? $this->urlPartText : prettyUrlPart($this->name);
-        return $this->urlPartText ? $this->urlPartText : $this->__genUrlPart();
+        return $this->urlPartText ? $this->urlPartText : $this->_genUrlPart();
     }
     
-    private function __genUrlPart() {
+    private function _genUrlPart() {
         $aUrlParts = array();
         $oCategory = $this;
         

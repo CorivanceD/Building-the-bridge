@@ -168,16 +168,16 @@ class MailManager {
         // loop trough all characters
         for ($i = 0; $i < $length; $i++) {
             $count++;
-            $sReturn .= $sInput{$i};
+            $sReturn .= $sInput[$i];
 
             // opening sign of HTML tag
-            if ($sInput{$i} == '<') {
+            if ($sInput[$i] == '<') {
                 $openTag = true;
                 continue;
             }
 
             // closing sign of HTML tag
-            if ($openTag && $sInput{$i} == '>') {
+            if ($openTag && $sInput[$i] == '>') {
                 if ($count > $iMaxLength) {
                     $sReturn .= $sBreak;
                     $count = 0;
@@ -187,7 +187,7 @@ class MailManager {
             }
 
             // tag is not opened and character is a space, cut string
-            if (!$openTag && $sInput{$i} == ' ') {
+            if (!$openTag && $sInput[$i] == ' ') {
                 if ($count == 0) {
                     $sReturn = substr($sReturn, 0, -1);
                     continue;
@@ -199,7 +199,7 @@ class MailManager {
             }
 
             // tag is not opened and 
-            if (!$openTag && $sInput{$i} != ' ' && $count >= 950) {
+            if (!$openTag && $sInput[$i] != ' ' && $count >= 950) {
                 $sReturn .= $sBreak;
                 $count = 0;
                 continue;
