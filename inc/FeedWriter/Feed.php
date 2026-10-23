@@ -71,7 +71,12 @@ abstract class Feed
     * Contains the format of this feed.
     */
     private $version   = null;
-    
+
+    /**
+    * The character encoding of the generated feed.
+    */
+    private $encoding = 'utf-8';
+
     /**
     * Constructor
     *
