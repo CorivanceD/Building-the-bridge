@@ -1,0 +1,46 @@
+/*
+    BEGIN PRODUCT PROPERTY TYPES
+*/
+ul.possibleValues{
+    margin-top: 10px;
+}
+ul.possibleValues.sortable .possibleValuePlaceholder:hover{
+    cursor: move;
+}
+ul.possibleValues .placeholder{
+    border: 2px solid #CCC;
+    background-color: #FFF;
+    position: relative;
+    display: block;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+
+    line-height: 28px;
+    padding: 0 7px;
+    margin-bottom: 5px;
+}
+
+ul.possibleValues .placeholder .possibleValuePlaceholder div.value{
+    float: left;
+    width: 35%;
+    padding: 0 5px 0 0;
+}
+
+ul.possibleValues .placeholder .actionsPlaceholder{
+    margin: 0 3px;
+    position: absolute;
+    top: 3px;
+    right: 0;
+}
+
+div#editPossibleValuesForm input[type="text"]{
+    margin-bottom: 5px;
+}
+div.possibleValuePlaceholder{
+    position: relative;
+}
+
+/*
+    END PRODUCT PROPERTY TYPES
+*/

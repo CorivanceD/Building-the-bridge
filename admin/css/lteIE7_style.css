@@ -1,0 +1,63 @@
+/* 
+    Document   : lteIE7
+    Created on : 27-jan-2011, 10:09:49
+    Author     : arjan
+    Description:
+        for styles for IE7 and lower
+*/
+div.images .placeholder .imagePlaceholder{
+    position: relative;
+}
+
+div.images .placeholder .imagePlaceholder .centered{
+    position: absolute;
+    top: 50%;
+    height: auto;
+}
+
+div.images .placeholder .imagePlaceholder .centered img{
+    position: relative;
+    top: -50%;
+    zoom: 1;
+    display:inline;
+}
+
+div.images .placeholder .actionsPlaceholder{
+    position: relative;
+    z-index: 99;
+}
+
+div.contentColumn{
+    width: 47%;
+    min-width: 472px;
+}
+
+div.filePlaceholder span.fileType, div.linkPlaceholder span.mediaType, div.youtubeLinkPlaceholder span.mediaType{
+    top: 0;
+}
+*.inline-block,
+a.backBtn,
+a.editBtn.textLeft,
+header #statusUpdate,
+div.crumblePath span.crumbleSep,
+span.fileType,
+span.mediaType,
+a.action_icon{
+    zoom: 1;
+    display:inline;
+}
+a.action_icon{
+    vertical-align: middle;
+}
+.hasTooltip{
+    zoom: 1;
+    display: inline;
+}
+.pagination{
+    display: inline;
+    zoom: 1;
+}
+.inline-block{
+    display: inline;
+    zoom: 1;
+}

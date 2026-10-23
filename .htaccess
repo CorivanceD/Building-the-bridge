@@ -1,0 +1,118 @@
+
+# upgrade memory limit
+########php_value memory_limit 320M
+########php_value max_input_vars 6000
+# let IE use the correct version
+Header set X-UA-Compatible "IE=edge"
+
+# utf-8 encoding by default
+AddDefaultCharset UTF-8
+
+# let the documents be documents and not ZIP files
+AddType application/vnd.ms-word.document.macroEnabled.12 docm
+AddType application/vnd.openxmlformats-officedocument.wordprocessingml.document docx
+AddType application/vnd.openxmlformats-officedocument.wordprocessingml.template dotx
+AddType application/vnd.ms-powerpoint.template.macroEnabled.12 potm
+AddType application/vnd.openxmlformats-officedocument.presentationml.template potx
+AddType application/vnd.ms-powerpoint.addin.macroEnabled.12 ppam
+AddType application/vnd.ms-powerpoint.slideshow.macroEnabled.12 ppsm
+AddType application/vnd.openxmlformats-officedocument.presentationml.slideshow ppsx
+AddType application/vnd.ms-powerpoint.presentation.macroEnabled.12 pptm
+AddType application/vnd.openxmlformats-officedocument.presentationml.presentation pptx
+AddType application/vnd.ms-excel.addin.macroEnabled.12 xlam
+AddType application/vnd.ms-excel.sheet.binary.macroEnabled.12 xlsb
+AddType application/vnd.ms-excel.sheet.macroEnabled.12 xlsm
+AddType application/vnd.openxmlformats-officedocument.spreadsheetml.sheet xlsx
+AddType application/vnd.ms-excel.template.macroEnabled.12 xltm
+AddType application/vnd.openxmlformats-officedocument.spreadsheetml.template xltx
+
+# stop automatic adding of slashes at post, get, cookie and request variables
+#########php_flag magic_quotes_gpc Off
+
+RewriteEngine on
+RewriteBase /
+
+
+
+# redirect requests with WWW to without WWW
+RewriteCond %{HTTP_HOST} ^www\.buildingthebridge.eu [NC]
+RewriteRule ^(.*)$ http://buildingthebridge.eu/$1 [L,R=301]
+
+RewriteCond %{HTTPS} off [NC]
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+ErrorDocument 307 /index.php?controller=errors&param1=307
+ErrorDocument 403 /index.php?controller=errors&param1=403
+ErrorDocument 404 /index.php?controller=errors&param1=404
+ErrorDocument 405 /index.php?controller=errors&param1=405
+
+#deny access to specific files/folders
+SetEnvIf Request_URI "^/admin/.+\.[a-z]+$" deny
+SetEnvIf Request_URI "^/admin/(index.php|images|css|js|plugins|robots.txt|favicon.png|cronjobs)" allow
+SetEnvIf Request_URI "^/(classes|controllers|pages|templates|inc|nbproject)" deny
+SetEnvIf Request_URI "(.mwb|.uml)" deny
+Order deny,allow
+Deny from env=deny
+Allow from env=allow
+
+#do not rewrite existing files!
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.*?)$ $1 [L]
+
+#rewrite rules for admin
+RewriteRule ^admin/(.*)/(.*)/(.*)/(.*)$ /admin/index.php?controller=$1&param1=$2&param2=$3&param3=$4 [L,QSA]
+RewriteRule ^admin/(.*)/(.*)/(.*)$ /admin/index.php?controller=$1&param1=$2&param2=$3 [L,QSA]
+RewriteRule ^admin/(.*)/(.*)$ /admin/index.php?controller=$1&param1=$2 [L,QSA]
+RewriteRule ^admin/(.*)$ /admin/index.php?controller=$1 [L,QSA]
+
+#sitemaps
+RewriteRule ^sitemap-?([a-z]+)?\.xml\.?(gz)?$ index.php?controller=sitemap&param1=$1&param2=$2 [L,QSA]
+
+
+#rewrite rules for  AMP pages
+RewriteRule ^amp/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-\.]*)/([a-zA-Z0-9\-\.]*)/([a-zA-Z0-9\-\.]*)$ index.php?amp=-AMP&controller=$1&param1=$2&param2=$3&param3=$4&param4=$5&param5=$6&param6=$7&lastparam=$7 [L,QSA]
+RewriteRule ^amp/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-\.]*)/([a-zA-Z0-9\-\.]*)$ index.php?amp=-AMP&controller=$1&param1=$2&param2=$3&param3=$4&param4=$5&param5=$6&lastparam=$6 [L,QSA]
+RewriteRule ^amp/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-\.]*)/([a-zA-Z0-9\-\.]*)$ index.php?amp=-AMP&controller=$1&param1=$2&param2=$3&param3=$4&param4=$5&lastparam=$5 [L,QSA]
+RewriteRule ^amp/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-\.]*)/([a-zA-Z0-9\-\.]*)$ index.php?amp=-AMP&controller=$1&param1=$2&param2=$3&param3=$4&lastparam=$4 [L,QSA]
+RewriteRule ^amp/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-\.]*)/([a-zA-Z0-9\-\.]*)$ index.php?amp=-AMP&controller=$1&param1=$2&param2=$3&lastparam=$3 [L,QSA]
+RewriteRule ^amp/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-\.]*)$ index.php?amp=-AMP&controller=$1&param1=$2&lastparam=$2 [L,QSA]
+RewriteRule ^amp/([a-zA-Z0-9\-]+)$ index.php?amp=-AMP&controller=$1 [L,QSA]
+
+#rewrite rules for non admin pages
+RewriteRule ^([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-\.]*)$ index.php?controller=$1&param1=$2&param2=$3&param3=$4&param4=$5&param5=$6&lastparam=$6 [L,QSA]
+RewriteRule ^([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-\.]*)$ index.php?controller=$1&param1=$2&param2=$3&param3=$4&param4=$5&lastparam=$5 [L,QSA]
+RewriteRule ^([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-\.]*)$ index.php?controller=$1&param1=$2&param2=$3&param3=$4&lastparam=$4 [L,QSA]
+RewriteRule ^([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-\.]*)$ index.php?controller=$1&param1=$2&param2=$3&lastparam=$3 [L,QSA]
+RewriteRule ^([a-zA-Z0-9\-]+)/([a-zA-Z0-9\-\.]*)$ index.php?controller=$1&param1=$2&lastparam=$2 [L,QSA]
+RewriteRule ^([a-zA-Z0-9\-\.]*)$ index.php?controller=$1 [L,QSA]
+
+
+########################## CACHING ##########################
+
+# enable expire module
+ExpiresActive On
+
+# define expire time for certain filetypes
+ExpiresByType image/x-icon                  "access plus 1 month"
+ExpiresByType image/gif                     "access plus 1 month"
+ExpiresByType image/png                     "access plus 1 month"
+ExpiresByType image/jpg                     "access plus 1 month"
+ExpiresByType image/jpeg                    "access plus 1 month"
+ExpiresByType text/css                      "access plus 1 week"
+ExpiresByType text/html                     "access plus 0 seconds"
+ExpiresByType text/xml                      "access plus 0 seconds"
+ExpiresByType application/xml               "access plus 0 seconds"
+ExpiresByType application/json              "access plus 0 seconds"
+ExpiresByType text/javascript               "access plus 1 week"
+ExpiresByType application/javascript        "access plus 1 week"
+ExpiresByType text/x-component              "access plus 1 week"
+ExpiresByType video/ogg                     "access plus 1 month"
+ExpiresByType audio/ogg                     "access plus 1 month"
+ExpiresByType video/mp4                     "access plus 1 month"
+ExpiresByType video/webm                    "access plus 1 month"
+ExpiresByType font/truetype                 "access plus 1 month"
+ExpiresByType font/opentype                 "access plus 1 month"
+ExpiresByType application/x-font-woff       "access plus 1 month"
+ExpiresByType image/svg+xml                 "access plus 1 month"
+ExpiresByType application/vnd.ms-fontobject "access plus 1 month"

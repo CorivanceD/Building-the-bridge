@@ -1,0 +1,153 @@
+* {
+    background: transparent !important;
+    color: #000 !important;
+    font-size:12pt !important;
+    box-shadow:none !important;
+    text-shadow: none !important;
+    filter: none !important;
+    -ms-filter: none !important;
+}
+
+html {
+    width: 100%;
+}
+
+/* Specify data of the client */
+body:before {
+    display: block;
+    content: "Building the Bridge | www.buildingthebridge.eu | info@buildingthebridge.nl";
+    margin-bottom: 12px;
+    border: 1px solid #000;
+    text-align: center;
+    font-size: 12px;
+    padding: 3px 5px;
+}
+
+#header,
+#nav,
+.no-print {
+    display: none !important;
+    height: 0 !important;
+}
+
+@page {
+    margin: 1.0cm;
+}
+
+thead {
+    display: table-header-group;
+}
+
+tr,
+img {
+    page-break-inside: avoid;
+}
+
+/* Call this code for each container element */
+#container {
+    width: auto;
+    float: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    /*font-size: 12pt;
+    line-height: 1.4em;*/
+}
+
+a {
+    text-decoration: underline !important;
+    word-wrap: break-word;
+    color: #000 !important;	
+}
+
+img {
+    border: 0;
+    max-width: 100% !important;
+    display: block;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #000 !important;
+    font-weight: bold !important;
+}
+
+#headerTitle h1 {
+    font-size:52px !important;
+}
+
+#banner {
+    border-top: none;
+    border-bottom: none;
+}
+
+.container-brandbox{
+    display: none;
+}
+
+.module-container{
+    display: none;
+}
+
+#brandboxModule {
+    display:none;
+    height: 0 !important;
+}
+
+#brandboxModule img {
+    display:none;
+    height: 0 !important;
+}
+
+.headerImage {
+    display:none;
+    height: 0 !important;
+}
+
+.fancyBoxLink {
+    display:none;
+    height: 0 !important;
+}
+
+.blogItemImage {
+    display:none;
+    height: 0 !important;
+}
+
+.breadcrumbs {
+    display:none;
+    height: 0 !important;
+}
+
+#standardForm {
+    display:none;
+    height: 0 !important;
+}
+
+
+#footer {
+    position:relative;
+}
+
+.googleMaps {
+    display:none;
+    height: 0 !important;
+}
+
+.row {
+    min-height:100px;  
+}
+
+.sidebarRight {
+    display:none;
+    height: 0 !important;
+}
+
+body {
+    height:auto;
+}

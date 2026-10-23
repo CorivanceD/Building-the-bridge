@@ -1,0 +1,28 @@
+/* 
+    Document   : lteIE8
+    Created on : 29-dec-2011, 10:09:49
+    Author     : arjan
+    Description:
+        for styles for IE8 and lower
+*/
+table.sorted th{
+    background: url( /admin/images/layout/th_nonsort_background.gif ) repeat-x 0 0 transparent;
+}
+table.sorted th.header{
+    cursor: pointer;
+    background: url( /admin/images/layout/th_unsorted_background.gif ) repeat-x top right transparent;
+}
+table.sorted th.headerSortUp{
+    background: url( /admin/images/layout/th_active_sort_up_background.gif ) repeat-x top right transparent;
+}
+table.sorted th.headerSortDown{
+    background: url( /admin/images/layout/th_active_sort_down_background.gif ) repeat-x top right transparent;
+}
+
+ul.menu li.hasChildren > div > a:hover{
+    background: url(/admin/images/layout/menu_with_children_hover.jpg) no-repeat 0 0 transparent;
+}
+
+ul.menu li.hasChildren.active > div > a{
+    background: url(/admin/images/layout/menu_with_children_active.jpg) no-repeat 0 0 transparent;
+}

@@ -1,0 +1,104 @@
+version: "3.8"
+
+services:
+  web:
+    image: btb-web:local
+    environment:
+      DB_HOST: ${DB_HOST:-db}
+      DB_USER: ${DB_USER:-bvkempen_btbuser}
+      DB_DATABASE: ${DB_DATABASE:-bvkempen_btbdb}
+      DB_PASSWORD: ${DB_PASSWORD:?set in .env}
+      CLIENT_URL: localhost
+      CLIENT_HTTP_URL: https://localhost
+      CLIENT_HTTPS_URL: https://localhost
+    ports:
+      - target: 80
+        published: ${WEB_HTTP_PORT:-80}
+        protocol: tcp
+        mode: host
+      - target: 443
+        published: ${WEB_HTTPS_PORT:-443}
+        protocol: tcp
+        mode: host
+    volumes:
+      - type: bind
+        source: .
+        target: /var/www/vhosts/buildingthebridge.eu/domains/buildingthebridge.eu/public_html
+      - type: bind
+        source: ./docker/php/secrets.inc.php
+        target: /var/www/vhosts/buildingthebridge.eu/domains/buildingthebridge.eu/public_html/inc/secrets.inc.php
+        read_only: true
+    networks:
+      - btb
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  db:
+    image: mariadb:10.11
+    environment:
+      MARIADB_DATABASE: ${DB_DATABASE:-bvkempen_btbdb}
+      MARIADB_USER: ${DB_USER:-bvkempen_btbuser}
+      MARIADB_PASSWORD: ${DB_PASSWORD:?set in .env}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?set in .env}
+    volumes:
+      - db_data:/var/lib/mysql
+      - type: bind
+        source: ./docker/db/my.cnf
+        target: /etc/mysql/conf.d/btb.cnf
+        read_only: true
+      - type: bind
+        source: ./docker/db/init
+        target: /docker-entrypoint-initdb.d
+        read_only: true
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30m
+    networks:
+      - btb
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  mail:
+    image: axllent/mailpit
+    ports:
+      - target: 8025
+        published: ${MAIL_UI_PORT:-8025}
+        protocol: tcp
+        mode: host
+    networks:
+      - btb
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  phpmyadmin:
+    image: phpmyadmin:5
+    environment:
+      PMA_HOST: db
+      UPLOAD_LIMIT: 1G
+    ports:
+      - target: 80
+        published: ${PMA_PORT:-8081}
+        protocol: tcp
+        mode: host
+    networks:
+      - btb
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  db_data:
+
+networks:
+  btb:
+    driver: overlay

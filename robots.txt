@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin
+Disallow: /awstats
+Disallow: /browserwarning
+Disallow: /cgi-bin
+Disallow: /errorpages

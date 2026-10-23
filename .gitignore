@@ -1,0 +1,49 @@
+# Secrets
+/inc/secrets.inc.php
+
+# Planning docs
+/docs/plans/
+/docs/PLAN.md
+
+# Uploads (content, not code)
+/images/articles/
+/images/page/
+/images/customer/
+/images/user/
+/images/petitions/
+/images/communication/
+/images/newssourcelogo/
+/images/settings/
+/files/articles/
+/files/page/
+/files/csv_upload_temp/*
+!/files/csv_upload_temp/.gitkeep
+
+# Runtime
+/a-side_logs/*
+!/a-side_logs/.htaccess
+!/a-side_logs/.gitkeep
+/admin/temp/*
+!/admin/temp/.gitkeep
+/admin/cronjobs/cronlocks/*
+!/admin/cronjobs/cronlocks/.gitkeep
+!/admin/cronjobs/cronlocks/.htaccess
+/admin/cronjobs/cronlogs/*
+!/admin/cronjobs/cronlogs/.gitkeep
+!/admin/cronjobs/cronlogs/.htaccess
+*.log
+
+# OS/editor/archives
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+nbproject/
+*.zip
+*.sql
+*.sql.gz
+
+# Docker local
+/.env
+/docker/db/init/*
+!/docker/db/init/.gitkeep

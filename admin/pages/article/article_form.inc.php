@@ -1,0 +1,212 @@
+<div id="topOptions">
+    <a class="backBtn" href="<?= ADMIN_FOLDER ?>/<?= (http_get('param3', null) === null) ? http_get('controller') : http_get('param3') ?>"><?= sysTranslations::get('global_back_to_overview') ?></a><span class="backBtnInfo"> (<?= sysTranslations::get('global_without_saving') ?>)</span>
+</div>
+<div class="cf">
+    <div class="contentColumn">
+        <form method="POST" id="articleForm" action="" class="validateForm">
+            <input type="hidden" value="" name="action" id="action"/>
+            <fieldset>
+                <legend><?= sysTranslations::get('articles_article') ?></legend>
+
+                <table class="withForm">
+                    <tr>
+                        <td class="withLabel" style="width: 120px;"><label for="title"><?= sysTranslations::get('global_title') ?> *</label> <div class="hasTooltip tooltip" title="<?= sysTranslations::get('global_title_tooltip') ?>">&nbsp;</div></td>
+                        <td><input id="title" class="{validate:{required:true}} autofocus default" title="<?= sysTranslations::get('global_title_tooltip') ?>" type="text" autocomplete="off" name="title" value="<?= _e($oArticle->title) ?>" /></td>
+                        <td><span class="error"><?= $oArticle->isPropValid("title") ? '' : sysTranslations::get('global_field_not_completed') ?></span></td>
+                    </tr>
+                    <tr>
+                        <td class="withLabel" style="width: 116px;"><label for="name"><?= sysTranslations::get('pages_page') ?></label> *</td>
+                        <td>                            
+                            <select id="parentPageId" name="parentPageId" class="{validate:{required:true}}">
+                                <option value="">-- None --</option>
+                                <? foreach ($aPages AS $oPage) { ?>
+                                    <option value="<?= $oPage->pageId ?>" <?= (!empty($oArticle->articleCategoryId) && $oPage->pageId == $oArticle->getCategory()->parentPageId) ? 'selected' : '' ?>><?= $oPage->title ?></option>
+
+                                <? } ?>
+                            </select>
+                        </td>
+                        <td><span class="error"><?= $oArticle->isPropValid("parentPageId") ? '' : sysTranslations::get('global_field_not_completed') ?></span></td>                        
+                    </tr>                     
+                    <tr>
+                        <td class="withLabel"><label for="articleCategoryId"><?= ucfirst(sysTranslations::get('global_category')) ?></label> *<div class="hasTooltip tooltip" title="<?= sysTranslations::get('articles_category_tooltip') ?>">&nbsp;</div></td>
+                        <td>
+                            <select id="articleCategoryId" class="{validate:{required:true}}" name="articleCategoryId"  title="<?= sysTranslations::get('articles_enter_title_tooltip') ?>">
+                                <option value="">-- None --</option>
+                                <? foreach ($aArticleCategories AS $oArticleCategory) { ?>
+                                    <option value="<?= $oArticleCategory->articleCategoryId ?>" <?= $oArticle->articleCategoryId === $oArticleCategory->articleCategoryId ? 'selected' : '' ?> ><?= $oArticleCategory->getFullName() ?></option>
+                                <? } ?>
+                            </select>
+                        <td><span class="error"><?= $oArticle->isPropValid("articleCategoryId") ? '' : sysTranslations::get('global_field_not_completed') ?></span></td>                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="withLabel" style="padding-top: 10px;"><label for="isLuminary">Voice of Wisdom</label></td>
+                        <td colspan="2" style="padding-top: 10px;">
+                            <input class="alignRadio" type="radio" name="isLuminary" <?= $oArticle->isLuminary ? 'checked' : '' ?> value="1" > &nbsp;<?= sysTranslations::get('global_yes') ?>
+
+                            <input class="alignRadio" type="radio" name="isLuminary" <?= $oArticle->isLuminary ? '' : 'checked' ?> value="0" >&nbsp;<?= sysTranslations::get('global_no') ?>
+                        </td>                        
+                    </tr>                     
+                    <tr>
+                        <td colspan="3" style="padding-top: 20px;"><label for="intro"><?= sysTranslations::get('articles_intro') ?></label> *<div class="hasTooltip tooltip" title="<?= sysTranslations::get('articles_intro_tooltip') ?>">&nbsp;</div></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><textarea name="intro" id="intro" class="{validate:{required:true}} tiny_MCE_default tiny_MCE intro" ><?= $oArticle->intro ?></textarea></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="padding-top: 20px;"><label for="content"><?= sysTranslations::get('articles_articles_item_2') ?></label> *<div class="hasTooltip tooltip" title="<?= sysTranslations::get('articles_articles_item_2_tooltip') ?>">&nbsp;</div></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><textarea name="content" id="content" class="{validate:{required:true}} tiny_MCE_default tiny_MCE"><?= $oArticle->content ?></textarea></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3"><h2><?= sysTranslations::get('user_seo') ?></h2></td>
+                    </tr>
+                    <? if (!empty($oArticle->articleCategoryId)) { ?>
+                        <tr>
+                            <td><?= sysTranslations::get('global_current_url') ?></td>
+                            <td><?= $oArticle->getUrlPath() ?></td>
+                        </tr>
+                    <? } ?>                        
+                    <tr>
+                        <td class="withLabel"><label for="windowTitle"><?= sysTranslations::get('global_window_title') ?></label> <div class="hasTooltip tooltip" title="<?= sysTranslations::get('global_title_seo') ?>">&nbsp;</div></td>
+                        <td colspan="2">
+                            <div class="inline-block">
+                                <input class="default charCounterWindowTitle" id="windowTitle" type="text" name="windowTitle" value="<?= _e($oArticle->windowTitle) ?>" />
+                                <div id="windowTitleCounter" style="text-align: right;"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="metaDescription"><?= sysTranslations::get('global_description') ?></label> <div class="hasTooltip tooltip" title="<?= sysTranslations::get('global_description_seo') ?>">&nbsp;</div></td>
+                        <td colspan="2">
+                            <div class="inline-block">
+                                <textarea class="default charCounterMetaDescription" id="metaDescription" name="metaDescription"><?= _e($oArticle->metaDescription) ?></textarea>
+                                <div id="metaDescriptionCounter" style="text-align: right;"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="withLabel"><label for="metaKeywords"><?= sysTranslations::get('global_keywords') ?></label> <div class="hasTooltip tooltip" title="<?= sysTranslations::get('global_keywords_seo') ?>">&nbsp;</div></td>
+                        <td colspan="2"><input  class="default" id="metaKeywords" type="text" name="metaKeywords" value="<?= _e($oArticle->metaKeywords) ?>" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <input type="submit" id="saveButton" value="<?= sysTranslations::get('global_save') ?>" name="saveButton" />
+                            <? if (!empty($oArticle->articleId)) { ?>
+                                &nbsp;<input type="submit" id="sendToReview" value="<?= sysTranslations::get('articles_send_to_review') ?>" name="sendToReview" />
+                            <? } ?>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </form>
+    </div>
+    <? ?>
+    <div class="contentColumn">
+        <fieldset>
+            <legend><?= sysTranslations::get('global_images') ?></legend>
+            <?
+            if ($oArticle->articleId !== null) {
+
+                $oImageManagerHTML->includeTemplate();
+            } else {
+                echo '<p><i>' . sysTranslations::get('articles_images_warning') . '</i></p>';
+            }
+            ?>
+        </fieldset>
+    </div>
+    <div class="contentColumn">
+        <fieldset>
+            <legend><?= sysTranslations::get('global_files') ?></legend>
+            <?
+            if ($oArticle->articleId !== null) {
+                $oFileManagerHTML->includeTemplate();
+            } else {
+                echo '<p><i>' . sysTranslations::get('articles_files_warning') . '</i></p>';
+            }
+            ?>
+        </fieldset>
+    </div>
+    <div class="contentColumn">
+        <fieldset>
+            <legend><?= sysTranslations::get('global_links') ?></legend>
+            <?
+            if ($oArticle->articleId !== null) {
+                $oLinkManagerHTML->includeTemplate();
+            } else {
+                echo '<p><i>' . sysTranslations::get('articles_links_warning') . '</i></p>';
+            }
+            ?>
+        </fieldset>
+    </div>
+    <div class="contentColumn">
+        <fieldset>
+            <legend><?= sysTranslations::get('global_youtube') ?></legend>
+            <?
+            if ($oArticle->articleId !== null) {
+                $oYoutubeLinkManagerHTML->includeTemplate();
+            } else {
+                echo '<p><i>' . sysTranslations::get('articles_youtube_warning') . '</i></p>';
+            }
+            ?>
+        </fieldset>
+    </div>
+</div>
+<div id="bottomOptions">
+    <a class="backBtn" href="<?= ADMIN_FOLDER ?>/<?= http_get('controller') ?>"><?= sysTranslations::get('global_back_to_overview') ?></a><span class="backBtnInfo"> (<?= sysTranslations::get('global_without_saving') ?>)</span>
+</div>
+<?
+$jsLang = empty($oCurrentUser) ? 'nl' : $oCurrentUser->getLanguage()->abbr;
+$sCurrentUrl = getCurrentUrl();
+$sJavascript = <<<EOT
+<script>
+    initTinyMCE(".tiny_MCE_default.intro", "/admin/paginas/link-list" , undefined, undefined, undefined, undefined, "$jsLang");
+    initTinyMCE(".tiny_MCE_default", "/admin/paginas/link-list", "/admin/articles/image-list/$oArticle->articleId", undefined, undefined, undefined, "$jsLang");
+    
+    $("#saveButton").click(
+        function(e) {
+            e.preventDefault();
+            $("#action").val("save");
+            $("#articleForm").submit();
+        }
+    );
+    
+    $("#sendToReview").click(
+        function(e) {
+            e.preventDefault();
+            $("#action").val("sendToReview");
+            $("#articleForm").submit();
+        }
+    ); 
+        
+    $('#parentPageId').change(function() {
+        $.ajax({
+            type: 'POST',
+            url: '$sCurrentUrl',
+            data: 'action=ajaxChangePage&page=' + $(this).val(),
+            async: true,
+            success: function(data){
+                var dataObj = eval('(' + data + ')');
+
+                var optCat = '<option value="">-- None --</option>';
+
+                /* On success */
+                if (dataObj.success == true){
+                    $.each(
+                        dataObj.categories, 
+                        function(index, cat) {
+                            optCat = optCat + '<option value="' + cat.articleCategoryId + '">' + cat.name + '</option>';
+                        }
+                    );                    
+                } 
+
+                $('#articleCategoryId').html(optCat);
+            }
+        });
+    });
+</script>
+EOT;
+$oPageLayout->addJavascriptBottom($sJavascript);
+?>

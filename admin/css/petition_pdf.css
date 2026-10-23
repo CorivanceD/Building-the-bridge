@@ -1,0 +1,71 @@
+header {
+    border: 1px solid #000;    
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 10pt;
+    margin:0;
+    padding:0;
+}
+
+table td {
+/*    border: 1px solid #000;*/
+    vertical-align: top;
+}
+
+#headerPdf td {
+    padding:2mm 4mm 0mm;
+}
+
+#headerPdf td.title {
+    font-size: 16pt !important;
+}
+
+img.logo {
+    width:80mm;
+}
+
+img.petitionImg {
+    height:80mm;
+    padding:0mm 4mm 4mm;
+}
+
+#customerInfo {
+    top: 50mm;
+    margin-left: 4mm;
+    font-size: 12pt;
+    line-height: 1.6;
+    position:absolute;
+}
+
+.pullUp {
+    margin-top: -5mm;
+}
+
+#reportDetail {
+    font-size:9pt !important;
+
+}
+
+#orderDetail tfoot {
+    font-size:10pt;
+}
+
+footer {
+    text-align:center;
+    font-size: 8pt;
+}
+footer table td {
+    background-color:grey; 
+    text-align: center;    
+    font-size: 8pt;
+}
+
+.topBorder {
+    border-top:thin solid black;
+}
+
+.bottomBorder {
+    border-bottom:thin solid black;
+}

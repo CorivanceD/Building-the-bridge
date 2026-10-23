@@ -1,0 +1,321 @@
+
+/* TABLET */
+@media (min-width: 768px) and (max-width: 1050px) {
+
+    .default-container-width {
+        width: 90%;
+    }
+
+    .show-on-tablet {
+        display: block;
+    }    
+
+    .hide-on-tablet {
+        display: none;
+        height: 0;
+    } 
+
+    #banner {
+        height:160px;
+        top:74px;
+    }
+
+    #upperMenu {
+        float:left;
+        width:100%;
+    }
+
+    #today, #upperMenu, #languages, #lowerMenu {
+        font: 12px "myriadpro";
+    }    
+
+    #headerTitle {
+        width:80%;
+        height:166px;        
+    }
+
+    #headerTitle ul {
+        margin: 10px 0px 0px;
+        width:100%;
+        float:left;
+        margin-top:20px
+    }
+
+    #headerTitle a.title {
+        font-size: 60px !important;
+        margin: 10px 0px 0px !important;
+        float:left !important;
+        width:100% !important;
+    }
+
+    #searchBox {
+        float:right;
+        width:225px;
+    }
+
+    #searchBox input[type="search"] {
+        width:100px;
+    }    
+
+    nav {
+        font: 15px "Georgia";
+    }       
+
+    nav li a, #searchButton {
+        margin: 0px 6px;
+    }
+
+    #searchButton {
+        background-size: cover;
+        width: 15px;
+        height: 15px;
+    }
+
+    a.subPageLink {
+        font:14px "Georgia";
+        height:26px;
+        padding:8px
+    }
+
+    footer, ul.footerNav li {
+        font: 13px "helveticaregular"
+    }
+
+    footer h1 {
+        font: 32px "Georgia";
+        padding: 20px 0px 20px 0px;
+    }
+
+    footer .footerContent {
+        height: 202px;
+    }    
+
+    footer {
+        height: 240px
+    }
+
+    #credits {
+        margin-top:60px;
+    }
+
+    #message {
+        width: 94%;
+    }  
+
+    .rightColumn .signPetition a.button, .rightColumn .helpUsDonate .button {
+        width:100%;
+    }    
+}
+
+
+/* MOBILE */
+@media (max-width: 767px) {
+
+    .default-container-width {
+        width: 85%;
+    }
+
+    .main-content {
+        top: 200px; 
+    }
+
+    .show-on-mobile {
+        display: block;
+    }
+
+    .hide-on-mobile {
+        display: none;
+        height: 0;
+    }
+
+    #banner {
+        height: 185px;
+        top: 100px;
+    }    
+
+    #headerTitle {
+        height:164px;
+        float:left;
+        position:absolute;
+        top:85px;
+    }
+
+    #headerTitle ul {
+        margin: 20px 0px 0px;
+        width:100%;
+        float:left;
+    }
+
+    #headerTitle a.title {
+        font-size: 40px !important;
+        margin: 15px 0px 0px !important;
+        float:left !important;
+        width:100% !important;
+    }
+
+    #upperMenu {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    #upperMenu, #languages, #lowerMenu {
+        font: 11px "myriadpro";
+    }
+
+    #upperMenu ul li {
+        margin-bottom:10px;
+    }
+
+    #mobileMenu {
+        width:100%;
+        float:left;
+        background-color: #555555;
+        height: 32px;
+        position:absolute;
+        top:254px;
+        left:0px;
+        z-index: 3000;
+    }
+
+    #mobileMenuLinks {
+        display:none;
+        position:absolute;
+        left:0px;
+        top:32px;
+    }
+
+    #mobileMenuLinks li {        
+        background-color: #555555;
+        border-top: 1px solid #efece3;
+        height: 32px;
+        width: 100%;
+    }
+
+    #mobileMenuLinks li a {
+        height:24px;
+        color: #efece3;
+        vertical-align: middle;   
+        padding:4px 1%;
+        margin:0px;
+        display:block;
+        width:98%
+    }
+
+    #mobileMenuLinks li a.submenu-1 {
+        padding: 1% 10%;  
+        width:80%
+    }
+
+    #mobileMenuLinks li a:hover, #mobileMenuLinks li a.active {
+        border-bottom:none;
+        background: #ef4130;
+    }
+
+    #navButton {
+        display: block;
+        width: 25px;
+        height: 19px;
+        background: url('/images/layout/show-nav.png') no-repeat center center transparent;
+        cursor: pointer;
+        padding:5px;
+        float:left
+    }
+
+    #searchButtonMobile {
+        background: url('/images/layout/search-icon-mobile.png') no-repeat center center transparent;
+        width:22px;
+        height:22px;
+        display:block;
+        float:right;
+        margin-top: 4px;
+        margin-right: 4px;
+    }
+
+    input[type="search"] {
+        font: 12px "Georgia";
+        float:right;
+        margin-top: 4px;
+        margin-right: 4px;
+    }
+
+    .rssFeeds {        
+        width: 98%;        
+    }
+
+    a.subPageLink {
+        font:17px "Georgia";
+    }
+
+    footer, ul.footerNav li {
+        font: 13px "helveticaregular"
+    }
+
+    footer h1 {
+        font: 32px "Georgia";
+        padding: 8px 0px 0px 0px;
+    }    
+
+    footer .footerContent {
+        height: 80px;
+    }
+
+    footer {
+        height: 84px;
+        top: 216px
+    } 
+
+    footer ul.socialMedia li a img {
+        margin-right: 4px
+    }
+
+    footer ul.socialMedia li {
+        margin-right: 1px
+    }    
+
+    #credits {
+        margin-top:240px
+    }
+
+    .column-50, .column-66, .column-75, .column-33 {
+        width:98%;
+    }
+
+    .socialMedia {
+        margin-top: 30px
+    }
+
+    #lowerMenu {
+        float:left;
+        margin-top:4px
+    }
+
+    #loginForm {
+        left:0px;
+    }
+
+    .articleComment .commentContent {
+        width: 90%
+    }    
+
+    #message {
+        width: 95%;
+    }    
+
+    .rightColumn .block {
+        /*width:195px;*/
+        margin:0px auto 25px;
+        padding: 25px;
+    }
+
+    #upperMenu   {
+        float:left;
+        margin-right: 0px;
+    }
+
+
+    #linkName, #linkUrl, #videoName, #videoUrl {
+        float: left;
+        width: 100% !important;
+        margin-bottom:10px;   
+    }
+}
